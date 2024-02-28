@@ -1,11 +1,11 @@
 import { contextBridge, ipcRenderer } from "electron";
 import {
-    CHANNEL_GET_CONFIG
+    CHANNEL_CORE_GETCONFIG
 } from "./common/channels";
 
 const LLWebUiApi = {
     getConfig: async (): Promise<void> => {
-        return ipcRenderer.invoke(CHANNEL_GET_CONFIG);
+        return ipcRenderer.invoke(CHANNEL_CORE_GETCONFIG);
     }
 }
 console.log("WebUiApi Preload...");

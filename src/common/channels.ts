@@ -1,4 +1,4 @@
-export const CHANNEL_GET_CONFIG = "LLWebUiApi_Get_Confg"
-export const CHANNEL_SET_CONFIG = "LLWebUiApi_Set_Config"
-export const CHANNEL_LOG = "LLWebUiApi_Log"
-export const CHANNEL_ERROR = "LLWebUiApi_Error"
+export const CHANNEL_CORE_GETCONFIG = "LLWebUiApi_Core_GetConfg"
+export const CHANNEL_CORE_SETCONFIG = "LLWebUiApi_Core_SetConfig"
+export const CHANNE_CORE_LOG = "LLWebUiApi_Core_Log"
+export const CHANNEL_CORE_ERROR = "LLWebUiApi_Core_Error"

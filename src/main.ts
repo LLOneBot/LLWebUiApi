@@ -1,15 +1,19 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, ipcMain } from 'electron';
 import { initHeadless3 } from "./main/headless";
-
+import { CHANNEL_CORE_ERROR, CHANNE_CORE_LOG, CHANNEL_CORE_GETCONFIG, CHANNEL_CORE_SETCONFIG } from './common/channels';
 
 function onBrowserWindowCreated(_window: BrowserWindow) {
   console.log("onBrowserWindowCreated...");
 }
 function loadLLWebUiApi() {
+  // 开启无头模式
   initHeadless3();
-  // 开始启动Api
-  // 流程 读取Config 是否以headless模式启动 启动后 让接口适配器 启动对应接口
-  // 全局Login状态需要保存
+  // 注册基础事件
+  ipcMain.handle(CHANNEL_CORE_ERROR, async (_event, _arg) => { });
+  ipcMain.handle(CHANNE_CORE_LOG, async (_event, _arg) => { });
+  ipcMain.handle(CHANNEL_CORE_GETCONFIG, async (_event, _arg) => { });
+  ipcMain.handle(CHANNEL_CORE_SETCONFIG, async (_event, _arg) => { });
+  //
 }
 try {
   loadLLWebUiApi();
