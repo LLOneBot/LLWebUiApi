@@ -1,6 +1,7 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import { initHeadless3 } from "./main/headless";
 import { CHANNEL_CORE_ERROR, CHANNE_CORE_LOG, CHANNEL_CORE_GETCONFIG, CHANNEL_CORE_SETCONFIG } from './common/channels';
+import { ServerAdapter } from './api/adapter';
 
 function onBrowserWindowCreated(_window: BrowserWindow) {
   console.log("onBrowserWindowCreated...");
@@ -14,6 +15,7 @@ function loadLLWebUiApi() {
   ipcMain.handle(CHANNEL_CORE_GETCONFIG, async (_event, _arg) => { });
   ipcMain.handle(CHANNEL_CORE_SETCONFIG, async (_event, _arg) => { });
   //
+  new ServerAdapter("http", 4557);
 }
 try {
   loadLLWebUiApi();
