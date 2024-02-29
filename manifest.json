@@ -4,16 +4,16 @@
     "name": "WebUiApi",
     "slug": "WebUiApi",
     "description": "LiteLoaderQQNT的WebUiApi",
-    "version": "3.10.0",
+    "version": "1.0.0",
     "thumbnail": "./icon.png",
     "authors": [
       {
         "name": "Mlikiowa",
-        "link": "https://github.com/Mlikiowa"
+        "link": "https://github.com/LLOneBot"
       }
     ],
     "repository": {
-      "repo": "linyuchen/WebUiApi",
+      "repo": "LLOneBot/WebUiApi",
       "branch": "main",
       "release": {
         "tag": "latest",
@@ -26,8 +26,8 @@
       "darwin"
     ],
     "injects": {
-      "renderer": "./renderer.mjs",
-      "main": "./main.js",
-      "preload": "./preload.js"
+      "renderer": "./renderer.js",
+      "main": "./main.cjs",
+      "preload": "./preload.cjs"
     }
   }

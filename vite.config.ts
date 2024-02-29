@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite'
 import path from 'node:path'
-
+import cp from 'vite-plugin-cp';
 export default defineConfig({
   build: {
     lib: {
-      formats: ["cjs", "es"],
+      formats: ['cjs', 'es'],
       entry: {
         ['main']: path.join(__dirname, '/src/main.ts'),
         ['preload']: path.join(__dirname, '/src/preload.ts'),
@@ -12,8 +12,8 @@ export default defineConfig({
       }
     },
     rollupOptions: {
-      external: ['electron','express','fs','path'],
-      plugins: []
+      external: ['electron', 'express', 'fs', 'path'],
     }
-  }
+  },
+  plugins: [cp({ targets: [{ src: './package.json', dest: 'dist' }, { src: './manifest.json', dest: 'dist' }] })]
 })
