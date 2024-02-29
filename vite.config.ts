@@ -12,7 +12,8 @@ export default defineConfig({
       }
     },
     rollupOptions: {
-      external: ['electron', 'fs', 'path', 'node:v8', 'node:vm']
+      external: ['electron','express','fs','path'],
+      plugins: []
     }
   }
 })
