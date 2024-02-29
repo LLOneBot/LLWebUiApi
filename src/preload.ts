@@ -5,10 +5,12 @@ import {
 
 const LLWebUiApi = {
     pushLog: (data: any) => {
+
         ipcRenderer.send(CHANNE_CORE_LOG, data);
-    }
+    },
+    version: "1.0.0"
 }
-console.log("WebUiApi Preload...");
+alert("WebUiApi Preload...");
 export type LLWebUiApiType = typeof LLWebUiApi;
 
 // 在window对象下导出只读对象

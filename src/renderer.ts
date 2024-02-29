@@ -1,8 +1,8 @@
 
 async function onSettingWindowCreated(_view: Element) {
-
+    window.LLWebUiApi.pushLog("Hello");
 }
-
+//window.LLWebUiApi.pushLog("Hello12");
 /**
  * 
  * @description 获取QRcode 如果过期会自动刷新
@@ -27,7 +27,6 @@ const Interval = setInterval(() => {
         }
         // tx大概率拦截了窗口消息之类的hook实现 前端不可见 也不可输入
         // 如果想实现可能需要 发送窗口消息 但是headless又没有窗口 难崩
-
         clearInterval(Interval);
     }
 });

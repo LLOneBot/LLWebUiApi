@@ -4,7 +4,8 @@
   "type": "module",
   "version": "0.0.0",
   "scripts": {
-    "build": "vite build & cd ./dist & npm install --omit=dev"
+    "build": "vite build",
+    "install": "cd ./dist & npm install --omit=dev"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",

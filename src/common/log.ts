@@ -55,6 +55,9 @@ class CoreLog {
     readFile() {
         return fs.readFileSync(this.FilePath, "utf-8");
     }
+    setConsole(Open: boolean) {
+        this.ConsoleLog = Open;
+    }
 
 }
 // 仅Main使用

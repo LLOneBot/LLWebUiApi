@@ -17,6 +17,7 @@ function loadLLWebUiApi() {
   // 注册基础事件
   ipcMain.handle(CHANNEL_CORE_ERROR, async (_event, _arg) => { });
   ipcMain.handle(CHANNE_CORE_LOG, async (_event, arg) => {
+    console.log(arg);
     CoreLog.getInstance().pushLog(LogLevel.Debug, arg);
   });
   ipcMain.handle(CHANNEL_CORE_GETCONFIG, async (_event, _arg) => { });
