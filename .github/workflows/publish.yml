@@ -25,11 +25,10 @@ jobs:
     - name: zip
       run: |
         sudo apt install zip -y
-        cp manifest.json ./dist/manifest.json
         cd ./dist/
-        rm ./preload.mjs
-        rm ./main.mjs
-        rm ./renderer.js
+        rm ./preload.js
+        rm ./main.js
+        rm ./renderer.cjs
         zip -r ../LLWebUiApi.zip ./* 
     
     - name: publish
