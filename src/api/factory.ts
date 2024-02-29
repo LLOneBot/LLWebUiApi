@@ -1,10 +1,20 @@
+import { ServerConfig } from "../common/types";
+import { ServerAdapter } from "./adapter";
 import { HttpAdapter } from "./http";
 
-// 
+/**
+ * @description 工厂类 生成对应Api接口提供类
+ */
 export class ServerFactory {
-    constructor(_AdapterName: string, ServerPort: number) {
-        // 按照适配器名字加载Adapter
-        // 创建Http服务 我还没实现
-        return new HttpAdapter(ServerPort);
+    static getServer(AdapterName: string, Config: ServerConfig): ServerAdapter {
+        if (AdapterName === "HTTP") {
+            //
+        }
+        else if (AdapterName === "WS") {
+            //
+        } else if (AdapterName === "SOCK") {
+            //
+        }
+        return new HttpAdapter(Config);
     }
 }

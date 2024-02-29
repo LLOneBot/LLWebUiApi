@@ -1,7 +1,7 @@
 import { CONFIG_DIR } from "./utils";
 import fs from "fs";
 import path from "path";
-enum LogLevel { All, Debug, Info, Warn, Error, None };
+export enum LogLevel { All, Debug, Info, Warn, Error, None };
 function getTime() {
     const date = new Date();
     const year = date.getFullYear();
@@ -12,11 +12,20 @@ function getTime() {
 }
 class CoreLog {
     private CoreLogLevel: LogLevel = LogLevel.Warn;
+    private ConsoleLog: boolean = false;
     public FilePath: string = "";
+    static CurrentInstance: CoreLog;
     constructor() {
         this.FilePath = path.join(CONFIG_DIR, "log" + getTime() + ".txt")
     }
-    PushLog(Level: LogLevel, ...msg: any[]) {
+    static getInstance(): CoreLog {
+        if (!CoreLog.CurrentInstance) {
+            CoreLog.CurrentInstance = new CoreLog();
+            return CoreLog.CurrentInstance;
+        }
+        return CoreLog.CurrentInstance;
+    }
+    pushLog(Level: LogLevel, ...msg: any[]) {
         if (Level < this.CoreLogLevel) {
             return;
         }
@@ -32,17 +41,21 @@ class CoreLog {
         }
         let LevelText = Level.toString();
         logMsg = `${currentDateTime} ${LevelText}: ${logMsg}\n\n`;
+        if (this.ConsoleLog === true) {
+            console.log(logMsg);
+        }
         fs.writeFileSync(this.FilePath, logMsg, "utf-8");
     }
-    SetLevel(Level: LogLevel) {
+    setLevel(Level: LogLevel) {
         this.CoreLogLevel = Level;
     }
-    GetLevel() {
+    getLevel() {
         return this.CoreLogLevel;
     }
-    ReadFile() {
+    readFile() {
         return fs.readFileSync(this.FilePath, "utf-8");
     }
 
 }
+// 仅Main使用
 export { CoreLog }

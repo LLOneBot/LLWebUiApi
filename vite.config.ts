@@ -12,7 +12,7 @@ export default defineConfig({
       }
     },
     rollupOptions: {
-      external: ['electron', 'express', 'fs', 'path'],
+      external: ['electron', 'express', "node:v8", "node:vm", "node:fs", "node:path", "fs", "path"],
     }
   },
   plugins: [cp({ targets: [{ src: './package.json', dest: 'dist' }, { src: './manifest.json', dest: 'dist' }] })]
