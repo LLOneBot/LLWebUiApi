@@ -26,9 +26,6 @@ jobs:
       run: |
         sudo apt install zip -y
         cd ./dist/
-        rm ./preload.js
-        rm ./main.js
-        rm ./renderer.cjs
         zip -r ../LLWebUiApi.zip ./* 
     
     - name: publish
