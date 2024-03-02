@@ -20,6 +20,7 @@ function getQRcode(): string {
 	return (document.querySelector('.qr-code-img > img') as HTMLImageElement)?.src;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Interval = setInterval(() => {
 	if (location.pathname === '/renderer/login.html') {
 		const loginBtnText = document.querySelector('.auto-login .q-button span');
@@ -29,9 +30,10 @@ const Interval = setInterval(() => {
 		}
 		// tx大概率拦截了窗口消息之类的hook实现 前端不可见 也不可输入
 		// 如果想实现可能需要 发送窗口消息 但是headless又没有窗口 难崩
-		clearInterval(Interval);
+		window.LLWebUiApi.LoginQRcode(getQRcode());
 	}
-});
+	clearInterval(Interval);
+},10000);
 
 function isRendererInit() {
 	const hash = location.hash;

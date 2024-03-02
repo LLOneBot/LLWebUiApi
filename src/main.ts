@@ -5,6 +5,7 @@ import { ServerFactory } from './main/server/factory';
 import { ServerConfig } from './common/types';
 import { CoreLog, LogLevel } from './common/log';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 function onBrowserWindowCreated(_window: BrowserWindow) {
 	console.log('onBrowserWindowCreated...');
 }
