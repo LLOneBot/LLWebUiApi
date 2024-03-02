@@ -10,7 +10,6 @@ const LLWebUiApi = {
     },
     version: "1.0.0"
 }
-alert("WebUiApi Preload...");
 export type LLWebUiApiType = typeof LLWebUiApi;
 
 // 在window对象下导出只读对象
