@@ -1,5 +1,5 @@
 import express from 'express';
-import { Express } from 'express';
+import { Express, Request, Response } from 'express';
 import { ServerAdapter, defaultServerAdapterCallback } from './adapter';
 import { ServerAdapterCallback, ServerConfig } from '../common/types';
 /**
@@ -12,21 +12,23 @@ export class HttpAdapter implements ServerAdapter {
 	constructor(Config: ServerConfig) {
 		this.CurrentConfig = Config;
 		this.app = express();
+		this.app.use(express.urlencoded({extended: true, limit: '500mb'}));
 		this.app.use(express.json());
-		this.app.listen(this.CurrentConfig.Port, async () => {
-			console.log(`App is running at http://localhost:${this.CurrentConfig.Port}`);
-		});
 	}
-	setCallBack(Callback: ServerAdapterCallback) {
+	public setCallBack(Callback: ServerAdapterCallback) {
 		this.DataCallBack = Callback;
 	}
-	onListening() {
+	public onListening() {
+		this.app.get('/', (_req: Request, res: Response) => {
+			res.send('WebUiApi HttpServer Is Running!');
+		});
+		this.app.listen(this.CurrentConfig.Port);
 		this.DataCallBack('boot', 'ok!');
 	}
-	setConfig() {
+	public setConfig() {
 
 	}
-	getConfig() {
+	public getConfig() {
 
 	}
 }

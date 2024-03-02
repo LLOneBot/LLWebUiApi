@@ -8,7 +8,7 @@ import { HttpAdapter } from './http';
 export class ServerFactory {
 	static getServer(AdapterName: string, Config: ServerConfig): ServerAdapter {
 		if (AdapterName === 'HTTP') {
-			//
+			return new HttpAdapter(Config);
 		}
 		else if (AdapterName === 'WS') {
 			//
@@ -16,5 +16,6 @@ export class ServerFactory {
 			//
 		}
 		return new HttpAdapter(Config);
+		
 	}
 }
