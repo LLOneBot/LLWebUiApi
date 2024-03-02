@@ -1,7 +1,7 @@
 import express from 'express';
 import { Express, Request, Response } from 'express';
 import { ServerAdapter, defaultServerAdapterCallback } from './adapter';
-import { ServerAdapterCallback, ServerConfig } from '../common/types';
+import { ServerAdapterCallback, ServerConfig } from '../../common/types';
 /**
  * @description Api接口Http实现类
  */

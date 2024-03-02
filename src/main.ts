@@ -1,7 +1,7 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import { initHeadless3 } from './main/headless';
 import { CHANNEL_CORE_ERROR, CHANNE_CORE_LOG, CHANNEL_CORE_GETCONFIG, CHANNEL_CORE_SETCONFIG } from './common/channels';
-import { ServerFactory } from './api/factory';
+import { ServerFactory } from './main/server/factory';
 import { ServerConfig } from './common/types';
 import { CoreLog, LogLevel } from './common/log';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

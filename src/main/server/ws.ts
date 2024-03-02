@@ -1,11 +1,11 @@
-import { Socket } from 'net';
-import { ServerAdapterCallback, ServerConfig } from '../common/types';
+import { WebSocketServer as WebSocketClass } from 'ws';
+import { ServerAdapterCallback, ServerConfig } from '../../common/types';
 import { ServerAdapter, defaultServerAdapterCallback } from './adapter';
 /**
  * @description Api接口WS实现类
  */
-export class HttpAdapter implements ServerAdapter {
-	private app: Socket;
+export class WebSocketAdapter implements ServerAdapter {
+	private app: WebSocketClass|undefined ;
 	public CurrentConfig: ServerConfig;
 	private DataCallBack: ServerAdapterCallback = defaultServerAdapterCallback;
 	constructor(Config: ServerConfig) {
@@ -15,6 +15,10 @@ export class HttpAdapter implements ServerAdapter {
 		this.DataCallBack = Callback;
 	}
 	public onListening() {
+		this.app = new WebSocketClass({port:this.CurrentConfig.Port});
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		this.app.on('connection', (_wsClient, _req)=>{});
+		this.DataCallBack('listeing','callback');
 	}
 	public setConfig() {
 
