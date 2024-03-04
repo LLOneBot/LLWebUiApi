@@ -12,8 +12,9 @@ export class HttpAdapter implements ServerAdapter {
 	constructor(Config: ServerConfig) {
 		this.CurrentConfig = Config;
 		this.app = express();
-		this.app.use(express.urlencoded({extended: true, limit: '500mb'}));
+		this.app.use(express.urlencoded({ extended: true, limit: '500mb' }));
 		this.app.use(express.json());
+		this.app.use(this.authCode);
 	}
 	public setCallBack(Callback: ServerAdapterCallback) {
 		this.DataCallBack = Callback;
@@ -22,11 +23,19 @@ export class HttpAdapter implements ServerAdapter {
 		this.app.get('/', (_req: Request, res: Response) => {
 			res.send('WebUiApi HttpServer Is Running!');
 		});
-		this.app.listen(this.CurrentConfig.Port);
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		this.app.get('/api/:action', (req: Request, res: Response) => {
+			res.send(this.DataCallBack(req.params.action, JSON.stringify(req.params)));
+		});
+		this.app.listen(this.CurrentConfig.Port, () => { console.log('Listening'); });
 		this.DataCallBack('boot', 'ok!');
 	}
 	public setConfig() {
 
+	}
+	public authCode(req, res, next) {
+		// 拦截处理
+		next();
 	}
 	public getConfig() {
 

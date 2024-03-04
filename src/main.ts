@@ -34,7 +34,7 @@ function loadLLWebUiApi() {
 		AuthCode: '',
 		IsRunning: false
 	};
-	ServerFactory.getServer('http', Config);
+	ServerFactory.getServer('HTTP', Config).onListening();
 }
 try {
 	loadLLWebUiApi();
