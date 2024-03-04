@@ -5,8 +5,8 @@ import { ServerConfig } from './common/types';
 import { CONFIG_DIR } from './common/utils';
 import { CHANNEL_CORE_ERROR, CHANNE_CORE_LOG, CHANNEL_CORE_GETCONFIG, CHANNEL_CORE_SETCONFIG } from './common/channels';
 import { CoreLog, LogLevel } from './common/log';
+import { InitIpcHandle } from './main/ipcHandle';
 import fs from 'fs';
-import { InitIpcHandle } from './main/api/api';
 function onBrowserWindowCreated(_window: BrowserWindow) {
 
 }
@@ -17,12 +17,9 @@ function loadLLWebUiApi() {
 		initHeadless3();
 	}
 	if (!fs.existsSync(CONFIG_DIR)) {
-
-	}
-	if (!fs.existsSync(CONFIG_DIR)) {
 		fs.mkdirSync(CONFIG_DIR, { recursive: true });
 	}
-	CoreLog.getInstance().pushLog(LogLevel.Error, "Test");
+	// CoreLog.getInstance().pushLog(LogLevel.Error, "Test");
 	// 注册基础事件
 	InitIpcHandle(ipcMain)
 	const Config: ServerConfig = {

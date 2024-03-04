@@ -1,9 +1,9 @@
-let ServerState = 0;
-export enum ServerStateType{}
-function getServerState(){
-	return ServerState;
+let ServerState = new Map();
+export enum ServerStateType { }
+function getServerState(key: string) {
+	return ServerState.get(key);
 }
-function setServerState(state:number){
-	ServerState =state;
+function setServerState(key: number, value: any) {
+	ServerState.set(key, value);
 }
 export { getServerState, setServerState };

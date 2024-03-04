@@ -23,7 +23,6 @@ export class HttpAdapter implements ServerAdapter {
 		this.app.get('/', (_req: Request, res: Response) => {
 			res.send('WebUiApi HttpServer Is Running!');
 		});
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		this.app.get('/api/:action', (req: Request, res: Response) => {
 			res.send(this.DataCallBack(req.params.action, JSON.stringify(req.params)));
 		});
