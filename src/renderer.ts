@@ -29,8 +29,6 @@ function ChangeState() {
 
 	}
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const OrgialUrl = location.pathname;
 const Interval = setInterval(() => {
 	if (location.pathname === '/renderer/login.html') {
 		const loginBtnText = document.querySelector('.auto-login .q-button span');
@@ -42,7 +40,8 @@ const Interval = setInterval(() => {
 		// 如果想实现可能需要 发送窗口消息 但是headless又没有窗口 难崩
 		window.LLWebUiApi.LoginQrCode(getQRcode());
 	}
-	window.LLWebUiApi.pushLog(JSON.stringify(onListeningUrl(OrgialUrl)));
+	// #/main/message 已进入主界面
+	window.LLWebUiApi.pushLog(location.hash);
 	//clearInterval(Interval);
 }, 1000);
 

@@ -5,7 +5,8 @@ import { ServerConfig } from './common/types';
 import { CONFIG_DIR } from './common/utils';
 import { CHANNEL_CORE_ERROR, CHANNE_CORE_LOG, CHANNEL_CORE_GETCONFIG, CHANNEL_CORE_SETCONFIG } from './common/channels';
 import { CoreLog, LogLevel } from './common/log';
-
+import fs from 'fs';
+import { InitIpcHandle } from './main/api/api';
 function onBrowserWindowCreated(_window: BrowserWindow) {
 
 }
@@ -15,16 +16,15 @@ function loadLLWebUiApi() {
 		// 默认关闭 没实现WebApi前不要开启
 		initHeadless3();
 	}
-	console.log("插件数据目录", CONFIG_DIR);
+	if (!fs.existsSync(CONFIG_DIR)) {
+
+	}
+	if (!fs.existsSync(CONFIG_DIR)) {
+		fs.mkdirSync(CONFIG_DIR, { recursive: true });
+	}
+	CoreLog.getInstance().pushLog(LogLevel.Error, "Test");
 	// 注册基础事件
-	//InitIpcHandle(ipcMain)
-	ipcMain.handle(CHANNEL_CORE_ERROR, async (_event, _arg) => { });
-	ipcMain.handle(CHANNE_CORE_LOG, async (_event, arg) => {
-		console.log(arg);
-		//CoreLog.getInstance().pushLog(LogLevel.Debug, arg);
-	});
-	ipcMain.handle(CHANNEL_CORE_GETCONFIG, async (_event, _arg) => { });
-	ipcMain.handle(CHANNEL_CORE_SETCONFIG, async (_event, _arg) => { });
+	InitIpcHandle(ipcMain)
 	const Config: ServerConfig = {
 		Port: 5600,
 		AuthCode: '',

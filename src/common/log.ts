@@ -16,7 +16,7 @@ class CoreLog {
 	public FilePath: string = '';
 	static CurrentInstance: CoreLog;
 	constructor() {
-		this.FilePath = path.join(CONFIG_DIR, 'log' + getTime() + '.txt');
+		this.FilePath = path.join(CONFIG_DIR, 'log-' + getTime() + '.txt');
 	}
 	static getInstance(): CoreLog {
 		if (!CoreLog.CurrentInstance) {
