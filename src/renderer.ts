@@ -1,5 +1,4 @@
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const RendererState = 0;
 async function onSettingWindowCreated(_view: Element) {
 	window.LLWebUiApi.pushLog('Hello');
 }
@@ -19,8 +18,19 @@ function getQRcode(): string {
 	}
 	return (document.querySelector('.qr-code-img > img') as HTMLImageElement)?.src;
 }
+function onListeningUrl(beforeUrl: string) {
+	if (location.pathname == beforeUrl) {
+		return { "result": false, "url": location.pathname };
+	}
+	return { "result": true, "url": location.pathname };
+}
+function ChangeState() {
+	if (RendererState == 0) {
 
+	}
+}
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const OrgialUrl = location.pathname;
 const Interval = setInterval(() => {
 	if (location.pathname === '/renderer/login.html') {
 		const loginBtnText = document.querySelector('.auto-login .q-button span');
@@ -32,8 +42,9 @@ const Interval = setInterval(() => {
 		// 如果想实现可能需要 发送窗口消息 但是headless又没有窗口 难崩
 		window.LLWebUiApi.LoginQrCode(getQRcode());
 	}
-	clearInterval(Interval);
-},10000);
+	window.LLWebUiApi.pushLog(JSON.stringify(onListeningUrl(OrgialUrl)));
+	//clearInterval(Interval);
+}, 1000);
 
 function isRendererInit() {
 	const hash = location.hash;
