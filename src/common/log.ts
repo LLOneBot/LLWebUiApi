@@ -25,7 +25,6 @@ class CoreLog {
 		}
 		return CoreLog.CurrentInstance;
 	}
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	pushLog(Level: LogLevel, ...msg: any[]) {
 		if (Level < this.CoreLogLevel) {
 			return;
