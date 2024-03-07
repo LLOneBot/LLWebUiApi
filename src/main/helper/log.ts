@@ -1,22 +1,17 @@
 import { CONFIG_DIR } from './utils';
 import fs from 'fs';
 import path from 'path';
-export enum LogLevel { All, Debug, Info, Warn, Error, None }
-function getTime() {
-	const date = new Date();
-	const year = date.getFullYear();
-	const month = date.getMonth() + 1;
-	const day = date.getDate();
-	const currentDate = `${year}-${month}-${day}`;
-	return currentDate;
-}
+
+export enum LogLevel { All, Debug, Info, Warn, Error, None };
+const LogLevelText = ["ALL", "Debug", "Info", "Warn", "Error", "None"];
+
 class CoreLog {
 	private CoreLogLevel: LogLevel = LogLevel.Warn;
 	private ConsoleLog: boolean = false;
 	public FilePath: string = '';
 	static CurrentInstance: CoreLog;
 	constructor() {
-		this.FilePath = path.join(CONFIG_DIR, 'log-' + getTime() + '.txt');
+		this.FilePath = path.join(CONFIG_DIR, 'log-' + this.getTime() + '.txt');
 	}
 	static getInstance(): CoreLog {
 		if (!CoreLog.CurrentInstance) {
@@ -39,10 +34,10 @@ class CoreLog {
 			}
 			logMsg += msgItem + ' ';
 		}
-		const LevelText = Level.toString();
+		const LevelText = LogLevelText[Level]; // 获取LevelInfo等级Text
 		logMsg = `${currentDateTime} ${LevelText}: ${logMsg}\n\n`;
 		if (this.ConsoleLog === true) {
-			console.log(logMsg);
+			console.log(logMsg); // 仅有Main进程输出std Log
 		}
 		fs.writeFileSync(this.FilePath, logMsg, 'utf-8');
 	}
@@ -55,10 +50,17 @@ class CoreLog {
 	readFile() {
 		return fs.readFileSync(this.FilePath, 'utf-8');
 	}
-	setConsole(Open: boolean) {
+	public setConsole(Open: boolean) {
 		this.ConsoleLog = Open;
 	}
-
+	private getTime() {
+		const date = new Date();
+		const year = date.getFullYear();
+		const month = date.getMonth() + 1;
+		const day = date.getDate();
+		const currentDate = `${year}-${month}-${day}`;
+		return currentDate;
+	}
 }
 // 仅Main使用
 export { CoreLog };
