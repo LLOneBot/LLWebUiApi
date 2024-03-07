@@ -16,7 +16,7 @@ export class HttpAdapter implements ServerAdapter {
 		this.app.use(express.urlencoded({ extended: true, limit: '500mb' }));
 		this.app.use(express.json());
 	}
-	public authorize(req: Request, res: Response, next: () => void) {
+	public authorize = (req: Request, res: Response, next: () => void) => {
 		// HTTP服务鉴权方式
 		const authHeader = req.get("authorization");
 		let clientToken = "";

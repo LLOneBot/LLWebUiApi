@@ -35,7 +35,7 @@ function loadLLWebUiApi() {
 	// 注册IPC基础事件
 	InitIpcHandle(ipcMain);
 	// 服务端Api初始化
-	let HttpServer = ServerFactory.getServer("HTTP", CoreConfig.getInstance().get().Server) as HttpAdapter;
+	let HttpServer = ServerFactory.getServer("HTTP", CoreConfig.getInstance().get().Server);
 	HttpServer.onListening();
 }
 
