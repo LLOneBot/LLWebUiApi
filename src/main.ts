@@ -3,11 +3,13 @@ import { initHeadless3 } from './main/helper/headless3';
 import { DATA_DIR } from './main/helper/utils';
 import { InitIpcHandle } from './main/helper/ipcHandler';
 import { CoreConfig } from './main/helper/config';
-import { BootMode } from './common/types';
+import { BootMode, WebStateCode } from './common/types';
 import fs from 'fs';
 import { CoreLog, LogLevel } from './main/helper/log';
 import { ServerFactory } from './main/adapter/factory';
 import { HttpAdapter } from './main/adapter/http';
+
+let WebUiApiState = WebStateCode.WAIT_LOGIN; // 标记未登录
 
 function onBrowserWindowCreated(_window: BrowserWindow) {
 
@@ -35,7 +37,7 @@ function loadLLWebUiApi() {
 	// 注册IPC基础事件
 	InitIpcHandle(ipcMain);
 	// 服务端Api初始化
-	let HttpServer = ServerFactory.getServer("HTTP", CoreConfig.getInstance().get().Server);
+	let HttpServer = ServerFactory.getServer("HTTP", CoreConfig.getInstance().get().Server) as HttpAdapter;
 	HttpServer.onListening();
 }
 

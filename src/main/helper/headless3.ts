@@ -1,5 +1,4 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
-// 来自choroncat
+// From Choroncat
 import type { BrowserWindowConstructorOptions } from 'electron';
 import { app, BrowserWindow } from 'electron';
 import { setFlagsFromString } from 'node:v8';
@@ -48,7 +47,6 @@ export const initHeadless3 = () => {
       isMain: boolean,
     ) => object
 
-    // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-member-access
     const originLoad = require('module')._load as ModuleLoad;
 
     const newLoad: ModuleLoad = (request, parent, isMain) => {
@@ -62,7 +60,6 @@ export const initHeadless3 = () => {
     	return originLoad(request, parent, isMain);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-unsafe-member-access
     require('module')._load = newLoad;
 	} catch (e) {
 		console.log('headless3: ', e);
