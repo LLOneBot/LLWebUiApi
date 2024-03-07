@@ -3,6 +3,7 @@ import { initHeadless3 } from './main/helper/headless3';
 import fs from 'fs';
 import { DATA_DIR } from './main/helper/utils';
 import { InitIpcHandle } from './main/helper/ipcHandler';
+import { CoreConfig } from './main/helper/config';
 
 function onBrowserWindowCreated(_window: BrowserWindow) {
 
@@ -17,6 +18,7 @@ function loadLLWebUiApi() {
 		fs.mkdirSync(DATA_DIR, { recursive: true });
 	}
 	// 读取配置文件
+	console.log(CoreConfig.getInstance().get());
 	// 注册基础事件
 	InitIpcHandle(ipcMain);
 }
