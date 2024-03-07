@@ -47,7 +47,7 @@ export class HttpAdapter implements ServerAdapter {
 			const Action = actionMap.get(req.params.action);
 			try {
 				if (Action) {
-					res.send(Action?.handle((_res: any, payload: any) => Action.handle(payload)));
+					res.send(await Action.handle(req));
 				} else {
 					res.status(403).send(JSON.stringify({ message: 'action not found!' }));
 				}
