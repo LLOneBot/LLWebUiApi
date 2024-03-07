@@ -8,3 +8,8 @@ export interface WebState {
     IsLogin: WebStateCode, //参考
     BootTime: number //10位时间戳
 }
+export interface ServerConfig {
+    Port: number,
+    AuthCode: string,
+    IsRunning: boolean
+}

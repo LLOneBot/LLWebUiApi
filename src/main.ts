@@ -17,7 +17,7 @@ function loadLLWebUiApi() {
 		fs.mkdirSync(CONFIG_DIR, { recursive: true });
 	}
 	// 注册基础事件
-	InitIpcHandle(ipcMain)
+	InitIpcHandle(ipcMain);
 }
 
 try {

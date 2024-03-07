@@ -1,4 +1,5 @@
-import { type ServerAdapterCallback, type ServerConfig } from '../../common/types';
+import { ServerConfig } from "../../common/types";
+
 export function defaultServerAdapterCallback(ActionName: string, ArgData: string): string {
 	console.log(ActionName, ArgData);
 	// 统一处理
@@ -17,7 +18,7 @@ export abstract class ServerAdapter {
 	/**
 	 * @description 注册数据处理回调函数
 	 */
-	public setCallBack(_Callback: ServerAdapterCallback) { }
+	public setCallBack(_Callback: any) { }
 	/**
 	 * @description 启动服务器
 	 */

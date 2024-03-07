@@ -1,5 +1,5 @@
 import { BaseAction } from "./BaseAction";
-import { ActionName } from "./type";
+import { ActionName } from "./types";
 
 export class GetBotLoginQR extends BaseAction<null, null> {
     public actionName: string = ActionName.GetBotLoginQR;

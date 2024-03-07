@@ -1,4 +1,4 @@
-import { ResponseReturn } from "./type";
+import { ResponseReturn } from "./types";
 import { ApiResponse } from "../server/ApiResponse";
 export class BaseAction<PayloadType, ReturnDataType> {
     public actionName: string = "";

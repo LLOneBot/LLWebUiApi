@@ -1,5 +1,5 @@
 import { BaseAction } from "./BaseAction";
-import { ActionName } from "./type";
+import { ActionName } from "./types";
 
 
 export class GetWebState extends BaseAction<null, any> {
