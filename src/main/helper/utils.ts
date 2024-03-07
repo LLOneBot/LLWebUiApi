@@ -1,4 +1,6 @@
-const CONFIG_DIR = global.LiteLoader.plugins['WebUiApi'].path.data;
+const DATA_DIR = global.LiteLoader.plugins['WebUiApi'].path.data;
+const PLGIN_DIR = global.LiteLoader.plugins['WebUiApi'].path.plugin;
 export {
-	CONFIG_DIR
+	DATA_DIR,
+	PLGIN_DIR
 };

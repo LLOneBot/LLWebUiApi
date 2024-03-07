@@ -1,4 +1,4 @@
-import { CONFIG_DIR } from './utils';
+import { DATA_DIR } from './utils';
 import fs from 'fs';
 import path from 'path';
 
@@ -11,7 +11,7 @@ class CoreLog {
 	public FilePath: string = '';
 	static CurrentInstance: CoreLog;
 	constructor() {
-		this.FilePath = path.join(CONFIG_DIR, 'log-' + this.getTime() + '.txt');
+		this.FilePath = path.join(DATA_DIR, 'log-' + this.getTime() + '.txt');
 	}
 	static getInstance(): CoreLog {
 		if (!CoreLog.CurrentInstance) {

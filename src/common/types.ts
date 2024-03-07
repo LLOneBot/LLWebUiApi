@@ -10,6 +10,9 @@ export interface WebState {
 }
 export interface ServerConfig {
     Port: number,
-    AuthCode: string,
-    IsRunning: boolean
+    Password: string
+}
+export interface WebUiApiConfig {
+    Server: ServerConfig,
+    AutoLogin: boolean,
 }
