@@ -2,7 +2,7 @@ import { ServerConfig } from "../../common/types";
 /**
 * @description 外部Api接口抽象类
 */
-export class ServerAdapter {
+export abstract class ServerAdapter {
 	public CurrentConfig: ServerConfig | undefined = undefined;
 
 	constructor() { }

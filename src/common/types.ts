@@ -10,7 +10,7 @@ export interface WebState {
 }
 export interface ServerConfig {
     Port: number,
-    Password: string
+    Password?: string
 }
 export interface WebUiApiConfig {
     Server: ServerConfig,
