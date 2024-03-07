@@ -49,7 +49,7 @@ export class HttpAdapter implements ServerAdapter {
 				if (Action) {
 					res.send(Action?.handle((_res: any, payload: any) => Action.handle(payload)));
 				} else {
-
+					res.status(403).send(JSON.stringify({ message: 'action not found!' }));
 				}
 			} catch (e) {
 
