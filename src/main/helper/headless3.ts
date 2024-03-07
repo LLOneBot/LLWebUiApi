@@ -1,4 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
+// 来自choroncat
 import type { BrowserWindowConstructorOptions } from 'electron';
 import { app, BrowserWindow } from 'electron';
 import { setFlagsFromString } from 'node:v8';
