@@ -33,7 +33,8 @@ export class CoreConfig {
     private getDefaultConfig() {
         return {
             Server: { Password: "", Port: 1234 },
-            AutoLogin: true
+            AutoLogin: true,
+            BootMode: 0
         }
     }
 }

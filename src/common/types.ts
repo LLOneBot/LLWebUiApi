@@ -15,4 +15,5 @@ export interface ServerConfig {
 export interface WebUiApiConfig {
     Server: ServerConfig,
     AutoLogin: boolean,
+    BootMode: number
 }
