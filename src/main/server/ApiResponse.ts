@@ -5,4 +5,10 @@ export class ApiResponse {
             data: data,
         }
     }
+    static error(message: string) {
+        return {
+            code: -1,
+            data: message,
+        }
+    }
 }

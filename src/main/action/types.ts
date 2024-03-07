@@ -5,4 +5,5 @@ export enum ActionName {
 export interface ResponseReturn<DataType> {
     code: number,
     data: DataType,
+    message?: string
 }
