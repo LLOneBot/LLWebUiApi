@@ -34,7 +34,8 @@ export class CoreConfig {
         return {
             Server: { Password: "", Port: 1234 },
             AutoLogin: true,
-            BootMode: 0
+            BootMode: 0,
+            Debug: false
         }
     }
 }

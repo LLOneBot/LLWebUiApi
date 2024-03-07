@@ -1,9 +1,11 @@
 import { BrowserWindow, ipcMain, app } from 'electron';
 import { initHeadless3 } from './main/helper/headless3';
-import fs from 'fs';
 import { DATA_DIR } from './main/helper/utils';
 import { InitIpcHandle } from './main/helper/ipcHandler';
 import { CoreConfig } from './main/helper/config';
+import { BootMode } from './common/types';
+import fs from 'fs';
+import { CoreLog, LogLevel } from './main/helper/log';
 
 function onBrowserWindowCreated(_window: BrowserWindow) {
 
@@ -17,8 +19,14 @@ function loadLLWebUiApi() {
 	}
 	// 读取配置文件
 	const WebApiConfig = CoreConfig.getInstance().get();
+	// 调试阶段输出所有日志 并输出命令行 发布时注释
+	if(WebApiConfig.Debug){
+		// Debug逻辑
+	}
+	CoreLog.getInstance().setLevel(LogLevel.All);
+	CoreLog.getInstance().setConsole(true);
 	// 启动模式选择
-	if (bootMode.includes("headless3") || WebApiConfig.BootMode == 1) {
+	if (bootMode.includes("headless3") || WebApiConfig.BootMode == BootMode.HEADLESS3) {
 		initHeadless3();
 	}
 	// 注册IPC基础事件

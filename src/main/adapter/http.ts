@@ -14,6 +14,10 @@ export class HttpAdapter implements ServerAdapter {
 		this.app.use(express.urlencoded({ extended: true, limit: '500mb' }));
 		this.app.use(express.json());
 	}
+	public authorize(_req: Request, _res: Response, next: () => void) {
+		
+		next();
+	}
 	public setCallBack(_Callback: any): void {
 		throw new Error('Method not implemented.');
 	}

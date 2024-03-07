@@ -13,14 +13,14 @@ class CoreLog {
 	constructor() {
 		this.FilePath = path.join(DATA_DIR, 'log-' + this.getTime() + '.txt');
 	}
-	static getInstance(): CoreLog {
+	public static getInstance(): CoreLog {
 		if (!CoreLog.CurrentInstance) {
 			CoreLog.CurrentInstance = new CoreLog();
 			return CoreLog.CurrentInstance;
 		}
 		return CoreLog.CurrentInstance;
 	}
-	pushLog(Level: LogLevel, ...msg: any[]) {
+	public pushLog(Level: LogLevel, ...msg: any[]) {
 		if (Level < this.CoreLogLevel) {
 			return;
 		}
@@ -41,13 +41,13 @@ class CoreLog {
 		}
 		fs.writeFileSync(this.FilePath, logMsg, 'utf-8');
 	}
-	setLevel(Level: LogLevel) {
+	public setLevel(Level: LogLevel) {
 		this.CoreLogLevel = Level;
 	}
-	getLevel() {
+	public getLevel() {
 		return this.CoreLogLevel;
 	}
-	readFile() {
+	public readFile() {
 		return fs.readFileSync(this.FilePath, 'utf-8');
 	}
 	public setConsole(Open: boolean) {

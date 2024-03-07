@@ -15,5 +15,7 @@ export interface ServerConfig {
 export interface WebUiApiConfig {
     Server: ServerConfig,
     AutoLogin: boolean,
-    BootMode: number
+    BootMode: number,
+    Debug: boolean
 }
+export enum BootMode { NORMAL, CONTRAL_1, CONTRAL_2, HEADLESS3 }
