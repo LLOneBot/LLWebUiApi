@@ -28,9 +28,8 @@ if (WebState.WorkState == WebStateCode.WAIT_LOGIN) {
 				clearInterval(Interval);
 			}
 			window.LLWebUiApi.pushLoginQrcode(getQRcode());
-			
 		}, 5000)
-	} else if (location.hash = "#/main/message") {
+	} else if (location.hash == "#/main/message") {
 		// 到达登录界面
 		WebState.WorkState = WebStateCode.WORK_NORMAL;
 		window.LLWebUiApi.setWebUiState(WebState);

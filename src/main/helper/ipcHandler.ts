@@ -26,6 +26,7 @@ export function InitIpcHandle(ipcMain: Electron.IpcMain, HandleIpcApi: HandleIPC
     ipcMain.handle(CHANNEL_LOGIN_QRCODE, (_event, arg) => {
         // 接收二维码内容
         DataClass.getInstance().set("QRCODE_BASE64", arg);
+        CoreLog.getInstance().pushLog(LogLevel.Debug, arg);
     });
     ipcMain.handle(CHANNEL_BROWSER_SETLOGINPAGE, (_event, _arg) => {
         // 设置 Login-Window
