@@ -22,7 +22,7 @@ function isRendererInit() {
 		return;
 	}
 }
-const WebState = await window.LLWebUiApi.getWebUiState();
+let WebState = await window.LLWebUiApi.getWebUiState();
 CheckQrLogin();
 function CheckQrLogin() {
 	if (WebState.WorkState == WebStateCode.WAIT_LOGIN) {
