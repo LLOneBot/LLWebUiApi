@@ -33,4 +33,4 @@ jobs:
       with:
         artifacts: "LLWebUiApi.zip"
         draft: true
-        token: ${{ secrets.WEBUI_API }}
+        token: ${{ secrets.GITHUB_TOKEN }}
