@@ -43,11 +43,12 @@ export class HttpAdapter implements ServerAdapter {
 		this.app.get('/', (_req: Request, res: Response) => {
 			res.send('WebUiApi HttpServer Is Running!');
 		});
-		this.app.get('/api/:action', this.authorize, async (req: Request, res: Response) => {
+		this.app.all('/api/:action', this.authorize, async (req: Request, res: Response) => {
 			const Action = actionMap.get(req.params.action);
 			try {
 				if (Action) {
-					res.send(await Action.handle(req));
+					let payload = { ...req.body, ...req.query };
+					res.send(await Action.handle(payload));
 				} else {
 					res.status(403).send(JSON.stringify({ message: 'action not found!' }));
 				}
