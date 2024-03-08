@@ -27,7 +27,7 @@ class CoreLog {
 		let logMsg = '';
 		const currentDateTime = new Date().toLocaleString();
 		for (const msgItem of msg) {
-			// 判断是否是对象
+			// 判断是否是对象 进行Dump
 			if (typeof msgItem === 'object') {
 				logMsg += JSON.stringify(msgItem) + ' ';
 				continue;
