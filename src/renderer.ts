@@ -1,4 +1,4 @@
-import { WebStateCode } from "./common/types";
+import { WebStateCode, WebUiApiConfig } from "./common/types";
 
 async function onSettingWindowCreated(_view: Element) {
 }
@@ -28,6 +28,7 @@ function isRendererInit() {
 	}
 }
 let WebState = await window.LLWebUiApi.getWebUiState();
+let WebUiConfig: WebUiApiConfig = await window.LLWebUiApi.getWebUiConfig();
 CheckQrLogin();
 function CheckQrLogin() {
 	if (WebState.WorkState == WebStateCode.WAIT_LOGIN) {
@@ -38,7 +39,9 @@ function CheckQrLogin() {
 				const loginBtnText = document.querySelector('.auto-login .q-button span');
 				if (loginBtnText) {
 					// 如果有自动登录 就自动登录
-					(loginBtnText as HTMLButtonElement).click();
+					if (WebUiConfig.AutoLogin) {
+						(loginBtnText as HTMLButtonElement).click();
+					}
 					clearInterval(Interval);
 				}
 				window.LLWebUiApi.pushLoginQrcode(getQRcode());
