@@ -1,15 +1,14 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { CHANNE_CORE_LOG, CHANNEL_LOGIN_QRCODE } from './common/channels';
+import { CHANNE_CORE_LOG, CHANNEL_CORE_GETSTATE } from './common/channels';
+import { WebState } from './common/types';
 
 const LLWebUiApi = {
 	pushLog: (data: any) => {
-		//alert(data)
 		ipcRenderer.send(CHANNE_CORE_LOG, data);
 	},
-	LoginQrCode: (data:string) => {
-		return ipcRenderer.send(CHANNEL_LOGIN_QRCODE,data);
-	},
-	FlushQrCode: ()=>{}
+	getWebUiState: async (): Promise<WebState> => {
+		return ipcRenderer.invoke(CHANNEL_CORE_GETSTATE);
+	}
 };
 export type LLWebUiApiType = typeof LLWebUiApi;
 

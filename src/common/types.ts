@@ -5,7 +5,7 @@ export enum WebStateCode {
     EXIT_ERROR // 异常退出
 }
 export interface WebState {
-    IsLogin: WebStateCode, //参考
+    WorkState: WebStateCode, //参考
     BootTime: number //10位时间戳
 }
 export interface ServerConfig {
@@ -19,3 +19,7 @@ export interface WebUiApiConfig {
     Debug: boolean
 }
 export enum BootMode { NORMAL, CONTRAL_1, CONTRAL_2, HEADLESS3 }
+export interface HandleIPCApiType {
+    getWebUiState?: any,
+    setWebUiState?: any
+}
