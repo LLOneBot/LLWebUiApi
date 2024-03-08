@@ -21,6 +21,11 @@ function isRendererInit() {
 	if (hash === '#/blank') {
 		return;
 	}
+	if (location.hash == "#/main/message") {
+		// 到达登录界面
+		WebState.WorkState = WebStateCode.WORK_NORMAL;
+		window.LLWebUiApi.setWebUiState(WebState);
+	}
 }
 let WebState = await window.LLWebUiApi.getWebUiState();
 CheckQrLogin();
@@ -36,13 +41,8 @@ function CheckQrLogin() {
 					(loginBtnText as HTMLButtonElement).click();
 					clearInterval(Interval);
 				}
-				window.LLWebUiApi.pushLog("持续获取中...");
-				window.LLWebUiApi.pushLoginQrcode("1235548");
+				window.LLWebUiApi.pushLoginQrcode(getQRcode());
 			}, 5000)
-		} else if (location.hash == "#/main/message") {
-			// 到达登录界面
-			WebState.WorkState = WebStateCode.WORK_NORMAL;
-			window.LLWebUiApi.setWebUiState(WebState);
 		}
 	}
 }

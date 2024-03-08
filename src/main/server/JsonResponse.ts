@@ -9,7 +9,7 @@ export class JsonResponse {
     static error(message: string) {
         return {
             code: -1,
-            data: message,
+            message: message,
         }
     }
 }

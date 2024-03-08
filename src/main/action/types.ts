@@ -4,6 +4,6 @@ export enum ActionName {
 }
 export interface ResponseReturn<DataType> {
     code: number,
-    data: DataType,
+    data?: DataType,
     message?: string
 }
