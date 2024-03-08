@@ -1,8 +1,15 @@
-import { CHANNEL_BROWSER_SETLOGINPAGE, CHANNEL_CORE_GETCONFIG, CHANNEL_CORE_GETSTATE, CHANNEL_CORE_SETCONFIG, CHANNEL_CORE_SETSTATE, CHANNEL_LOGIN_QRCODE, CHANNE_CORE_LOG } from '../../common/channels';
+import {
+    CHANNEL_BROWSER_SETLOGINPAGE,
+    CHANNEL_CORE_GETCONFIG,
+    CHANNEL_CORE_GETSTATE,
+    CHANNEL_CORE_SETCONFIG,
+    CHANNEL_CORE_SETSTATE,
+    CHANNEL_REMOTE_QRCODE,
+    CHANNE_CORE_LOG
+} from '../../common/channels';
 import { HandleIPCApiType } from '../../common/types';
 import { CoreLog, LogLevel } from '../helper/log';
 import { CoreConfig } from './config';
-import { DataClass } from './data';
 export function InitIpcHandle(ipcMain: Electron.IpcMain, HandleIpcApi: HandleIPCApiType) {
     ipcMain.on(CHANNE_CORE_LOG, (_event, arg) => {
         CoreLog.getInstance().pushLog(LogLevel.Debug, arg);
@@ -23,12 +30,13 @@ export function InitIpcHandle(ipcMain: Electron.IpcMain, HandleIpcApi: HandleIPC
         // 设置配置
         CoreConfig.getInstance().set(arg);
     });
-    ipcMain.handle(CHANNEL_LOGIN_QRCODE, (_event, arg) => {
+    ipcMain.handle(CHANNEL_REMOTE_QRCODE, (_event, arg) => {
         // 接收二维码内容
-        DataClass.getInstance().set("QRCODE_BASE64", arg);
-        CoreLog.getInstance().pushLog(LogLevel.Debug, arg);
+        //CoreLog.getInstance().pushLog(LogLevel.Debug, arg);
+        console.log(arg);
+        //DataClass.getInstance().set("QRCODE_BASE64", arg);
     });
     ipcMain.handle(CHANNEL_BROWSER_SETLOGINPAGE, (_event, _arg) => {
         // 设置 Login-Window
-    })
+    });
 }
