@@ -25,9 +25,10 @@ if (WebState.WorkState == WebStateCode.WAIT_LOGIN) {
 			if (loginBtnText) {
 				// 如果有自动登录 就自动登录
 				(loginBtnText as HTMLButtonElement).click();
+				clearInterval(Interval);
 			}
 			window.LLWebUiApi.pushLoginQrcode(getQRcode());
-			clearInterval(Interval);
+			
 		}, 5000)
 	} else if (location.hash = "#/main/message") {
 		// 到达登录界面
