@@ -3,16 +3,20 @@ import { initHeadless3 } from './main/helper/headless3';
 import { DATA_DIR } from './main/helper/utils';
 import { InitIpcHandle } from './main/helper/ipcHandler';
 import { CoreConfig } from './main/helper/config';
-import { BootMode, HandleIPCApiType, WebStateCode } from './common/types';
+import { BootMode, HandleIPCApiType, WebState, WebStateCode } from './common/types';
 import { CoreLog, LogLevel } from './main/helper/log';
 import { ServerFactory } from './main/adapter/factory';
 import { HttpAdapter } from './main/adapter/http';
 import { DataClass } from './main/helper/data';
 import fs from 'fs';
-function onBrowserWindowCreated(_window: BrowserWindow) {
-
+import { CHANNEL_BROWSER_LOGINPAGE } from './common/channels';
+let BrowserLogin: BrowserWindow[] = new Array<BrowserWindow>();
+function onBrowserWindowCreated(window: BrowserWindow) {
+	BrowserLogin.push(window);
+	setTimeout(() => {
+		window.webContents.send(CHANNEL_BROWSER_LOGINPAGE, BrowserLogin.length);
+	}, 2000);
 }
-
 function loadLLWebUiApi() {
 	// 初始化状态信息
 	DataClass.getInstance().set("WebUiApiState", {

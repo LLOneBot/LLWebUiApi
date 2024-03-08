@@ -39,9 +39,7 @@ class CoreLog {
 		if (this.ConsoleLog === true) {
 			console.log("[ WebUiApi ] " + logMsg); // 仅有Main进程输出std Log
 		}
-		fs.appendFile(this.FilePath, logMsg, (_err: any) => {
-			console.log("[ WebUiApi ] 日志写故障 ")
-		});
+		fs.appendFileSync(this.FilePath, logMsg);
 	}
 	public setLevel(Level: LogLevel) {
 		this.CoreLogLevel = Level;

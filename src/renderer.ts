@@ -25,11 +25,18 @@ if (WebState.WorkState = WebStateCode.WAIT_LOGIN) {
 				// 如果有自动登录 就自动登录
 				(loginBtnText as HTMLButtonElement).click();
 			}
+			window.LLWebUiApi.pushLoginQrcode(getQRcode());
 			clearInterval(Interval);
 		}, 5000)
 	}
 }
+window.LLWebUiApi.onLoginPage((value: number) => {
+	console.log("当前标记:", value);
+	if (location.pathname === '/renderer/login.html') {
+		window.LLWebUiApi.setLoginPage(value);
+	}
 
+})
 function isRendererInit() {
 	const hash = location.hash;
 	if (hash === '#/blank') {

@@ -1,4 +1,5 @@
-export class ApiResponse {
+// Json 应答生成
+export class JsonResponse {
     static ok<T>(data: T) {
         return {
             code: 200,
