@@ -11,8 +11,8 @@ function getQRcode(): string {
 	if (location.pathname !== '/renderer/login.html') {
 		return '';
 	}
-	if ((document.querySelector('.qrcode-error .expired-label') as HTMLDivElement)?.innerText === '当前二维码已过期') {
-		(document.querySelector('.q-button .q-button--secondary .q-button--default') as HTMLButtonElement)?.click();
+	if ((document.querySelector('.qrcode-error.expired-label') as HTMLDivElement)?.innerText === '当前二维码已过期') {
+		(document.querySelector('.q-button.q-button--secondary.q-button--default') as HTMLButtonElement)?.click();
 	}
 	return (document.querySelector('.qr-code-img > img') as HTMLImageElement)?.src;
 }
