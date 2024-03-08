@@ -12,6 +12,7 @@ export function InitIpcHandle(ipcMain: Electron.IpcMain, HandleIpcApi: HandleIPC
     });
     ipcMain.on(CHANNEL_CORE_SETSTATE, (_event, arg) => {
         // 设置状态
+        CoreLog.getInstance().pushLog(LogLevel.Debug, arg);
         HandleIpcApi.setWebUiState(arg);
     });
     ipcMain.handle(CHANNEL_CORE_GETCONFIG, async (_event, _arg) => {

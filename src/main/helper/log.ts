@@ -35,10 +35,10 @@ class CoreLog {
 			logMsg += msgItem + ' ';
 		}
 		const LevelText = LogLevelText[Level]; // 获取LevelInfo等级Text
-		logMsg = `${currentDateTime} ${LevelText}: ${logMsg}\n\n`;
 		if (this.ConsoleLog === true) {
-			console.log("[ WebUiApi ] " + logMsg); // 仅有Main进程输出std Log
+			console.log(`[ WebUiApi ] ${currentDateTime} ${LevelText}: ${logMsg}`); // 仅有Main进程输出std Log
 		}
+		logMsg = `${currentDateTime} ${LevelText}: ${logMsg}\n\n`;
 		fs.appendFileSync(this.FilePath, logMsg);
 	}
 	public setLevel(Level: LogLevel) {

@@ -16,8 +16,9 @@ function getQRcode(): string {
 	}
 	return (document.querySelector('.qr-code-img > img') as HTMLImageElement)?.src;
 }
+// 未考虑网络情况与异常离线
 const WebState = await window.LLWebUiApi.getWebUiState();
-if (WebState.WorkState = WebStateCode.WAIT_LOGIN) {
+if (WebState.WorkState == WebStateCode.WAIT_LOGIN) {
 	if (location.pathname === '/renderer/login.html') {
 		const Interval = setInterval(() => {
 			const loginBtnText = document.querySelector('.auto-login .q-button span');
@@ -28,15 +29,17 @@ if (WebState.WorkState = WebStateCode.WAIT_LOGIN) {
 			window.LLWebUiApi.pushLoginQrcode(getQRcode());
 			clearInterval(Interval);
 		}, 5000)
+	} else if (location.hash = "#/main/message") {
+		// 到达登录界面
+		WebState.WorkState = WebStateCode.WORK_NORMAL;
+		window.LLWebUiApi.setWebUiState(WebState);
 	}
 }
+/** 该方案暴毙
 window.LLWebUiApi.onLoginPage((value: number) => {
 	console.log("当前标记:", value);
-	if (location.pathname === '/renderer/login.html') {
-		window.LLWebUiApi.setLoginPage(value);
-	}
-
-})
+	window.LLWebUiApi.setLoginPage(value);
+})*/
 function isRendererInit() {
 	const hash = location.hash;
 	if (hash === '#/blank') {

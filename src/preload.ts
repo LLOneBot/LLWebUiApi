@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { CHANNE_CORE_LOG, CHANNEL_BROWSER_LOGINPAGE, CHANNEL_CORE_GETCONFIG, CHANNEL_CORE_GETSTATE, CHANNEL_CORE_SETCONFIG, CHANNEL_CORE_SETSTATE, CHANNEL_LOGIN_QRCODE } from './common/channels';
+import { CHANNE_CORE_LOG, CHANNEL_BROWSER_LOGINPAGE, CHANNEL_BROWSER_SETLOGINPAGE, CHANNEL_CORE_GETCONFIG, CHANNEL_CORE_GETSTATE, CHANNEL_CORE_SETCONFIG, CHANNEL_CORE_SETSTATE, CHANNEL_LOGIN_QRCODE } from './common/channels';
 import { WebState, WebUiApiConfig } from './common/types';
 
 const LLWebUiApi = {
@@ -21,11 +21,11 @@ const LLWebUiApi = {
 	pushLoginQrcode: (data: string) => {
 		ipcRenderer.send(CHANNEL_LOGIN_QRCODE, data);
 	},
-	onLoginPage: (callback: any) => { 
-		ipcRenderer.on(CHANNEL_BROWSER_LOGINPAGE, (_event, value) => callback(value)) 
+	onLoginPage: (callback: any) => {
+		ipcRenderer.on(CHANNEL_BROWSER_LOGINPAGE, (_event, value) => callback(value))
 	},
 	setLoginPage: (data: number) => {
-		ipcRenderer.send(CHANNEL_CORE_SETCONFIG, data);
+		ipcRenderer.send(CHANNEL_BROWSER_SETLOGINPAGE, data);
 	}
 };
 export type LLWebUiApiType = typeof LLWebUiApi;
