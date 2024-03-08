@@ -37,10 +37,10 @@ class CoreLog {
 		const LevelText = LogLevelText[Level]; // 获取LevelInfo等级Text
 		logMsg = `${currentDateTime} ${LevelText}: ${logMsg}\n\n`;
 		if (this.ConsoleLog === true) {
-			console.log(logMsg); // 仅有Main进程输出std Log
+			console.log("[ WebUiApi ] " + logMsg); // 仅有Main进程输出std Log
 		}
 		fs.appendFile(this.FilePath, logMsg, (_err: any) => {
-			// console.log("[ WebUiApi ] 日志写故障 ")
+			console.log("[ WebUiApi ] 日志写故障 ")
 		});
 	}
 	public setLevel(Level: LogLevel) {

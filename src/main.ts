@@ -14,13 +14,13 @@ function onBrowserWindowCreated(_window: BrowserWindow) {
 }
 
 function loadLLWebUiApi() {
-	// 标记未登录
+	// 初始化状态信息
 	DataClass.getInstance().set("WebUiApiState", {
 		WorkState: WebStateCode.WAIT_LOGIN,
 		BootTime: 0
 	});
 	let HandleIpcApi = {} as HandleIPCApiType;
-	// IPC 辅助函数
+	// IPC 辅助函数绑定与实现
 	HandleIpcApi.getWebUiState = async () => {
 		return DataClass.getInstance().get("WebUiApiState");
 	}
