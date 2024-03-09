@@ -31,9 +31,16 @@ function isRendererInit() {
 		window.LLWebUiApi.setWebUiState(WebState);
 		// 设置后台 为Headless3
 		if (WebUiConfig.BootMode == BootMode.HEADLESS3) {
+			// 最小化方案
+			/*
 			const minbutton = document.querySelector(".window-control-area > div:nth-of-type(2)");
 			if (minbutton) {
 				(minbutton as HTMLButtonElement).click()
+			}*/
+			// 关闭进行托盘方案
+			const closebutton = document.querySelector("div.close");
+			if (closebutton) {
+				(closebutton as HTMLButtonElement).click()
 			}
 		}
 	}
