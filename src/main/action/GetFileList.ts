@@ -1,13 +1,14 @@
+import { FileStateApi } from "../../common/types";
+import { FileSystemApi } from "../api/FileSystemApi";
 import { BaseAction } from "./BaseAction";
 import { ActionName } from "./types";
 
-export interface GetFileListResponse {
-    action: string;
+export interface GetFileListPayload {
+    path: string;
 }
-
-export class GetFileList extends BaseAction<void, GetFileListResponse> {
+export class GetFileList extends BaseAction<GetFileListPayload, FileStateApi[]> {
     public actionName: string = ActionName.GetFileList;
-    public async _handle(_payload: void): Promise<GetFileListResponse> {
-        return { action: "GetFileList" };
+    public async _handle(payload: GetFileListPayload): Promise<FileStateApi[]> {
+        return FileSystemApi.listFile(payload.path);
     }
 }

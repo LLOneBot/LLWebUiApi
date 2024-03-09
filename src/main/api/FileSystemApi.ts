@@ -1,14 +1,8 @@
 import fs from "fs";
 import path from "path";
 import { FileStateApi } from "../../common/types";
-// 仅允许操作整个 QQ 与 LiteLoader所在目录 Class实现限制与辅助
+// 仅允许操作整个 QQ 与 LiteLoader所在目录（太麻烦了 干脆放开） 实现限制与辅助
 export class FileSystemApi {
-    static LLbasePath: string;
-    static QQbasePath: string;
-    static init(LLbase: string, QQbase: string) {
-        FileSystemApi.LLbasePath = LLbase;
-        FileSystemApi.QQbasePath = QQbase;
-    }
     static listFile(filePath: string) {
         let data = new Array<FileStateApi>();
         // 获取文件列表
@@ -32,9 +26,6 @@ export class FileSystemApi {
             data.push(pushdata);
         });
         return data;
-    }
-    static isInWhiteList(){
-        // 检查目录是否在白名单
     }
     static searchFile() {
         // 未实现预留
