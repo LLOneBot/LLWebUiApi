@@ -23,3 +23,25 @@ export interface HandleIPCApiType {
     getWebUiState?: any,
     setWebUiState?: any
 }
+export interface FileStateApi {
+    filename?: string,
+    filetype?: number,//0文件 1文件夹 -1未知
+    dev: number;
+    ino: number;
+    mode: number;
+    nlink: number;
+    uid: number;
+    gid: number;
+    rdev: number;
+    size: number;
+    blksize: number;
+    blocks: number;
+    atimeMs: number;
+    mtimeMs: number;
+    ctimeMs: number;
+    birthtimeMs: number;
+    atime: Date;
+    mtime: Date;
+    ctime: Date;
+    birthtime: Date;
+}
