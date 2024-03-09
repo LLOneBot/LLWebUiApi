@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { FileStateApi } from "../../common/types";
+import { FileType } from "../action/types";
 // 仅允许操作整个 QQ 与 LiteLoader所在目录（太麻烦了 干脆放开） 实现限制与辅助
 export class FileSystemApi {
     static listFile(filePath: string) {
@@ -13,12 +14,12 @@ export class FileSystemApi {
             const stats = fs.statSync(filedir);
             const isFile = stats.isFile();
             const isDir = stats.isDirectory(); // 是文件夹
-            let filetype = -1;
+            let filetype: FileType = FileType.ERROR;
             if (isFile) {
-                filetype = 0;
+                filetype = FileType.FILE;
             }
             else if (isDir) {
-                filetype = 1;
+                filetype = FileType.PATH;
             }
             let pushdata = stats as FileStateApi;
             pushdata.filename = filename;

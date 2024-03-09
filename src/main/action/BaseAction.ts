@@ -5,7 +5,7 @@ import { WebState, WebStateCode } from "../../common/types";
 export class BaseAction<PayloadType, ReturnDataType> {
     public actionName: string = "";
     protected async check(_payload: PayloadType): Promise<boolean> {
-        // 大部分Api 登录后使用 不登陆 就没必要
+        // 大部分Api 登录后使用 不登陆 就没必要用Api 优先保证登录状态
         if ((DataClass.getInstance().get("WebUiApiState") as WebState).WorkState == WebStateCode.WAIT_LOGIN) {
             return false;
         }
