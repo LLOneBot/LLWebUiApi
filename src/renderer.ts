@@ -1,7 +1,7 @@
 import { BootMode, WebStateCode, WebUiApiConfig } from "./common/types";
 
 async function onSettingWindowCreated(_view: Element) {
-	
+
 }
 /**
  * 
@@ -37,33 +37,34 @@ function isRendererInit() {
 			}
 		}
 	}
-	CheckQrLogin();
-	function CheckQrLogin() {
-		if (WebState.WorkState == WebStateCode.WAIT_LOGIN) {
-			if (location.pathname === '/renderer/login.html') {
-				const disconnect = document.querySelector('.process-txt .disconnect');
-				if (disconnect) return;
-				const Interval = setInterval(() => {
-					const loginBtnText = document.querySelector('.auto-login .q-button span');
-					if (loginBtnText) {
-						// 如果有自动登录 就自动登录
-						if (WebUiConfig.AutoLogin) {
-							(loginBtnText as HTMLButtonElement).click();
-						}
-						clearInterval(Interval);
+}
+CheckQrLogin();
+function CheckQrLogin() {
+	if (WebState.WorkState == WebStateCode.WAIT_LOGIN) {
+		if (location.pathname === '/renderer/login.html') {
+			const disconnect = document.querySelector('.process-txt .disconnect');
+			if (disconnect) return;
+			const Interval = setInterval(() => {
+				const loginBtnText = document.querySelector('.auto-login .q-button span');
+				if (loginBtnText) {
+					// 如果有自动登录 就自动登录
+					if (WebUiConfig.AutoLogin) {
+						(loginBtnText as HTMLButtonElement).click();
 					}
-					window.LLWebUiApi.pushLoginQrcode(getQRcode());
-				}, 5000)
-			}
+					clearInterval(Interval);
+				}
+				window.LLWebUiApi.pushLoginQrcode(getQRcode());
+			}, 5000)
 		}
 	}
+}
 
-	if (location.hash === '#/blank') {
-		(window as any).navigation.addEventListener('navigatesuccess', isRendererInit, { once: true });
-	} else {
-		isRendererInit();
-	}
+if (location.hash === '#/blank') {
+	(window as any).navigation.addEventListener('navigatesuccess', isRendererInit, { once: true });
+} else {
+	isRendererInit();
+}
 
-	export {
-		onSettingWindowCreated
-	};
+export {
+	onSettingWindowCreated
+};
