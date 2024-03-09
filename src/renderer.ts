@@ -1,4 +1,4 @@
-import { WebStateCode, WebUiApiConfig } from "./common/types";
+import { BootMode, WebStateCode, WebUiApiConfig } from "./common/types";
 
 async function onSettingWindowCreated(_view: Element) {
 }
@@ -16,6 +16,9 @@ function getQRcode(): string {
 	}
 	return (document.querySelector('.qr-code-img > img') as HTMLImageElement)?.src;
 }
+let WebState = await window.LLWebUiApi.getWebUiState();
+let WebUiConfig: WebUiApiConfig = await window.LLWebUiApi.getWebUiConfig();
+
 function isRendererInit() {
 	const hash = location.hash;
 	if (hash === '#/blank') {
@@ -25,37 +28,41 @@ function isRendererInit() {
 		// 到达登录界面
 		WebState.WorkState = WebStateCode.WORK_NORMAL;
 		window.LLWebUiApi.setWebUiState(WebState);
-	}
-}
-let WebState = await window.LLWebUiApi.getWebUiState();
-let WebUiConfig: WebUiApiConfig = await window.LLWebUiApi.getWebUiConfig();
-CheckQrLogin();
-function CheckQrLogin() {
-	if (WebState.WorkState == WebStateCode.WAIT_LOGIN) {
-		if (location.pathname === '/renderer/login.html') {
-			const disconnect = document.querySelector('.process-txt .disconnect');
-			if (disconnect) return;
-			const Interval = setInterval(() => {
-				const loginBtnText = document.querySelector('.auto-login .q-button span');
-				if (loginBtnText) {
-					// 如果有自动登录 就自动登录
-					if (WebUiConfig.AutoLogin) {
-						(loginBtnText as HTMLButtonElement).click();
-					}
-					clearInterval(Interval);
-				}
-				window.LLWebUiApi.pushLoginQrcode(getQRcode());
-			}, 5000)
+		// 设置后台 为Headless3
+		if (WebUiConfig.BootMode == BootMode.HEADLESS3) {
+			const minbutton = document.querySelector(".window-control-area > div:nth-of-type(2)");
+			if (minbutton) {
+				(minbutton as HTMLButtonElement).click()
+			}
 		}
 	}
-}
+	CheckQrLogin();
+	function CheckQrLogin() {
+		if (WebState.WorkState == WebStateCode.WAIT_LOGIN) {
+			if (location.pathname === '/renderer/login.html') {
+				const disconnect = document.querySelector('.process-txt .disconnect');
+				if (disconnect) return;
+				const Interval = setInterval(() => {
+					const loginBtnText = document.querySelector('.auto-login .q-button span');
+					if (loginBtnText) {
+						// 如果有自动登录 就自动登录
+						if (WebUiConfig.AutoLogin) {
+							(loginBtnText as HTMLButtonElement).click();
+						}
+						clearInterval(Interval);
+					}
+					window.LLWebUiApi.pushLoginQrcode(getQRcode());
+				}, 5000)
+			}
+		}
+	}
 
-if (location.hash === '#/blank') {
-	(window as any).navigation.addEventListener('navigatesuccess', isRendererInit, { once: true });
-} else {
-	isRendererInit();
-}
+	if (location.hash === '#/blank') {
+		(window as any).navigation.addEventListener('navigatesuccess', isRendererInit, { once: true });
+	} else {
+		isRendererInit();
+	}
 
-export {
-	onSettingWindowCreated
-};
+	export {
+		onSettingWindowCreated
+	};

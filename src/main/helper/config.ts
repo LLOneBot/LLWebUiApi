@@ -23,8 +23,12 @@ export class CoreConfig {
     public get(): WebUiApiConfig {
         return this.configData;
     }
-    public set(newConfig: WebUiApiConfig) {
+    public setLost(newConfig: WebUiApiConfig) {
+        // 运行结束丢失数据
         this.configData = newConfig;
+    }
+    public set(newConfig: WebUiApiConfig) {
+        //this.configData = newConfig; 不要立刻刷新 而是主动监听callbck刷新
         fs.writeFileSync(this.configPath, JSON.stringify(newConfig));
     }
     public regListening() {

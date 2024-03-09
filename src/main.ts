@@ -50,6 +50,8 @@ function loadLLWebUiApi() {
 	CoreLog.getInstance().pushLog(LogLevel.Info, "Application Is Running");
 	// 启动模式选择
 	if (bootMode.includes("headless3") || WebApiConfig.BootMode == BootMode.HEADLESS3) {
+		WebApiConfig.BootMode = BootMode.HEADLESS3;
+		CoreConfig.getInstance().setLost(WebApiConfig);
 		initHeadless3();
 	}
 	// 注册IPC基础事件
