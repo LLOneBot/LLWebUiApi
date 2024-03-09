@@ -1,6 +1,7 @@
 import { BootMode, WebStateCode, WebUiApiConfig } from "./common/types";
 
 async function onSettingWindowCreated(_view: Element) {
+	
 }
 /**
  * 
