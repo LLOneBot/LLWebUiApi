@@ -3,20 +3,13 @@ import { initHeadless3 } from './main/helper/headless3';
 import { DATA_DIR } from './main/helper/utils';
 import { InitIpcHandle } from './main/helper/ipcHandler';
 import { CoreConfig } from './main/helper/config';
-import { BootMode, HandleIPCApiType, WebStateCode } from './common/types';
+import { BootMode, HandleIPCApiType, WebState, WebStateCode } from './common/types';
 import { CoreLog, LogLevel } from './main/helper/log';
 import { ServerFactory } from './main/adapter/factory';
 import { HttpAdapter } from './main/adapter/http';
 import { DataClass } from './main/helper/data';
 import fs from 'fs';
 function onBrowserWindowCreated(_window: BrowserWindow) {
-	/** 
-	if ((DataClass.getInstance().get("WebUiApiState") as WebState).WorkState == WebStateCode.WAIT_LOGIN) {
-		BrowserLogin.push(window);
-		setTimeout(() => {
-			window.webContents.send(CHANNEL_BROWSER_LOGINPAGE, BrowserLogin.length);
-		}, 3000);
-	}*/
 }
 function loadLLWebUiApi() {
 	// 初始化状态信息
@@ -29,7 +22,7 @@ function loadLLWebUiApi() {
 	HandleIpcApi.getWebUiState = async () => {
 		return DataClass.getInstance().get("WebUiApiState");
 	}
-	HandleIpcApi.setWebUiState = async (value: WebStateCode) => {
+	HandleIpcApi.setWebUiState = async (value: WebState) => {
 		return DataClass.getInstance().set("WebUiApiState", value);
 	}
 	// 获取WebUi启动模式
