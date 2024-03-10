@@ -1,4 +1,5 @@
 import { BaseAction } from "./BaseAction";
+import { DeleteFile } from "./DeleteFile";
 import { GetAllPath } from "./GetAllPath";
 import { GetBotLoginQR } from "./GetBotLoginQR";
 import { GetFileData } from "./GetFileData";
@@ -10,7 +11,8 @@ export const actionHandlers = [
     new GetBotLoginQR(),
     new GetAllPath(),
     new GetFileList(),
-    new GetFileData()
+    new GetFileData(),
+    new DeleteFile()
 ];
 
 function initActionMap() {

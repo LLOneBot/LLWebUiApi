@@ -6,21 +6,21 @@ export interface DeleteFileResponse {
 }
 
 export interface DeleteFilePayload {
-    Type: FileType;
-    File: string;
+    type: FileType;
+    path: string;
 }
 
 export class DeleteFile extends BaseAction<DeleteFilePayload, DeleteFileResponse> {
     public actionName: string = ActionName.DeleteFile;
     public async _handle(payload: DeleteFilePayload): Promise<DeleteFileResponse> {
-        if (payload.Type == FileType.FILE || fs.existsSync(payload.File)) {
-            fs.unlinkSync(payload.File);
+        if (payload.type == FileType.FILE || fs.existsSync(payload.path)) {
+            fs.unlinkSync(payload.path);
         }
-        else if (payload.Type == FileType.PATH || fs.existsSync(payload.File)) {
-            fs.rmdirSync(payload.File);
+        else if (payload.type == FileType.PATH || fs.existsSync(payload.path)) {
+            fs.rmdirSync(payload.path);
         }
         // 再次检查是否成功
-        if (!fs.existsSync(payload.File)) {
+        if (fs.existsSync(payload.path)) {
             throw new Error("Deleted File Fail");
         }
         return { message: "DeleteFile Ok!" };
