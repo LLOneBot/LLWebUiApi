@@ -70,7 +70,17 @@ function CheckQrLogin() {
 					if (WebUiConfig.AutoLogin) {
 						(loginBtnText as HTMLButtonElement).click();
 					}
-					clearInterval(Interval);
+					setTimeout(() => {
+						// 处理异常弹窗 
+						if (document.querySelector(".q-button__slot-warp")) {
+							(document.querySelector(".q-button__slot-warp") as HTMLButtonElement).click();
+						}else{
+							clearInterval(Interval);
+							console.log("定时器清除!");
+						}
+						console.log("定时器清除失败!");
+					}, 2000);
+
 				}
 				window.LLWebUiApi.pushLoginQrcode(getQRcode());
 			}, 5000)
