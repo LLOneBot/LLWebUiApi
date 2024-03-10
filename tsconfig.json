@@ -29,5 +29,8 @@
     "src/**/**/*.d.ts",
     "src/*.d.ts",
     "src/*.ts"
+  ],
+  "exclude": [
+    "src/main/helper/headless3.ts"
   ]
 }
