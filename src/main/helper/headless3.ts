@@ -50,7 +50,6 @@ export const initHeadless3 = () => {
     const originLoad = require('module')._load as ModuleLoad;
 
     const newLoad: ModuleLoad = (request, parent, isMain) => {
-    	console.log(request);
     	if (request === 'electron') {
     		return {
     			...originLoad(request, parent, isMain),
@@ -62,6 +61,6 @@ export const initHeadless3 = () => {
 
     require('module')._load = newLoad;
 	} catch (e) {
-		console.log('headless3: ', e);
+		//console.log('headless3: ', e);
 	}
 };
