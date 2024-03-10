@@ -4,7 +4,7 @@ import { ActionName } from "./types";
 
 export interface GetAllPathResponse {
     LiteLoaderPath: string;
-    PluginPath: string;//所有插件
+    PluginPath: string;//所有插件目录 同时注意\\ 结尾无\\
     PluginDataPath: string;
 }
 

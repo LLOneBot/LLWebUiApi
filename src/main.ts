@@ -17,7 +17,7 @@ function loadLLWebUiApi() {
 	DataClass.getInstance().set("WebUiApiState", {
 		WorkState: WebStateCode.WAIT_LOGIN,
 		BootMode: BootMode.NORMAL,
-		BootTime: 0
+		BootTime: Math.floor(Date.now() / 1000)
 	});
 	let HandleIpcApi = {} as HandleIPCApiType;
 	// IPC 辅助函数绑定与实现
