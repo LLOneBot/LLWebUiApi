@@ -1,12 +1,16 @@
 import { BaseAction } from "./BaseAction";
 import { GetAllPath } from "./GetAllPath";
 import { GetBotLoginQR } from "./GetBotLoginQR";
+import { GetFileData } from "./GetFileData";
+import { GetFileList } from "./GetFileList";
 import { GetWebState } from "./GetWebState";
 
 export const actionHandlers = [
     new GetWebState(),
     new GetBotLoginQR(),
-    new GetAllPath()
+    new GetAllPath(),
+    new GetFileList(),
+    new GetFileData()
 ];
 
 function initActionMap() {

@@ -21,7 +21,7 @@ export class FileSystemApi {
             else if (isDir) {
                 filetype = FileType.PATH;
             }
-            let pushdata = stats as FileStateApi;
+            let pushdata:FileStateApi = stats;
             pushdata.filename = filename;
             pushdata.filetype = filetype;
             data.push(pushdata);
