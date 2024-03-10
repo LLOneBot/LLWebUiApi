@@ -15,6 +15,7 @@ function loadLLWebUiApi() {
 	// 初始化状态信息
 	DataClass.getInstance().set("WebUiApiState", {
 		WorkState: WebStateCode.WAIT_LOGIN,
+		BootMode: BootMode.NORMAL,
 		BootTime: 0
 	});
 	let HandleIpcApi = {} as HandleIPCApiType;
@@ -44,7 +45,6 @@ function loadLLWebUiApi() {
 	// 启动模式选择
 	if (bootMode.includes("headless3") || WebApiConfig.BootMode == BootMode.HEADLESS3) {
 		WebApiConfig.BootMode = BootMode.HEADLESS3;
-		CoreConfig.getInstance().setLost(WebApiConfig);
 		initHeadless3();
 	}
 	// 注册IPC基础事件

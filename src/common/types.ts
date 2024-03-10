@@ -6,6 +6,7 @@ export enum WebStateCode {
 }
 export interface WebState {
     WorkState: WebStateCode, //参考
+    BootMode:BootMode,
     BootTime: number //10位时间戳
 }
 export interface ServerConfig {
@@ -15,7 +16,7 @@ export interface ServerConfig {
 export interface WebUiApiConfig {
     Server: ServerConfig,
     AutoLogin: boolean,
-    BootMode: number,
+    BootMode: BootMode,
     Debug: boolean
 }
 export enum BootMode { NORMAL, CONTRAL_1, CONTRAL_2, HEADLESS3 }

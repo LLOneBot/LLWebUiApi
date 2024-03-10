@@ -30,7 +30,7 @@ function isRendererInit() {
 		WebState.WorkState = WebStateCode.WORK_NORMAL;
 		window.LLWebUiApi.setWebUiState(WebState);
 		// 设置后台 为Headless3
-		if (WebUiConfig.BootMode == BootMode.HEADLESS3) {
+		if (WebState.BootMode == BootMode.HEADLESS3) {
 			// 最小化方案
 			/*
 			const minbutton = document.querySelector(".window-control-area > div:nth-of-type(2)");
