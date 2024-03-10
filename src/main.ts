@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain, app } from 'electron';
 import { initHeadless3 } from './main/helper/headless3';
-import { ALL_PLGIN_DIR, DATA_DIR } from './main/helper/utils';
+import { ALL_PLUGIN_DIR, DATA_DIR } from './main/helper/utils';
 import { InitIpcHandle } from './main/helper/ipcHandler';
 import { CoreConfig } from './main/helper/config';
 import { BootMode, HandleIPCApiType, WebState, WebStateCode } from './common/types';
@@ -51,7 +51,7 @@ function loadLLWebUiApi() {
 	// 注册IPC基础事件
 	InitIpcHandle(ipcMain, HandleIpcApi);
 	// Web Plugin Loading
-	WebPlugin.getInstance().loadPluginInfo(ALL_PLGIN_DIR);
+	WebPlugin.getInstance().loadPluginInfo(ALL_PLUGIN_DIR);
 	// 服务端Api初始化
 	let HttpServer = ServerFactory.getServer("HTTP", CoreConfig.getInstance().get().Server) as HttpAdapter;
 	HttpServer.onListening();
