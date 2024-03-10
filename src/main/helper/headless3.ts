@@ -10,7 +10,6 @@ export const initHeadless3 = () => {
 		setFlagsFromString('--expose_gc');
 
 		const gc = runInNewContext('gc') as () => void;
-
 		setInterval(() => {
 			gc();
 		}, 5000);
@@ -32,34 +31,34 @@ export const initHeadless3 = () => {
 
 				win.webContents.setFrameRate(1);
 				win.webContents.on('paint', ({ preventDefault }) => preventDefault());
-				win.setSize = () => {};
-				win.setMinimumSize = () => {};
-				win.setMaximumSize = () => {};
-				win.setPosition = () => {};
-				win.show = () => {};
+				win.setSize = () => { };
+				win.setMinimumSize = () => { };
+				win.setMaximumSize = () => { };
+				win.setPosition = () => { };
+				win.show = () => { };
 				return win;
 			},
 		});
 
-    type ModuleLoad = (
-      request: string,
-      parent: unknown,
-      isMain: boolean,
-    ) => object
+		type ModuleLoad = (
+			request: string,
+			parent: unknown,
+			isMain: boolean,
+		) => object
 
-    const originLoad = require('module')._load as ModuleLoad;
+		const originLoad = require('module')._load as ModuleLoad;
 
-    const newLoad: ModuleLoad = (request, parent, isMain) => {
-    	if (request === 'electron') {
-    		return {
-    			...originLoad(request, parent, isMain),
-    			BrowserWindow: FakeBrowserWindow,
-    		};
-    	}
-    	return originLoad(request, parent, isMain);
-    };
+		const newLoad: ModuleLoad = (request, parent, isMain) => {
+			if (request === 'electron') {
+				return {
+					...originLoad(request, parent, isMain),
+					BrowserWindow: FakeBrowserWindow,
+				};
+			}
+			return originLoad(request, parent, isMain);
+		};
 
-    require('module')._load = newLoad;
+		require('module')._load = newLoad;
 	} catch (e) {
 		//console.log('headless3: ', e);
 	}
