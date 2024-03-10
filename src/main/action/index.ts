@@ -1,10 +1,12 @@
 import { BaseAction } from "./BaseAction";
+import { GetAllPath } from "./GetAllPath";
 import { GetBotLoginQR } from "./GetBotLoginQR";
 import { GetWebState } from "./GetWebState";
 
 export const actionHandlers = [
     new GetWebState(),
-    new GetBotLoginQR()
+    new GetBotLoginQR(),
+    new GetAllPath()
 ];
 
 function initActionMap() {
