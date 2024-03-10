@@ -12,6 +12,10 @@ function getQRcode(): string {
 	if (location.pathname !== '/renderer/login.html') {
 		return '';
 	}
+	// 扫码之后一直不登
+	if (document.querySelector(".q-button__slot-warp")) {
+		(document.querySelector(".q-button__slot-warp") as HTMLButtonElement).click();
+	}
 	if ((document.querySelector('.qrcode-error.expired-label') as HTMLDivElement)?.innerText === '当前二维码已过期') {
 		(document.querySelector('.q-button.q-button--secondary.q-button--default') as HTMLButtonElement)?.click();
 	}
@@ -47,10 +51,18 @@ function isRendererInit() {
 }
 CheckQrLogin();
 function CheckQrLogin() {
-	if (WebState.WorkState == WebStateCode.WAIT_LOGIN) {
+	if (WebState.WorkState == WebStateCode.WAIT_LOGIN || WebState.WorkState == WebStateCode.NET_ERROR) {
 		if (location.pathname === '/renderer/login.html') {
 			const disconnect = document.querySelector('.process-txt .disconnect');
-			if (disconnect) return;
+			if (disconnect && WebState.WorkState != WebStateCode.NET_ERROR) {
+				// 通知Main 设置断网状态
+				WebState.WorkState = WebStateCode.NET_ERROR;
+				window.LLWebUiApi.setWebUiState(WebState);
+				return;
+			} else if (!disconnect || WebState.WorkState == WebStateCode.NET_ERROR) {
+				WebState.WorkState = WebStateCode.WAIT_LOGIN;
+				window.LLWebUiApi.setWebUiState(WebState);
+			}
 			const Interval = setInterval(() => {
 				const loginBtnText = document.querySelector('.auto-login .q-button span');
 				if (loginBtnText) {

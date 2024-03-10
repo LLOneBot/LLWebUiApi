@@ -10,7 +10,9 @@ export interface WebStateResponse {
 export class GetBotLoginQR extends BaseAction<void, WebStateResponse> {
     public actionName: string = ActionName.GetBotLoginQR;
     protected async check(_payload: void): Promise<boolean> {
-        if ((DataClass.getInstance().get("WebUiApiState") as WebState).WorkState != WebStateCode.WAIT_LOGIN) {
+        let WorkState = (DataClass.getInstance().get("WebUiApiState") as WebState).WorkState;
+        //工作状态与异常状态 不需要获取QRcode
+        if (WorkState != WebStateCode.WAIT_LOGIN) {
             return false;
         }
         return true;
