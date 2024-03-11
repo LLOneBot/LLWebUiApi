@@ -53,17 +53,18 @@ CheckQrLogin();
 function CheckQrLogin() {
 	if (WebState.WorkState == WebStateCode.WAIT_LOGIN || WebState.WorkState == WebStateCode.NET_ERROR) {
 		if (location.pathname === '/renderer/login.html') {
-			const disconnect = document.querySelector('.process-txt .disconnect');
-			if (disconnect && WebState.WorkState != WebStateCode.NET_ERROR) {
-				// 通知Main 设置断网状态
-				WebState.WorkState = WebStateCode.NET_ERROR;
-				window.LLWebUiApi.setWebUiState(WebState);
-				return;
-			} else if (!disconnect || WebState.WorkState == WebStateCode.NET_ERROR) {
-				WebState.WorkState = WebStateCode.WAIT_LOGIN;
-				window.LLWebUiApi.setWebUiState(WebState);
-			}
 			const Interval = setInterval(() => {
+				// 断网情况
+				const disconnect = document.querySelector('.process-txt .disconnect');
+				if (disconnect && WebState.WorkState != WebStateCode.NET_ERROR) {
+					// 通知Main 设置断网状态
+					WebState.WorkState = WebStateCode.NET_ERROR;
+					window.LLWebUiApi.setWebUiState(WebState);
+					return;
+				} else if (!disconnect && WebState.WorkState == WebStateCode.NET_ERROR) {
+					WebState.WorkState = WebStateCode.WAIT_LOGIN;
+					window.LLWebUiApi.setWebUiState(WebState);
+				}
 				const loginBtnText = document.querySelector('.auto-login .q-button span');
 				if (loginBtnText) {
 					// 如果有自动登录 就自动登录
@@ -74,7 +75,7 @@ function CheckQrLogin() {
 						// 处理异常弹窗 
 						if (document.querySelector(".q-button__slot-warp")) {
 							(document.querySelector(".q-button__slot-warp") as HTMLButtonElement).click();
-						}else{
+						} else {
 							clearInterval(Interval);
 							console.log("定时器清除!");
 						}
