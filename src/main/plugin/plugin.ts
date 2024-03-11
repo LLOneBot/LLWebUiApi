@@ -21,7 +21,6 @@ export class WebPlugin {
         let fileList: FileStateApi[] = FileSystemApi.listFile(path);
         for (let i = 0; i < fileList.length; i++) {
             let manifestPath = path + "\\" + fileList[i].filename + "\\manifest.json";
-            console.log(manifestPath);
             try {
                 let { result, data } = this.solveManifest(manifestPath);
                 if (result as boolean) {
@@ -32,7 +31,6 @@ export class WebPlugin {
                 CoreLog.getInstance().pushLog(LogLevel.Error, e.message);
             }
         }
-        console.log(this.PluginList);
     }
     public solveManifest(path: string) {
         let manifestJson = JSON.parse(fs.readFileSync(path).toString());
@@ -54,5 +52,9 @@ export class WebPlugin {
             return { result: false, data: Plugin };
         }
         return { result: true, data: Plugin };
+    }
+    // 生成Config页面
+    public getConfigPage(_base:string,_slug:string){
+
     }
 }
