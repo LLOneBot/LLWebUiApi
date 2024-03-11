@@ -1,7 +1,7 @@
 import { FileStateApi } from "../../common/types";
 import { FileSystemApi } from "../api/FileSystemApi";
 import fs from "fs";
-import path from "path";
+import * as Path from "path";
 import { CoreLog, LogLevel } from "../helper/log";
 import { LiteLoaderConfig, WebPluginData } from "./types";
 import { LITELOADER_DIR } from "../helper/utils";
@@ -22,7 +22,7 @@ export class WebPlugin {
     public loadPluginInfo(path: string) {
         let fileList: FileStateApi[] = FileSystemApi.listFile(path);
         for (let i = 0; i < fileList.length; i++) {
-            let manifestPath = path + "\\" + fileList[i].filename + "\\manifest.json";
+            let manifestPath = Path.resolve(path, `./${fileList[i].filename}/manifest.json`);
             try {
                 let { result, data } = this.solveManifest(manifestPath, fileList[i].filename as string);
                 if (result as boolean) {
@@ -48,9 +48,9 @@ export class WebPlugin {
             version: manifestJson?.version,
             injects:
             {
-                main: path.join("\\" + base, manifestJson.injects.main),
-                preload: path.join("\\" + base, manifestJson.injects.preload),
-                renderer: path.join("\\" + base, manifestJson.injects.renderer)
+                main: Path.resolve(base, manifestJson.injects.main),
+                preload: Path.resolve(base, manifestJson.injects.preload),
+                renderer: Path.resolve(base, manifestJson.injects.renderer)
             }
         };
         if (this.whiteList.includes(manifestJson?.slug)) {
@@ -60,26 +60,26 @@ export class WebPlugin {
     }
     // 生成Config页面
     public getConfigPage(_base: string, _slug: string) {
-
+        
     }
     //
     public setPluginEnable(plugin: string): boolean {
-        let data = JSON.parse(fs.readFileSync(path.join(LITELOADER_DIR, "./config.json")).toString()) as LiteLoaderConfig;
+        let data = JSON.parse(fs.readFileSync(Path.resolve(LITELOADER_DIR, "./config.json")).toString()) as LiteLoaderConfig;
 
         let index = data.LiteLoader.disabled_plugins.indexOf(plugin);
         if (index !== -1) {
             data.LiteLoader.disabled_plugins.splice(index, 1);
-            fs.writeFileSync(path.join(LITELOADER_DIR, "./config.json"), JSON.stringify(data));
+            fs.writeFileSync(Path.resolve(LITELOADER_DIR, "./config.json"), JSON.stringify(data));
             return true;
         }
         return false;
     }
     public setPluginDisable(plugin: string): boolean {
-        let data = JSON.parse(fs.readFileSync(path.join(LITELOADER_DIR, "./config.json")).toString()) as LiteLoaderConfig;
+        let data = JSON.parse(fs.readFileSync(Path.resolve(LITELOADER_DIR, "./config.json")).toString()) as LiteLoaderConfig;
         let index = data.LiteLoader.disabled_plugins.indexOf(plugin);
         if (index !== -1) {
             data.LiteLoader.disabled_plugins.push(plugin);
-            fs.writeFileSync(path.join(LITELOADER_DIR, "./config.json"), JSON.stringify(data));
+            fs.writeFileSync(Path.resolve(LITELOADER_DIR, "./config.json"), JSON.stringify(data));
             return true;
         }
         return false;

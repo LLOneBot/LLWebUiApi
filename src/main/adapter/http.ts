@@ -17,7 +17,7 @@ export class HttpAdapter implements ServerAdapter {
 		this.app = express();
 		this.app.use(express.urlencoded({ extended: true, limit: '500mb' }));
 		// 安不安全 我不知道 但是好用
-		this.app.use("/static", express.static(path.join(PLUGIN_DIR, "./static/")));
+		this.app.use("/static", express.static(path.resolve(PLUGIN_DIR, "./static")));
 		this.app.use("/plugin", express.static(ALL_PLUGIN_DIR));
 		this.app.use(express.json());
 	}
