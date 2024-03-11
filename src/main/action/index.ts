@@ -6,7 +6,7 @@ import { GetFileData } from "./GetFileData";
 import { GetFileList } from "./GetFileList";
 import { GetWebPlugin } from "./GetWebPlugin";
 import { GetWebState } from "./GetWebState";
-import { PluginIPC } from "./PluginIpc";
+import { PluginIPC } from "./PluginIPC";
 import { RenameFile } from "./RenameFile";
 import { WriteFile } from "./WriteFile";
 
