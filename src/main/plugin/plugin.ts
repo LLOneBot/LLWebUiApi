@@ -79,6 +79,7 @@ export class WebPlugin {
         let index = data.LiteLoader.disabled_plugins.indexOf(plugin);
         if (index !== -1) {
             data.LiteLoader.disabled_plugins.push(plugin);
+            fs.writeFileSync(path.join(LITELOADER_DIR, "./config.json"), JSON.stringify(data));
             return true;
         }
         return false;
