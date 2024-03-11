@@ -3,7 +3,8 @@ import { FileSystemApi } from "../api/FileSystemApi";
 import fs from "fs";
 import path from "path";
 import { CoreLog, LogLevel } from "../helper/log";
-import { WebPluginData } from "./types";
+import { LiteLoaderConfig, WebPluginData } from "./types";
+import { LITELOADER_DIR } from "../helper/utils";
 export class WebPlugin {
     private whiteList: string[] = ["WebUiApi"];
     private PluginList: WebPluginData[] = [];
@@ -60,5 +61,26 @@ export class WebPlugin {
     // 生成Config页面
     public getConfigPage(_base: string, _slug: string) {
 
+    }
+    //
+    public setPluginEnable(plugin: string): boolean {
+        let data = JSON.parse(fs.readFileSync(path.join(LITELOADER_DIR, "./config.json")).toString()) as LiteLoaderConfig;
+
+        let index = data.LiteLoader.disabled_plugins.indexOf(plugin);
+        if (index !== -1) {
+            data.LiteLoader.disabled_plugins.splice(index, 1);
+            fs.writeFileSync(path.join(LITELOADER_DIR, "./config.json"), JSON.stringify(data));
+            return true;
+        }
+        return false;
+    }
+    public setPluginDisable(plugin: string): boolean {
+        let data = JSON.parse(fs.readFileSync(path.join(LITELOADER_DIR, "./config.json")).toString()) as LiteLoaderConfig;
+        let index = data.LiteLoader.disabled_plugins.indexOf(plugin);
+        if (index !== -1) {
+            data.LiteLoader.disabled_plugins.push(plugin);
+            return true;
+        }
+        return false;
     }
 }
