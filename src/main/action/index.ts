@@ -5,6 +5,8 @@ import { GetBotLoginQR } from "./GetBotLoginQR";
 import { GetFileData } from "./GetFileData";
 import { GetFileList } from "./GetFileList";
 import { GetWebState } from "./GetWebState";
+import { RenameFile } from "./RenameFile";
+import { WriteFile } from "./WriteFile";
 
 export const actionHandlers = [
     new GetWebState(),
@@ -12,7 +14,9 @@ export const actionHandlers = [
     new GetAllPath(),
     new GetFileList(),
     new GetFileData(),
-    new DeleteFile()
+    new DeleteFile(),
+    new RenameFile(),
+    new WriteFile()
 ];
 
 function initActionMap() {

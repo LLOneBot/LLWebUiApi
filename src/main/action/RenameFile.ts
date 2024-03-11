@@ -1,13 +1,17 @@
 import { BaseAction } from "./BaseAction";
 import { ActionName } from "./types";
-
+import fs from "fs";
 export interface RenameFileResponse {
-    action: string;
+    message: string;
 }
-
-export class RenameFile extends BaseAction<void, RenameFileResponse> {
+export interface RenameFilePayload {
+    oldPath: string;
+    newPath: string;
+}
+export class RenameFile extends BaseAction<RenameFilePayload, RenameFileResponse> {
     public actionName: string = ActionName.RenameFile;
-    public async _handle(_payload: void): Promise<RenameFileResponse> {
-        return { action: "RenameFile" };
+    public async _handle(payload: RenameFilePayload): Promise<RenameFileResponse> {
+        fs.renameSync(payload.oldPath,payload.newPath);
+        return { message: "Rename Success" };
     }
 }

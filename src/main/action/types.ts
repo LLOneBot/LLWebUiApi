@@ -8,14 +8,15 @@ export enum ActionName {
     WriteFile = "WriteFile",
     RenameFile = "RenameFile",
     GetAllPath = "GetAllPath"
-}
+};
+export enum FileDataType { Text, Base64, Hex };
 export interface ResponseReturn<DataType> {
     code: number,
     data?: DataType,
     message?: string
-}
+};
 export enum FileType {
     ERROR = -1,
     FILE = 0,
     PATH = 1
-}
+};
