@@ -1,6 +1,7 @@
 import { FileStateApi } from "../../common/types";
 import { FileSystemApi } from "../api/FileSystemApi";
 import fs from "fs";
+import path from "path";
 import { CoreLog, LogLevel } from "../helper/log";
 import { WebPluginData } from "./types";
 export class WebPlugin {
@@ -22,7 +23,7 @@ export class WebPlugin {
         for (let i = 0; i < fileList.length; i++) {
             let manifestPath = path + "\\" + fileList[i].filename + "\\manifest.json";
             try {
-                let { result, data } = this.solveManifest(manifestPath);
+                let { result, data } = this.solveManifest(manifestPath, fileList[i].filename as string);
                 if (result as boolean) {
                     this.PluginList.push(data);
                 }
@@ -32,11 +33,11 @@ export class WebPlugin {
             }
         }
     }
-    public getPluginList(){
+    public getPluginList() {
         return this.PluginList;
     }
-    public solveManifest(path: string) {
-        let manifestJson = JSON.parse(fs.readFileSync(path).toString());
+    public solveManifest(file: string, base: string) {
+        let manifestJson = JSON.parse(fs.readFileSync(file).toString());
         let Plugin: WebPluginData =
         {
             name: manifestJson?.name,
@@ -46,9 +47,9 @@ export class WebPlugin {
             version: manifestJson?.version,
             injects:
             {
-                main: manifestJson.injects.main,
-                preload: manifestJson.injects.preload,
-                renderer: manifestJson.injects.renderer
+                main: path.join("\\" + base, manifestJson.injects.main),
+                preload: path.join("\\" + base, manifestJson.injects.preload),
+                renderer: path.join("\\" + base, manifestJson.injects.renderer)
             }
         };
         if (this.whiteList.includes(manifestJson?.slug)) {
@@ -57,7 +58,7 @@ export class WebPlugin {
         return { result: true, data: Plugin };
     }
     // 生成Config页面
-    public getConfigPage(_base:string,_slug:string){
+    public getConfigPage(_base: string, _slug: string) {
 
     }
 }
