@@ -11,3 +11,8 @@ export interface WebPluginData {
     version: string,
     injects: InjectPlugin
 }
+export enum PluginIpcType{
+    Listen,
+    Send,
+    Invoke
+}

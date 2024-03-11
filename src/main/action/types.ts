@@ -7,7 +7,8 @@ export enum ActionName {
     GetFileData = "GetFileData",
     WriteFile = "WriteFile",
     RenameFile = "RenameFile",
-    GetAllPath = "GetAllPath"
+    GetAllPath = "GetAllPath",
+    PluginIPC = "PluginIPC"
 };
 export enum FileDataType { Text, Base64, Hex };
 export interface ResponseReturn<DataType> {
@@ -20,3 +21,8 @@ export enum FileType {
     FILE = 0,
     PATH = 1
 };
+export enum PluginIpcType {
+    Listen,
+    Send,
+    Invoke
+}
