@@ -4,6 +4,7 @@ import { ServerAdapter } from './adapter';
 import { ServerConfig } from '../../common/types';
 import { CoreLog, LogLevel } from '../helper/log';
 import { actionMap } from '../action';
+import { ALL_PLUGIN_DIR } from '../helper/utils';
 /**
  * @description Api接口Http实现类
  */
@@ -14,6 +15,8 @@ export class HttpAdapter implements ServerAdapter {
 		this.CurrentConfig = Config;
 		this.app = express();
 		this.app.use(express.urlencoded({ extended: true, limit: '500mb' }));
+		// 安不安全 我不知道 但是好用
+		this.app.use("/WebPlugin", express.static(ALL_PLUGIN_DIR));
 		this.app.use(express.json());
 	}
 	public authorize = (req: Request, res: Response, next: () => void) => {

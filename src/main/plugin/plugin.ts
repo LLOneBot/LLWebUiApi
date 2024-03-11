@@ -32,6 +32,9 @@ export class WebPlugin {
             }
         }
     }
+    public getPluginList(){
+        return this.PluginList;
+    }
     public solveManifest(path: string) {
         let manifestJson = JSON.parse(fs.readFileSync(path).toString());
         let Plugin: WebPluginData =

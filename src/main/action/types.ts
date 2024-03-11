@@ -8,7 +8,8 @@ export enum ActionName {
     WriteFile = "WriteFile",
     RenameFile = "RenameFile",
     GetAllPath = "GetAllPath",
-    PluginIPC = "PluginIPC"
+    PluginIPC = "PluginIPC",
+    GetWebPlugin = "GetWebPlugin"
 };
 export enum FileDataType { Text, Base64, Hex };
 export interface ResponseReturn<DataType> {

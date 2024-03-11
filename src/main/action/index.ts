@@ -4,6 +4,7 @@ import { GetAllPath } from "./GetAllPath";
 import { GetBotLoginQR } from "./GetBotLoginQR";
 import { GetFileData } from "./GetFileData";
 import { GetFileList } from "./GetFileList";
+import { GetWebPlugin } from "./GetWebPlugin";
 import { GetWebState } from "./GetWebState";
 import { PluginIPC } from "./PluginIpc";
 import { RenameFile } from "./RenameFile";
@@ -18,7 +19,8 @@ export const actionHandlers = [
     new DeleteFile(),
     new RenameFile(),
     new WriteFile(),
-    new PluginIPC()
+    new PluginIPC(),
+    new GetWebPlugin()
 ];
 
 function initActionMap() {
