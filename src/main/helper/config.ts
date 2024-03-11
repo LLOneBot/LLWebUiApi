@@ -7,7 +7,7 @@ export class CoreConfig {
     static CurrentInstance: CoreConfig;
     private configPath: string;
     constructor() {
-        this.configPath = path.join(DATA_DIR, "config.json");
+        this.configPath = path.resolve(DATA_DIR, "config.json");
         if (!fs.existsSync(this.configPath)) {
             fs.writeFileSync(this.configPath, JSON.stringify(this.getDefaultConfig()))
         }

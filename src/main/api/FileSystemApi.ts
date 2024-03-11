@@ -10,7 +10,7 @@ export class FileSystemApi {
         const files = fs.readdirSync(filePath);
         // 遍历文件列表
         files.forEach((filename) => {
-            const filedir = path.join(filePath, filename);
+            const filedir = path.resolve(filePath, filename);
             const stats = fs.statSync(filedir);
             const isFile = stats.isFile();
             const isDir = stats.isDirectory(); // 是文件夹
