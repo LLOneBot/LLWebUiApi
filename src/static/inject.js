@@ -1,7 +1,6 @@
 // 注入插件
-import { onSettingWindowCreated } from './renderer.js';
-
-(async () => {
+async function loadPlugin(rendererFile, preloadFile) {
+  const { onSettingWindowCreated } = await import(rendererFile);
   const settingView = document.querySelector('#app');
   const FakeElectron = {
     ipcRenderer: {
@@ -25,14 +24,13 @@ import { onSettingWindowCreated } from './renderer.js';
     if (moduleName === 'electron') return FakeElectron;
     else return {};
   }
-
   window.__FAKE_REQUIRE__ = FakeRequire;
-
-  const PreloadRes = await fetch('./preload.js');
+  const PreloadRes = await fetch(preloadFile);
   const PreloadRaw = await PreloadRes.text();
   const PreloadJS = `const require = window.__FAKE_REQUIRE__;${PreloadRaw}`;
-
   eval(PreloadJS);
-
   onSettingWindowCreated(settingView);
+}
+(async () => {
+  await loadPlugin("/plugin/LLOneBot/renderer/index.js", "/plugin/LLOneBot/preload/preload.cjs");
 })();
