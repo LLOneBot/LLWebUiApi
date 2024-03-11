@@ -9,7 +9,7 @@ export default {
 				entry: { 'main': 'src/main.ts' },
 			}
 		},
-		plugins: [cp({ targets: [{ src: './manifest.json', dest: 'dist' },{ src: './src/static', dest: 'dist/static' }] })]
+		plugins: [cp({ targets: [{ src: './manifest.json', dest: 'dist' },{ src: './static', dest: 'dist/static' }] })]
 	},
 	preload: {
 		build: {
