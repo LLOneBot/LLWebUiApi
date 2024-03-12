@@ -24,3 +24,6 @@ export function HookIpcCallHandle(window: BrowserWindow) {
         webContents._events["-ipc-message"] = proxyIpcMsg;
     }
 }
+export function IpcApiCall() {
+
+}
