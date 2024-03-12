@@ -10,7 +10,14 @@ import { HttpAdapter } from './main/adapter/http';
 import { DataClass } from './main/helper/data';
 import fs from 'fs';
 import { WebPlugin } from './main/plugin/plugin';
-function onBrowserWindowCreated(_window: BrowserWindow) {
+import { HookIpcCallHandle, HookIpcReceiveHandle } from './main/helper/ipcHook';
+function onBrowserWindowCreated(window: BrowserWindow) {
+	try {
+		HookIpcReceiveHandle(window);
+		HookIpcCallHandle(window);
+	} catch (e: any) {
+		CoreLog.getInstance().pushLog(LogLevel.Error, e.toString())
+	}
 }
 function loadLLWebUiApi() {
 	// 初始化状态信息
