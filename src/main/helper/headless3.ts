@@ -3,9 +3,6 @@ import type { BrowserWindowConstructorOptions } from 'electron';
 import { app, BrowserWindow } from 'electron';
 import { setFlagsFromString } from 'node:v8';
 import { runInNewContext } from 'node:vm';
-import { DataClass } from './data';
-import { WebState, WebStateCode } from '../../common/types';
-
 
 export const initHeadless3 = () => {
 	try {

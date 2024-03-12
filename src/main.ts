@@ -1,16 +1,17 @@
-import { BrowserWindow, ipcMain, app } from 'electron';
-import { initHeadless3 } from './main/helper/headless3';
+import { BootMode, HandleIPCApiType, WebState, WebStateCode } from './common/types';
+import { HookIpcCallHandle, HookIpcReceiveHandle } from './main/helper/ipcHook';
 import { ALL_PLUGIN_DIR, DATA_DIR } from './main/helper/utils';
 import { InitIpcHandle } from './main/helper/ipcHandler';
-import { CoreConfig } from './main/helper/config';
-import { BootMode, HandleIPCApiType, WebState, WebStateCode } from './common/types';
-import { CoreLog, LogLevel } from './main/helper/log';
+import { initHeadless3 } from './main/helper/headless3';
 import { ServerFactory } from './main/adapter/factory';
+import { BrowserWindow, ipcMain, app } from 'electron';
+import { CoreLog, LogLevel } from './main/helper/log';
 import { HttpAdapter } from './main/adapter/http';
+import { CoreConfig } from './main/helper/config';
+import { WebPlugin } from './main/plugin/plugin';
+
 import { DataClass } from './main/helper/data';
 import fs from 'fs';
-import { WebPlugin } from './main/plugin/plugin';
-import { HookIpcCallHandle, HookIpcReceiveHandle } from './main/helper/ipcHook';
 function onBrowserWindowCreated(window: BrowserWindow) {
 	try {
 		HookIpcReceiveHandle(window);
@@ -19,6 +20,7 @@ function onBrowserWindowCreated(window: BrowserWindow) {
 		CoreLog.getInstance().pushLog(LogLevel.Error, e.toString())
 	}
 }
+
 function loadLLWebUiApi() {
 	// 初始化状态信息
 	DataClass.getInstance().set("WebUiApiState", {
@@ -70,7 +72,7 @@ function loadLLWebUiApi() {
 try {
 	loadLLWebUiApi();
 } catch (e: any) {
-	console.log(e.toString());
+	CoreLog.getInstance().pushLog(LogLevel.Error, e.toString());
 }
 export {
 	onBrowserWindowCreated
