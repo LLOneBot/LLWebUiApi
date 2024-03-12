@@ -53,6 +53,9 @@ function loadLLWebUiApi() {
 	// 启动模式选择
 	if (bootMode.includes("headless3") || WebApiConfig.BootMode == BootMode.HEADLESS3) {
 		//WebApiConfig.BootMode = BootMode.HEADLESS3; 现在在 RUNTIME DATA 而不是Config
+		let BootMode_WebState = DataClass.getInstance().get("WebUiApiState") as WebState;
+		BootMode_WebState.BootMode = BootMode.HEADLESS3;
+		DataClass.getInstance().set("WebUiApiState", BootMode_WebState);
 		initHeadless3();
 	}
 	// 注册IPC基础事件
