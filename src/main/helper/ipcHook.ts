@@ -17,7 +17,7 @@ export function HookIpcCallHandle(window: BrowserWindow) {
         apply(target, thisArg, args) {
             return target.apply(thisArg, args);
         },
-    });
+    }); 
     if (webContents._events["-ipc-message"]?.[0]) {
         webContents._events["-ipc-message"][0] = proxyIpcMsg;
     } else {
