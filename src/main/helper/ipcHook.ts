@@ -1,4 +1,4 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, ipcMain } from "electron";
 
 export function HookIpcReceiveHandle(window: BrowserWindow) {
     const originalSend = window.webContents.send;
@@ -17,13 +17,16 @@ export function HookIpcCallHandle(window: BrowserWindow) {
         apply(target, thisArg, args) {
             return target.apply(thisArg, args);
         },
-    }); 
+    });
     if (webContents._events["-ipc-message"]?.[0]) {
         webContents._events["-ipc-message"][0] = proxyIpcMsg;
     } else {
         webContents._events["-ipc-message"] = proxyIpcMsg;
     }
 }
-export function IpcApiCall() {
-
+export function IpcApiCall(channel: string, args: any): boolean {
+    return ipcMain.emit(
+        channel,
+        ...args
+    );
 }
