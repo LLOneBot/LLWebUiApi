@@ -19,7 +19,11 @@ export class PluginIPC extends BaseAction<PluginIPCPayload, PluginIPCResponse> {
         }
         if (payload.type == PluginIpcType.Send) {
             // 单向IPC
-            IpcApiCall(payload.channel, payload.args);
+            if (IpcApiCall(payload.channel, payload.args)) {
+                return { message: "PluginIPC Ok!" };
+            } else {
+                throw new Error("IPC Send Error");
+            }
         }
         if (payload.type == PluginIpcType.Invoke) {
             // 双向IPC
