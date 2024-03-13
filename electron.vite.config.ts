@@ -1,6 +1,17 @@
+import { resolve } from 'path';
 import cp from 'vite-plugin-cp';
+
+const BaseOption = {
+	resolve: {
+		alias: {
+			'@': resolve(__dirname, './src'),
+		}
+	}
+};
+
 export default {
 	main: {
+		...BaseOption,
 		build: {
 			outDir: 'dist/main',
 			emptyOutDir: true,
@@ -12,9 +23,9 @@ export default {
 		plugins: [cp({ targets: [{ src: './manifest.json', dest: 'dist' },{ src: './static', dest: 'dist/static' }] })]
 	},
 	preload: {
+		...BaseOption,
 		build: {
 			outDir: 'dist/preload',
-			emptyOutDir: true,
 			lib: {
 				formats: ['cjs'],
 				entry: { 'preload': 'src/preload.ts' },
@@ -23,13 +34,11 @@ export default {
 				input: 'src/preload.ts',
 			}
 		},
-		resolve: {
-		}
 	},
 	renderer: {
+		...BaseOption,
 		build: {
 			outDir: 'dist/renderer',
-			emptyOutDir: true,
 			lib: {
 				formats: ['es'],
 				entry: { 'renderer': 'src/renderer.ts' },
@@ -38,7 +47,5 @@ export default {
 				input: 'src/renderer.ts',
 			}
 		},
-		resolve: {
-		}
 	}
 };

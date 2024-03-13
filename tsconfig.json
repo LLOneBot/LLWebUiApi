@@ -32,5 +32,10 @@
   ],
   "exclude": [
     "src/main/helper/headless3.ts"
-  ]
+  ],
+  "paths": {
+    "@/*": [
+      "./src*"
+    ]
+  }
 }
