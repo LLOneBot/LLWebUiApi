@@ -20,7 +20,12 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@/*": [
+        "./src*"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts",
@@ -32,10 +37,5 @@
   ],
   "exclude": [
     "src/main/helper/headless3.ts"
-  ],
-  "paths": {
-    "@/*": [
-      "./src*"
-    ]
-  }
+  ]
 }
