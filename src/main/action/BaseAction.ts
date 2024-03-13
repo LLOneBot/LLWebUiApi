@@ -14,7 +14,7 @@ export class BaseAction<PayloadType, ReturnDataType> {
         let resData: ReturnDataType;
         const result = await this.check(payload);
         if (!result) {
-            return JsonResponse.error("This RequenstNot Pass Check");
+            return JsonResponse.error("This Requenst Not Pass Check");
         }
         try {
             resData = await this._handle(payload);
