@@ -4,29 +4,8 @@ import { FileType } from '@/main/action/types';
 import { FileStateApi } from '@/common/types';
 import { Request, Response } from 'express';
 
-const BASE_DIR = LiteLoader.path.root;
-const verifyPath = (path: string) => {
-  const newPath = resolve(BASE_DIR, path);
-  if (newPath.indexOf(BASE_DIR) !== 0) return false;
-  else return true;
-}
-
 export const List = (req: Request, res: Response) => {
-  const path = resolve(BASE_DIR, req.body.path);
-
-  if (!verifyPath(path)) {
-    return res.status(400)
-      .json({
-        msg: 'Invaild path'
-      });
-  }
-
-  if (!fs.lstatSync(path).isDirectory()) {
-    return res.status(400)
-      .json({
-        msg: 'Target is not a directory'
-      })
-  }
+  const { path } = req.body;
 
   const files = fs.readdirSync(path);
   let result: FileStateApi[] = [];
@@ -45,28 +24,13 @@ export const List = (req: Request, res: Response) => {
   res.json({
     msg: 'ok',
     data: result,
-  })
+  });
 };
 
 export const Delete = (req: Request, res: Response) => {
-  const { type } = req.body;
-  const path = resolve(BASE_DIR, req.body.path);
-
-  if (!verifyPath(path)) {
-    return res.status(400)
-      .json({
-        msg: 'Invaild path'
-      });
-  }
+  const { type, path } = req.body;
 
   try {
-    if (!fs.existsSync(path)) {
-      return res.status(400)
-        .json({
-          msg: 'File not exist',
-        });
-    }
-
     if (type === FileType.FILE) fs.unlinkSync(path);
     if (type === FileType.PATH) fs.rmdirSync(path);
     res.json({
@@ -82,21 +46,7 @@ export const Delete = (req: Request, res: Response) => {
 }
 
 export const Get = (req: Request, res: Response) => {
-  const path = resolve(BASE_DIR, req.body.path);
-
-  if (!verifyPath(path)) {
-    return res.status(400)
-      .json({
-        msg: 'Invaild path'
-      });
-  }
-
-  if (!fs.existsSync(path)) {
-    return res.status(400)
-      .json({
-        msg: 'File not exist',
-      });
-  }
+  const { path } = req.body;
 
   if (fs.lstatSync(path).isDirectory()) {
     return res.status(400)
