@@ -27,6 +27,7 @@ export function HookIpcCallHandle(window: BrowserWindow) {
 export function IpcApiCall(channel: string, args: any): boolean {
     return ipcMain.emit(
         channel,
+        {},
         ...args
     );
 }
