@@ -1,4 +1,13 @@
 // 注入插件
+async function postData() {
+  const data = JSON.stringify({});
+  customConfig = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  const result = await axios.post('/api/PluginIPC', data, customConfig);
+}
 async function loadPlugin(rendererFile, preloadFile) {
   const { onSettingWindowCreated } = await import(rendererFile);
   const settingView = document.querySelector('#app');
@@ -9,6 +18,7 @@ async function loadPlugin(rendererFile, preloadFile) {
       }),
       send: (channel, ...args) => new Promise((res, rej) => {
         console.log('[Electron][IPC][Send]', channel, args);
+        postData();
       }),
       on: (channel, ...args) => {
         console.log('[Electron][IPC][On]', channel, args);

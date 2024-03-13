@@ -11,6 +11,7 @@
     "@types/filesystem": "^0.0.35",
     "@types/node": "^20.11.24",
     "@types/ws": "^8.5.10",
+    "@types/cors": "^2.8.17",
     "electron": "^26.1.0",
     "electron-vite": "^2.0.0",
     "typescript": "^5.3.3",
@@ -18,6 +19,7 @@
     "vite-plugin-cp": "^4.0.8"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "ws": "^8.16.0"
   }
