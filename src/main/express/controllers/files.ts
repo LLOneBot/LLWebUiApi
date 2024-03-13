@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { resolve } from 'path';
 import { FileType } from '@/main/action/types';
+import { FileStateApi } from '@/common/types';
 import { Request, Response } from 'express';
 
 const BASE_DIR = LiteLoader.path.root;
@@ -9,6 +10,43 @@ const verifyPath = (path: string) => {
   if (newPath.indexOf(BASE_DIR) !== 0) return false;
   else return true;
 }
+
+export const List = (req: Request, res: Response) => {
+  const path = resolve(BASE_DIR, req.body.path);
+
+  if (!verifyPath(path)) {
+    return res.status(400)
+      .json({
+        msg: 'Invaild path'
+      });
+  }
+
+  if (!fs.lstatSync(path).isDirectory()) {
+    return res.status(400)
+      .json({
+        msg: 'Target is not a directory'
+      })
+  }
+
+  const files = fs.readdirSync(path);
+  let result: FileStateApi[] = [];
+
+  files.forEach((filename) => {
+    const fileDir = resolve(path, filename);
+    const stats = fs.statSync(fileDir);
+    
+    result.push({
+      filename: filename,
+      filetype: stats.isDirectory() ? FileType.PATH : FileType.FILE,
+      ...stats,
+    });
+  });
+
+  res.json({
+    msg: 'ok',
+    data: result,
+  })
+};
 
 export const Delete = (req: Request, res: Response) => {
   const { type } = req.body;
