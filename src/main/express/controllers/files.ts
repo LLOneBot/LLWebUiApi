@@ -26,3 +26,23 @@ export const Delete = (req: Request, res: Response) => {
       })
   }
 }
+
+export const Get = (req: Request, res: Response) => {
+  const { path } = req.body;
+
+  if (!fs.existsSync(path)) {
+    return res.status(400)
+      .json({
+        msg: 'File not exist',
+      });
+  }
+
+  if (fs.lstatSync(path).isDirectory()) {
+    return res.status(400)
+      .json({
+        msg: 'Target is a directory',
+      });
+  }
+
+  res.download(path);
+}
