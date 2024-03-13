@@ -1,16 +1,16 @@
 import { BrowserWindow, ipcMain } from "electron";
 
-let receiveHooks: Array<{
-    channel: string,
-    hookFunc: ((payload: any) => void | Promise<void>)
-}> = []
-export function IPCExecuteCall(){
-    
+let PluginChannel: Array<string> = [];
+export function IPCExecuteCall(channel: string, args: any) {
+    console.log(channel, args);
 }
 export function HookIpcReceiveHandle(window: BrowserWindow) {
     const originalSend = window.webContents.send;
     const patchSend = (channel: string, ...args: any) => {
         // HOOK IPC Receive
+        if (PluginChannel.includes(channel)) {
+            console.log(args);
+        }
         originalSend.call(window.webContents, channel, ...args);
     }
     window.webContents.send = patchSend;

@@ -1,4 +1,4 @@
-import { IpcApiCall } from "../helper/ipcHook";
+import { IPCExecuteCall, IpcApiCall } from "../helper/ipcHook";
 import { BaseAction } from "./BaseAction";
 import { ActionName, PluginIpcType } from "./types";
 export interface PluginIPCResponse {
@@ -27,6 +27,7 @@ export class PluginIPC extends BaseAction<PluginIPCPayload, PluginIPCResponse> {
         }
         if (payload.type == PluginIpcType.Invoke) {
             // 双向IPC
+            IPCExecuteCall(payload.channel, payload.args);
         }
         return { message: "PluginIPC Ok!" };
 

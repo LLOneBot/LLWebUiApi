@@ -12,6 +12,19 @@ function IPC_Send(channel, args) {
   };
   const result = axios.post('/api/PluginIPC', data, customConfig);
 }
+function IPC_Invoke(channel, args) {
+  const data = JSON.stringify({
+    type: 2,
+    channel: channel,
+    args: args
+  });
+  customConfig = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  const result = axios.post('/api/PluginIPC', data, customConfig);
+}
 async function loadPlugin(rendererFile, preloadFile) {
   const { onSettingWindowCreated } = await import(rendererFile);
   const settingView = document.querySelector('#app');
@@ -19,6 +32,7 @@ async function loadPlugin(rendererFile, preloadFile) {
     ipcRenderer: {
       invoke: (channel, ...args) => new Promise((res, rej) => {
         console.log('[Electron][IPC][Invoke]', channel, args);
+        IPC_Invoke(channel, args);
       }),
       send: (channel, ...args) => new Promise((res, rej) => {
         console.log('[Electron][IPC][Send]', channel, args);
