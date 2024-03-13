@@ -6,6 +6,7 @@ export interface PluginIPCResponse {
 
 export interface PluginIPCPayload {
     type: PluginIpcType,
+    channel: string,
     content: any
 }
 
