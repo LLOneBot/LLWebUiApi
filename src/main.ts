@@ -9,6 +9,7 @@ import { CoreLog, LogLevel } from './main/helper/log';
 import { HttpAdapter } from './main/adapter/http';
 import { CoreConfig } from './main/helper/config';
 import { WebPlugin } from './main/plugin/plugin';
+import express from './main/express';
 
 import { DataClass } from './main/helper/data';
 import fs from 'fs';
@@ -65,8 +66,11 @@ function loadLLWebUiApi() {
 	// Web Plugin Loading
 	WebPlugin.getInstance().loadPluginInfo(ALL_PLUGIN_DIR);
 	// 服务端Api初始化
-	let HttpServer = ServerFactory.getServer("HTTP", CoreConfig.getInstance().get().Server) as HttpAdapter;
-	HttpServer.onListening();
+	// let HttpServer = ServerFactory.getServer("HTTP", CoreConfig.getInstance().get().Server) as HttpAdapter;
+	// HttpServer.onListening();
+	express.listen(CoreConfig.getInstance().get().Server.Port, () => {
+		console.log('Express server is now started!');
+	});
 }
 
 try {
