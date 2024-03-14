@@ -4,6 +4,7 @@ import cp from 'vite-plugin-cp';
 const BaseOption = {
 	resolve: {
 		alias: {
+			'@static': resolve(__dirname, './static'),
 			'@': resolve(__dirname, './src'),
 		}
 	}
@@ -20,7 +21,14 @@ export default {
 				entry: { 'main': 'src/main.ts' },
 			}
 		},
-		plugins: [cp({ targets: [{ src: './manifest.json', dest: 'dist' },{ src: './static', dest: 'dist/static' }] })]
+		plugins: [
+			cp({
+				targets: [
+					{ src: './manifest.json', dest: 'dist' },
+					{ src: './static', dest: 'dist/static', flatten: false },
+				]
+			}),
+		]
 	},
 	preload: {
 		...BaseOption,

@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import fs from 'fs';
 import * as Utils from '@/main/helper/utils';
+import PluginIframeRaw from '@static/plugin/iframe.html?raw';
 import { Request, Response } from 'express';
 
 export const GetInfo = (req: Request, res: Response) => {
@@ -39,4 +40,15 @@ export const GetRenderer = (req: Request, res: Response) => {
 
   res.set('Content-Type', 'text/javascript')
     .download(rendererPath);
+}
+
+export const GetIframe = (req: Request, res: Response) => {
+  const { pluginMeta } = res.locals;
+  const baseUrl = req.protocol + '://' + req.get('host') + '/';
+  let result = PluginIframeRaw.toString();
+
+  result = result.replace(/{\sBASE_URL\s}/g, baseUrl);
+  result = result.replace('<!--{ INJECT_JS }-->', `<script>window._LOAD_PLUGIN_('/plugin/${req.params.pluginSlug}/renderer', '/plugin/${req.params.pluginSlug}/preload');</script>`);
+
+  res.send(result);
 }

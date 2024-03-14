@@ -21,5 +21,6 @@ router.use('/:pluginSlug', (req, res, next) => {
 router.get('/:pluginSlug', Plugin.GetInfo);
 router.get('/:pluginSlug/preload', Plugin.GetPreload);
 router.get('/:pluginSlug/renderer', Plugin.GetRenderer);
+router.get('/:pluginSlug/iframe', Plugin.GetIframe);
 
 export { router as PluginRouter };
