@@ -17,7 +17,7 @@ window.LiteLoader.api = {
       return new Promise(async (_res, _rej) => {
         const res = await axios({
           method: 'GET',
-          url: `/plugin/inject/config/${slug}`,
+          url: `/plugin/${slug}/config`,
         });
         const resBody = res.data;
 
@@ -34,7 +34,7 @@ window.LiteLoader.api = {
       return new Promise(async (_res, _rej) => {
         const res = await axios({
           method: 'POST',
-          url: `/plugin/inject/config/${slug}`,
+          url: `/plugin/${slug}/config`,
           data: newConfig,
         });
         const resBody = res.data;

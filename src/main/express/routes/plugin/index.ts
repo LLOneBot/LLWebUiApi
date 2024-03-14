@@ -26,4 +26,7 @@ router.get('/:pluginSlug/preload', Plugin.GetPreload);
 router.get('/:pluginSlug/renderer', Plugin.GetRenderer);
 router.get('/:pluginSlug/iframe', Plugin.GetIframe);
 
+router.get('/:pluginSlug/config', Plugin.GetConfig);
+router.post('/:pluginSlug/config', Plugin.SetConfig);
+
 export { router as PluginRouter };
