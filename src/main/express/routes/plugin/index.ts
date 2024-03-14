@@ -22,9 +22,9 @@ router.use('/:pluginSlug', (req, res, next) => {
 });
 
 router.get('/:pluginSlug', Plugin.GetInfo);
-router.get('/:pluginSlug/preload', Plugin.GetPreload);
-router.get('/:pluginSlug/renderer', Plugin.GetRenderer);
-router.get('/:pluginSlug/iframe', Plugin.GetIframe);
+router.get('/:pluginSlug/preload.js', Plugin.GetPreload);
+router.get('/:pluginSlug/renderer.js', Plugin.GetRenderer);
+router.get('/:pluginSlug/iframe.html', Plugin.GetIframe);
 
 router.get('/:pluginSlug/config', Plugin.GetConfig);
 router.post('/:pluginSlug/config', Plugin.SetConfig);
