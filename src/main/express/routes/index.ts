@@ -1,9 +1,5 @@
-import { Express, Router } from 'express';
-import * as API from './api';
-
-const router = Router();
-
-router.use('/files', API.FileRouter);
+import { Express } from 'express';
+import { APIRouter } from './api';
 
 export const useRoute = (app: Express) => {
   app.all('/', (req, res) => {
@@ -19,5 +15,5 @@ export const useRoute = (app: Express) => {
     })
   });
 
-  app.use('/api', router);
+  app.use('/api', APIRouter);
 };
