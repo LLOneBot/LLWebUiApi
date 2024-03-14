@@ -58,6 +58,31 @@ export const Get = (req: Request, res: Response) => {
   res.download(path);
 }
 
+export const Rename = (req: Request, res: Response) => {
+  const { path, newPath } = req.body;
+
+  if (fs.lstatSync(path).isDirectory()) {
+    return res.status(400)
+      .json({
+        msg: 'Target is a directory',
+      });
+  }
+
+  fs.rename(path, newPath)
+    .then(() => {
+      res.json({
+        msg: 'ok',
+      });
+    })
+    .catch((e) => {
+      res.status(500)
+        .json({
+          msg: 'Internal server error',
+          err: JSON.stringify(e, null, 2),
+        })
+    })
+}
+
 export const Write = (req: Request, res: Response) => {
   const { path, content } = req.body;
 
