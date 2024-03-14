@@ -25,7 +25,7 @@ export default {
 			cp({
 				targets: [
 					{ src: './manifest.json', dest: 'dist' },
-					{ src: './static', dest: 'dist/static', flatten: false },
+					// { src: './static', dest: 'dist/static', flatten: false },
 				]
 			}),
 		]
