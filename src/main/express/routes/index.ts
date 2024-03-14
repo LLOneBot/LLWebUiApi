@@ -1,8 +1,8 @@
-import { Express } from 'express';
 import { APIRouter } from './api';
 import { PluginRouter } from './plugin';
+import { Application } from 'express-ws';
 
-export const useRoute = (app: Express) => {
+export const useRoute = (app: Application) => {
   app.all('/', (req, res) => {
     res.json({
       msg: 'LLWebAPI is now running!',

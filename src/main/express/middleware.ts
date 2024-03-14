@@ -1,11 +1,10 @@
 import express from 'express';
 import { resolve } from 'path';
 import * as Utils from '@/main/helper/utils';
-import { Express } from "express";
+import { Application } from 'express-ws';
 
 
-
-export const useMiddleware = (app: Express) => {
+export const useMiddleware = (app: Application) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
 
