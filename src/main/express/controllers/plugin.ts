@@ -22,7 +22,8 @@ export const GetPreload = (req: Request, res: Response) => {
       });
   }
 
-  res.download(preloadPath);
+  res.set('Content-Type', 'text/javascript')
+    .download(preloadPath);
 }
 
 export const GetRenderer = (req: Request, res: Response) => {
@@ -36,5 +37,6 @@ export const GetRenderer = (req: Request, res: Response) => {
       });
   }
 
-  res.download(rendererPath);
+  res.set('Content-Type', 'text/javascript')
+    .download(rendererPath);
 }
