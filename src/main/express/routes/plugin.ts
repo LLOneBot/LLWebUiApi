@@ -1,7 +1,10 @@
 import { Router } from 'express';
+import { PluginInjectRouter } from './plugin-inject';
 import * as Plugin from '@/main/express/controllers/plugin';
 
 const router = Router();
+
+router.use('/inject', PluginInjectRouter);
 
 router.use('/:pluginSlug', (req, res, next) => {
   const { pluginSlug } = req.params;
