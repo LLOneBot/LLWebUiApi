@@ -1,5 +1,6 @@
 import { Express } from 'express';
 import { APIRouter } from './api';
+import { PluginRouter } from './plugin';
 
 export const useRoute = (app: Express) => {
   app.all('/', (req, res) => {
@@ -16,4 +17,5 @@ export const useRoute = (app: Express) => {
   });
 
   app.use('/api', APIRouter);
+  app.use('/plugin/:pluginSlug', PluginRouter);
 };
