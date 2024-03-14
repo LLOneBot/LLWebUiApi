@@ -3,7 +3,7 @@ import * as Plugin from '@/main/express/controllers/plugin';
 
 const router = Router();
 
-router.use((req, res, next) => {
+router.use('/:pluginSlug', (req, res, next) => {
   const { pluginSlug } = req.params;
   const pluginMeta = global.LiteLoader.plugins[pluginSlug];
 
@@ -18,8 +18,8 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/', Plugin.GetInfo);
-router.get('/preload', Plugin.GetPreload);
-router.get('/renderer', Plugin.GetRenderer);
+router.get('/:pluginSlug', Plugin.GetInfo);
+router.get('/:pluginSlug/preload', Plugin.GetPreload);
+router.get('/:pluginSlug/renderer', Plugin.GetRenderer);
 
 export { router as PluginRouter };

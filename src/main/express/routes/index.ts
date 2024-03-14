@@ -17,5 +17,5 @@ export const useRoute = (app: Express) => {
   });
 
   app.use('/api', APIRouter);
-  app.use('/plugin/:pluginSlug', PluginRouter);
+  app.use('/plugin', PluginRouter);
 };
