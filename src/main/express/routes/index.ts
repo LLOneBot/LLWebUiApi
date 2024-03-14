@@ -1,9 +1,9 @@
 import { Express, Router } from 'express';
-import { FileRouter } from './files';
+import * as API from './api';
 
 const router = Router();
 
-router.use('/files', FileRouter);
+router.use('/files', API.FileRouter);
 
 export const useRoute = (app: Express) => {
   app.all('/', (req, res) => {

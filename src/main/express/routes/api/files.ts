@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { existsSync } from 'fs';
 import { Router } from 'express';
-import { Files } from '../controllers';
+import { Files } from '../../controllers';
 
 const BASE_DIR = LiteLoader.path.root;
 const verifyPath = (path: string) => {
