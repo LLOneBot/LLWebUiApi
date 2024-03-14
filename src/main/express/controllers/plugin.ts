@@ -24,3 +24,17 @@ export const GetPreload = (req: Request, res: Response) => {
 
   res.download(preloadPath);
 }
+
+export const GetRenderer = (req: Request, res: Response) => {
+  const { pluginMeta } = res.locals;
+  const rendererPath = resolve(pluginMeta.path.plugin, pluginMeta.path.injects.renderer);
+
+  if (!fs.existsSync(rendererPath)) {
+    return res.status(400)
+      .json({
+        msg: 'File not found',
+      });
+  }
+
+  res.download(rendererPath);
+}

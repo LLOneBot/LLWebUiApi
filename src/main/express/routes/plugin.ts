@@ -20,5 +20,6 @@ router.use((req, res, next) => {
 
 router.get('/', Plugin.GetInfo);
 router.get('/preload', Plugin.GetPreload);
+router.get('/renderer', Plugin.GetRenderer);
 
 export { router as PluginRouter };
