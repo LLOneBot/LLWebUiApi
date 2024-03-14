@@ -44,5 +44,6 @@ router.use((req, res, next) => {
 router.get('/list', Files.List);
 router.post('/delete', Files.Delete);
 router.get('/get', Files.Get);
+router.post('/write', Files.Write);
 
 export { router as FileRouter };

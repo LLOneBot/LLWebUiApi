@@ -57,3 +57,21 @@ export const Get = (req: Request, res: Response) => {
 
   res.download(path);
 }
+
+export const Write = (req: Request, res: Response) => {
+  const { path, content } = req.body;
+
+  fs.writeFile(path, content, { encoding: 'utf8' })
+    .then(() => {
+      res.json({
+        msg: 'ok',
+      });
+    })
+    .catch((e) => {
+      res.status(500)
+        .json({
+          msg: 'Internal server error',
+          err: JSON.stringify(e, null, 2),
+        })
+    });
+}
