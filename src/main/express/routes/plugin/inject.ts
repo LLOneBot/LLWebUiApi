@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { Inject as PluginInject } from '@/main/express/controllers/plugin';
+import { Plugin } from '@/main/express/controllers';
 
 const router = Router();
 
-router.get('/iframe.js', PluginInject.GetJs);
-router.get('/llapi.js', PluginInject.GetLLAPI);
+router.get('/iframe.js', Plugin.Inject.GetJs);
+router.get('/llapi.js', Plugin.Inject.GetLLAPI);
 
 export { router as PluginInjectRouter };

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { PluginInjectRouter } from './inject';
-import * as Plugin from '@/main/express/controllers/plugin';
+import { Plugin } from '@/main/express/controllers';
 
 const router = Router();
 
@@ -17,6 +17,7 @@ router.use('/:pluginSlug', (req, res, next) => {
       });
   }
 
+  res.locals.pluginSlug = pluginSlug;
   res.locals.pluginMeta = pluginMeta;
   next();
 });
