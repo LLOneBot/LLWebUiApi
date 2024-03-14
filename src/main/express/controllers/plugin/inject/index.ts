@@ -1,4 +1,4 @@
-import InjectLLAPIRaw from '@static/plugin/llapi.js?raw';
+import InjectLLAPIRaw from './llapi.js?raw';
 import { Request, Response } from 'express';
 
 export const GetJs = (req: Request, res: Response) => {

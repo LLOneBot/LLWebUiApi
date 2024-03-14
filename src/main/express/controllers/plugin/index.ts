@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import fs from 'fs';
 import * as Utils from '@/main/helper/utils';
-import PluginIframeRaw from '@static/plugin/iframe.html?raw';
+import PluginIframeRaw from './iframe.html?raw';
 import { Request, Response } from 'express';
 
 export const GetInfo = (req: Request, res: Response) => {
