@@ -52,3 +52,5 @@ export const GetIframe = (req: Request, res: Response) => {
 
   res.send(result);
 }
+
+export * as Inject from './inject';

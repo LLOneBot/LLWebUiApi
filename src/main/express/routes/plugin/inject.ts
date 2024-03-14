@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as PluginInject from '@/main/express/controllers/plugin-inject';
+import { Inject as PluginInject } from '@/main/express/controllers/plugin';
 
 const router = Router();
 
