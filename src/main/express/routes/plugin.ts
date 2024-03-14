@@ -19,6 +19,6 @@ router.use((req, res, next) => {
 });
 
 router.get('/', Plugin.GetInfo);
-
+router.get('/preload', Plugin.GetPreload);
 
 export { router as PluginRouter };
