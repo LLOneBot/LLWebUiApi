@@ -48,7 +48,7 @@ export const GetIframe = (req: Request, res: Response) => {
   let result = PluginIframeRaw.toString();
 
   result = result.replace(/{\sBASE_URL\s}/g, baseUrl);
-  result = result.replace('<!--{ INJECT_JS }-->', `<script>window._LOAD_PLUGIN_('/plugin/${req.params.pluginSlug}/renderer.js', '/plugin/${req.params.pluginSlug}/preload.js');</script>`);
+  result = result.replace('<!--{ INJECT_JS }-->', `<script>window._LOAD_PLUGIN_('${req.params.pluginSlug}');</script>`);
 
   res.send(result);
 }

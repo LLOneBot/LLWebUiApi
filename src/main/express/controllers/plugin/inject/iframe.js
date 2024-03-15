@@ -1,9 +1,7 @@
 ;'use strict';
 
 (() => {
-  const loadPlugin = async (rendererFile, preloadFile) => {
-    const { onSettingWindowCreated } = await import(rendererFile);
-    const settingView = document.querySelector('#app');
+  const loadPlugin = async (pluginSlug) => {
     const FakeElectron = {
       ipcRenderer: {
         invoke: (channel, ...args) => new Promise((res, rej) => {
@@ -27,10 +25,16 @@
       else return {};
     }
     window.__FAKE_REQUIRE__ = FakeRequire;
-    const PreloadRes = await fetch(preloadFile);
+
+    // Load preload.js
+    const PreloadRes = await fetch(`/plugin/${pluginSlug}/preload.js`);
     const PreloadRaw = await PreloadRes.text();
-    const PreloadJS = `const require = window.__FAKE_REQUIRE__;${PreloadRaw}`;
+    const PreloadJS = `;const require = window.__FAKE_REQUIRE__;${PreloadRaw}`;
     eval(PreloadJS);
+
+    // Load renderer.js
+    const { onSettingWindowCreated } = await import(`/plugin/${pluginSlug}/renderer.js`);
+    const settingView = document.querySelector('#app');
     onSettingWindowCreated(settingView);
   }
 
