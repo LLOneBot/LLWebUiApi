@@ -1,6 +1,12 @@
+import InjectIPCRaw from './ipc.js?raw';
 import InjectIframeRaw from './iframe.js?raw';
 import InjectLLAPIRaw from './llapi.js?raw';
 import { Request, Response } from 'express';
+
+export const GetIPC = (req: Request, res: Response) => {
+  res.set('Content-Type', 'text/javascript')
+    .send(InjectIPCRaw);
+}
 
 export const GetJs = (req: Request, res: Response) => {
   res.set('Content-Type', 'text/javascript')
