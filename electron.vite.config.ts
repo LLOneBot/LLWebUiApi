@@ -1,6 +1,14 @@
 import { resolve } from 'path';
 import cp from 'vite-plugin-cp';
 
+const ExternalModule = [ 'ws' ];
+const BuildExternalModulePath = (moduleName: string) => {
+	return {
+		src: `./node_modules/${moduleName}`,
+		dest: `dist/node_modules/${moduleName}`,
+		flatten: false,
+	};
+};
 const BaseOption = {
 	resolve: {
 		alias: {
@@ -19,11 +27,16 @@ export default {
 			lib: {
 				formats: ['cjs'],
 				entry: { 'main': 'src/main.ts' },
+			},
+			rollupOptions: {
+				external: ExternalModule,
+				input: 'src/main.ts',
 			}
 		},
 		plugins: [
 			cp({
 				targets: [
+					...ExternalModule.map(BuildExternalModulePath),
 					{ src: './manifest.json', dest: 'dist' },
 					// { src: './static', dest: 'dist/static', flatten: false },
 				]
