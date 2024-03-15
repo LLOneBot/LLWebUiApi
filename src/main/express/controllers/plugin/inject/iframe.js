@@ -2,14 +2,17 @@
 
 (() => {
   const loadPlugin = async (pluginSlug) => {
+    const ipcWs = new IPCWebSocket();
     const FakeElectron = {
       ipcRenderer: {
-        invoke: (channel, ...args) => new Promise((res, rej) => {
+        invoke: (channel, ...args) => {
           console.log('[Electron][IPC][Invoke]', channel, args);
-        }),
-        send: (channel, ...args) => new Promise((res, rej) => {
+          return ipcWs.invoke(channel, ...args);
+        },
+        send: (channel, ...args) => {
           console.log('[Electron][IPC][Send]', channel, args);
-        }),
+          return ipcWs.send(channel, ...args);
+        },
         on: (channel, ...args) => {
           console.log('[Electron][IPC][On]', channel, args);
         }
