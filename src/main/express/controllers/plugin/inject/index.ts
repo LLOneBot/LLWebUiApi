@@ -1,5 +1,6 @@
 import InjectStyleColorRaw from './color.css?raw';
 import InjectStyleRaw from './style.css?raw';
+import InjectStyleWebComponents from './webcomponents.css?raw';
 import InjectIPCRaw from './ipc.js?raw';
 import InjectIframeRaw from './iframe.js?raw';
 import InjectLLAPIRaw from './llapi.js?raw';
@@ -13,6 +14,11 @@ export const GetStyleColor = (req: Request, res: Response) => {
 export const GetStyle = (req: Request, res: Response) => {
   res.set('Content-Type', 'text/css')
     .send(InjectStyleRaw);
+}
+
+export const GetStyleWebComponents = (req: Request, res: Response) => {
+  res.set('Content-Type', 'text/css')
+    .send(InjectStyleWebComponents);
 }
 
 export const GetIPC = (req: Request, res: Response) => {

@@ -5,6 +5,7 @@ const router = Router();
 
 router.get('/color.css', Plugin.Inject.GetStyleColor);
 router.get('/style.css', Plugin.Inject.GetStyle);
+router.get('/webcomponents.css', Plugin.Inject.GetStyleWebComponents);
 router.get('/ipc.js', Plugin.Inject.GetIPC);
 router.get('/iframe.js', Plugin.Inject.GetJs);
 router.get('/llapi.js', Plugin.Inject.GetLLAPI);
