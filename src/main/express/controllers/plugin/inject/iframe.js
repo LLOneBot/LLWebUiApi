@@ -1,4 +1,4 @@
-;'use strict';
+; 'use strict';
 
 (() => {
   const loadPlugin = async (pluginSlug) => {
@@ -28,8 +28,16 @@
       if (moduleName === 'electron') return FakeElectron;
       else return {};
     }
-    const RealFetch = window.fetch; 
-    const FakeFetch = async function(...args){ console.log(args);return RealFetch(...args);}
+    const RealFetch = window.fetch;
+    const FakeFetch = async function (...args) {
+      if (args.length > 0) {
+        if (args[0].substr(0, 9) === "local:///") {
+          // 重写地址
+          console.log("[Electron][Fetch][Rewrite]", args[0]);
+        }
+      }
+      return RealFetch(...args);
+    }
     window.fetch = FakeFetch;
     window.__FAKE_REQUIRE__ = FakeRequire;
 
