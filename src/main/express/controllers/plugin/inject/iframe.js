@@ -28,6 +28,9 @@
       if (moduleName === 'electron') return FakeElectron;
       else return {};
     }
+    const RealFetch = window.fetch; 
+    const FakeFetch = async function(...args){ console.log(args);return RealFetch(...args);}
+    window.fetch = FakeFetch;
     window.__FAKE_REQUIRE__ = FakeRequire;
 
     document.title = pluginMeta.name + ' - Plugin iframe';
