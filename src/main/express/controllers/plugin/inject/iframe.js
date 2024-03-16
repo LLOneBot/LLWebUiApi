@@ -1,6 +1,13 @@
 ; 'use strict';
 
 (() => {
+  const parseLocalScheme = (url, pluginPath) => {
+    if (url.indexOf('local:///') !== 0) return url;
+    let result = url.replace('local:///', '');
+    result = result.replace(pluginPath, document.baseURI);
+    return result;
+  };
+
   const loadPlugin = async (pluginSlug) => {
     const { manifest: pluginMeta, path: originPath } = LiteLoader.plugins[pluginSlug];
     const ipcWs = new IPCWebSocket();
@@ -36,9 +43,7 @@
       const [originUrl, originConfig = {}, ...originArgs] = args;
 
       if (originUrl.indexOf('local:///') === 0) {
-        let newUrl = originUrl.replace('local:///', '');
-        newUrl = newUrl.replace(originPath.plugin, document.baseURI);
-        return RealFetch(newUrl, originConfig, ...originArgs);
+        return RealFetch(parseLocalScheme(originUrl, originPath.plugin), originConfig, ...originArgs);
       }
 
       if (originUrl.indexOf(window.location.origin) !== 0) {
@@ -60,12 +65,19 @@
       return RealFetch(originUrl, originConfig, ...originArgs);
     }
     window.fetch = FakeFetch;
+
     // MutationObserver Html
     const observer = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type !== 'childList' || !mutation.addedNodes) return;
         mutation.addedNodes.forEach((item) => {
-            console.log(item);
+          if (
+            (!item.href || item.href.indexOf('local:///') !== 0) &&
+            (!item.src || item.src.indexOf('local:///') !== 0)
+          ) return;
+
+          if (item.href) item.href = parseLocalScheme(item.href, originPath.plugin);
+          if (item.src) item.src = parseLocalScheme(item.src, originPath.plugin);
         });
       }
     });
@@ -86,6 +98,7 @@
     // Load renderer.js
     const { onSettingWindowCreated } = await import(document.baseURI + pluginMeta.injects.renderer);
     const settingView = document.querySelector('#app');
+    settingView.classList.add('liteloader', 'tab-view', pluginSlug);
     await onSettingWindowCreated(settingView);
 
     document.querySelectorAll('.fake-bar.nav-bar.liteloader .nav-item.liteloader').forEach(dom => {
