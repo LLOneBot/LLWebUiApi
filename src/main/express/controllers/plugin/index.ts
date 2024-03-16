@@ -4,6 +4,8 @@ import * as Utils from '@/main/helper/utils';
 import PluginIframeRaw from './iframe.html?raw';
 import { Request, Response } from 'express';
 
+const isEmpty = (data: any) => data === undefined || data === null || data === '';
+
 export const GetInfo = (req: Request, res: Response) => {
   const { pluginMeta } = res.locals;
   res.json({
@@ -46,6 +48,11 @@ export const GetIframe = (req: Request, res: Response) => {
   const { pluginMeta } = res.locals;
   const baseUrl = req.protocol + '://' + req.get('host') + '/';
   let result = PluginIframeRaw.toString();
+  
+  if (isEmpty(pluginMeta.path.injects.preload) || isEmpty(pluginMeta.path.injects.renderer)) {
+    return res.status(400)
+      .send('Plugin did not provide preloader or renderer');
+  }
 
   result = result.replace(/{\sBASE_URL\s}/g, baseUrl);
   result = result.replace('<!--{ INJECT_JS }-->', `<script>window._LOAD_PLUGIN_('${req.params.pluginSlug}');</script>`);
