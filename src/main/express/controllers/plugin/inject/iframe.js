@@ -35,8 +35,6 @@
     const FakeFetch = (...args) => {
       const [ originUrl, originConfig = {}, ...originArgs ] = args;
 
-      console.log(args);
-
       if (originUrl.indexOf('local:///') === 0) {
         let newUrl = originUrl.replace('local:///', '');
         newUrl = newUrl.replace(originPath.plugin, document.baseURI);
