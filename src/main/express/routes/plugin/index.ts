@@ -13,9 +13,16 @@ router.use('/:pluginSlug', (req, res, next) => {
   const pluginMeta = global.LiteLoader.plugins[pluginSlug];
 
   if (!pluginSlug || !pluginMeta) {
-    return res.status(400)
+    return res.status(404)
       .json({
         msg: 'Plugin not found',
+      });
+  }
+
+  if (pluginMeta.disabled) {
+    return res.status(404)
+      .json({
+        msg: 'Plugin is disabled',
       });
   }
 
