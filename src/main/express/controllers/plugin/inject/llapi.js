@@ -48,3 +48,39 @@ window.LiteLoader.api = {
     },
   }
 };
+
+window.addEventListener('load', () => { // For some plugin
+  const navbarDom = document.createElement('div');
+  navbarDom.classList.add('fake-bar', 'nav-bar', 'liteloader');
+
+  for (const slug in LiteLoader.plugins) {
+    const {
+      disabled,
+      manifest: {
+        name,
+        injects: {
+          renderer
+        }
+      }
+    } = LiteLoader.plugins[slug];
+    if (disabled || !renderer) continue;
+
+    const navItemDom = document.createElement('div');
+    navItemDom.classList.add('nav-item', 'liteloader');
+    navItemDom.dataset.pluginSlug = slug;
+
+    const navItemIconDom = document.createElement('i');
+    navItemIconDom.classList.add('q-icon', 'icon');
+
+    const navItemLabelDom = document.createElement('div');
+    navItemLabelDom.classList.add('name');
+    navItemLabelDom.innerHTML = name;
+
+    navItemDom.appendChild(navItemIconDom);
+    navItemDom.appendChild(navItemLabelDom);
+
+    navbarDom.appendChild(navItemDom);
+  }
+
+  document.body.appendChild(navbarDom);
+});

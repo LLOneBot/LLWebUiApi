@@ -33,6 +33,13 @@ a, address, article, aside, b, blockquote, body, div, em, fieldset, footer, form
   background: transparent;
 }
 
+.fake-bar {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+}
+
 .q-input {
   align-items: center;
   border-radius: 4px;

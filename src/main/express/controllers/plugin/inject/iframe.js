@@ -72,7 +72,13 @@
     // Load renderer.js
     const { onSettingWindowCreated } = await import(document.baseURI + pluginMeta.injects.renderer);
     const settingView = document.querySelector('#app');
-    onSettingWindowCreated(settingView);
+    await onSettingWindowCreated(settingView);
+
+    document.querySelectorAll('.fake-bar.nav-bar.liteloader .nav-item.liteloader').forEach(dom => {
+      if (dom.dataset.pluginSlug === pluginSlug) {
+        dom.dispatchEvent(new CustomEvent('click'));
+      }
+    });
   }
 
   window._LOAD_PLUGIN_ = loadPlugin;
