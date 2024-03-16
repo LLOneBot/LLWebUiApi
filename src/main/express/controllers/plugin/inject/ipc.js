@@ -47,7 +47,7 @@ class IPCWebSocket {
   _onMessage(msg) {
     if (msg.type === 'pong') { /* Ping-pong */ }
     else if (msg.type === 'invoke') {
-      this._doMsgEchoCallback('invoke', msg.channel, msg.echo, msg.data);
+      this._doMsgEchoCallback('invoke', msg.channel, msg.echo, msg.data, msg.error);
     }
   }
 
@@ -63,7 +63,7 @@ class IPCWebSocket {
     });
   }
 
-  _doMsgEchoCallback(type, channel, echoStr, data) {
+  _doMsgEchoCallback(type, channel, echoStr, data, error) {
     const echos = this.echos[type];
 
     if (!echos) throw new Error(`No such echo type: ${type}`);
@@ -72,18 +72,23 @@ class IPCWebSocket {
       if (echo.channel !== channel) continue;
       if (echoStr && echo.echo !== echoStr) continue;
 
+      if (error) {
+        echo.errorCallback(error);
+        continue;
+      }
+
       if (data instanceof Array && data.length === 1) echo.callback(data[0]);
       else echo.callback(data);
     }
   }
 
-  addMsgEcho(type, channel, callback, echo = null) {
+  addMsgEcho(type, channel, callback, errorCallback, echo = null) {
     const echos = this.echos[type];
     const id = uuidv4();
 
     if (!echos) throw new Error(`No such echo type: ${type}`);
 
-    echos.push({ id, channel, callback, echo });
+    echos.push({ id, channel, callback, errorCallback, echo });
     return id;
   }
 
@@ -105,6 +110,9 @@ class IPCWebSocket {
     return new Promise((res, rej) => {
       const echoId = this.addMsgEcho('invoke', channel, (data) => {
         res(data);
+        this.removeMsgEcho('invoke', echoId);
+      }, (e) => {
+        rej(e);
         this.removeMsgEcho('invoke', echoId);
       }, echo);
 

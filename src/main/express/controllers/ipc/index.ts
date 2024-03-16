@@ -1,9 +1,11 @@
+import { IPCExecuteCall } from '@/main/helper/ipcHook';
 
 interface IWebSocketMessage {
   type: string,
   channel: string,
   params?: any, // Send
   data?: any, // Receive
+  error?: any, // Receive
   echo?: any, // Optional
 }
 
@@ -17,8 +19,15 @@ export const IPCHandler = ({ type, channel, params = [], echo }: IWebSocketMessa
   console.log({ type, channel, params, echo });
   if (type === 'ping') {
     result.type = 'pong';
-  } else {
-    return sendMsg({ type, channel, params, echo });
+    sendMsg(result);
+  } else if (type === 'invoke') {
+    IPCExecuteCall(channel, params, (data) => {
+      result.data = data;
+      sendMsg(result);
+    }, (e) => {
+      result.error = e;
+      sendMsg(result);
+    });
   }
-  sendMsg(result);
+  // sendMsg(result);
 }
