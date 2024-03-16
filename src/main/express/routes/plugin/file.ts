@@ -9,13 +9,11 @@ const resolvePath = (basePath: string, targetPath: string) => {
   else return resolve(basePath, targetPath);
 }
 
-router.use((req, res, next) => {
+router.use((req, res) => {
   const { path: targetPath } = req;
   const { pluginMeta } = res.locals;
   const basePath = pluginMeta.path.plugin;
   const realPath = resolvePath(basePath, targetPath);
-
-  console.log(targetPath, basePath, realPath);
 
   if (realPath.indexOf(basePath) !== 0) {
     return res.status(400)

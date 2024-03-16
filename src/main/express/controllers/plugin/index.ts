@@ -14,39 +14,9 @@ export const GetInfo = (req: Request, res: Response) => {
   });
 }
 
-export const GetPreload = (req: Request, res: Response) => {
-  const { pluginMeta } = res.locals;
-  const preloadPath = resolve(pluginMeta.path.plugin, pluginMeta.path.injects.preload);
-
-  if (!fs.existsSync(preloadPath)) {
-    return res.status(400)
-      .json({
-        msg: 'File not found',
-      });
-  }
-
-  res.set('Content-Type', 'text/javascript')
-    .download(preloadPath);
-}
-
-export const GetRenderer = (req: Request, res: Response) => {
-  const { pluginMeta } = res.locals;
-  const rendererPath = resolve(pluginMeta.path.plugin, pluginMeta.path.injects.renderer);
-
-  if (!fs.existsSync(rendererPath)) {
-    return res.status(400)
-      .json({
-        msg: 'File not found',
-      });
-  }
-
-  res.set('Content-Type', 'text/javascript')
-    .download(rendererPath);
-}
-
 export const GetIframe = (req: Request, res: Response) => {
-  const { pluginMeta } = res.locals;
-  const baseUrl = req.protocol + '://' + req.get('host') + '/';
+  const { pluginMeta, pluginSlug } = res.locals;
+  const baseUrl = `${req.protocol}://${req.get('host')}/plugin/${pluginSlug}/files/`;
   let result = PluginIframeRaw.toString();
   
   if (isEmpty(pluginMeta.path.injects.preload) || isEmpty(pluginMeta.path.injects.renderer)) {
@@ -55,7 +25,7 @@ export const GetIframe = (req: Request, res: Response) => {
   }
 
   result = result.replace(/{\sBASE_URL\s}/g, baseUrl);
-  result = result.replace('<!--{ INJECT_JS }-->', `<script>window._LOAD_PLUGIN_('${req.params.pluginSlug}');</script>`);
+  result = result.replace('<!--{ INJECT_JS }-->', `<script>window._LOAD_PLUGIN_('${pluginSlug}');</script>`);
 
   res.send(result);
 }

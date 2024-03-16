@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { PluginInjectRouter } from './inject';
 import { PluginFileRouter } from './file';
+import { PluginProxyRouter } from './proxy';
 import { Plugin } from '@/main/express/controllers';
 
 const router = Router();
@@ -30,5 +31,6 @@ router.get('/:pluginSlug/config', Plugin.GetConfig);
 router.post('/:pluginSlug/config', Plugin.SetConfig);
 
 router.use('/:pluginSlug/files', PluginFileRouter);
+router.use('/:pluginSlug/proxy', PluginProxyRouter);
 
 export { router as PluginRouter };
