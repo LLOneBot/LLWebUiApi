@@ -11,3 +11,10 @@ LLWebUiApi 能够提供部分伪Headless能力，将无GPU服务器渲染压力�
 如果你想体验，现在是不可用的状态，唯一可用的就是远程登录与Headless等基础Api而无法提供完善的图形化简洁操作
 
 请移步LLOneBot Telegram/QQ 持续关注
+
+## 感谢
+LLOnebot
+
+LiteLoaderQQNT
+
+Chronocat
