@@ -1,4 +1,4 @@
-import { IPCExecuteCall, IpcApiSend } from '@/main/helper/ipcHook';
+import { IpcApiInvoke, IpcApiSend } from '@/main/helper/ipcHook';
 
 interface IWebSocketMessage {
   type: string,
@@ -21,16 +21,16 @@ export const IPCHandler = ({ type, channel, params = [], echo }: IWebSocketMessa
     result.type = 'pong';
     sendMsg(result);
   } else if (type === 'invoke') {
-    IPCExecuteCall(channel, params, (data) => {
+    IpcApiInvoke(channel, params, (data) => {
       result.data = data;
       sendMsg(result);
     }, (e) => {
       result.error = e;
       sendMsg(result);
     });
-  }else if(type=='send'){
-    IpcApiSend(channel,params);
-    sendMsg("{}");
+  } else if (type === 'send') {
+    IpcApiSend(channel, params);
+    sendMsg(result);
   }
   // sendMsg(result);
 }

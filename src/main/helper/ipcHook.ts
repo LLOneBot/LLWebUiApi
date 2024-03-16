@@ -1,36 +1,5 @@
 import { BrowserWindow, ipcMain } from "electron";
 let proxyIpcInvokeList: any[] = [];
-export async function IPCExecuteCall(
-    channel: string,
-    args: any[],
-    callback?: (payload: any) => (void | Promise<void>),
-    errorCallback?: (error: string) => void
-) {
-    console.log("reg hook");
-    console.log(proxyIpcInvokeList[0]);
-
-    return proxyIpcInvokeList[0](
-        {
-            _replyChannel: {
-                sendReply: ({ result, error }: { result: any, error: string }) => {
-                    if (error && errorCallback) {
-                        return errorCallback(error);
-                    }
-                    if (callback) {
-                        new Promise(async (res) => {
-                            res((await callback(result)));
-                        }).then().catch(e => console.error(e));
-                    }
-                }
-            },
-            frameId: 1,
-            processId: 1
-        },
-        false,
-        channel,
-        [...args]
-    );
-}
 export function HookIpcReceiveHandle(window: BrowserWindow) {
     const originalSend = window.webContents.send;
     const patchSend = (channel: string, ...args: any) => {
@@ -96,5 +65,36 @@ export function IpcApiSend(channel: string, args: any): boolean {
         channel,
         {},
         ...args
+    );
+}
+export async function IpcApiInvoke(
+    channel: string,
+    args: any[],
+    callback?: (payload: any) => (void | Promise<void>),
+    errorCallback?: (error: string) => void
+) {
+    console.log("reg hook");
+    console.log(proxyIpcInvokeList[0]);
+
+    return proxyIpcInvokeList[0](
+        {
+            _replyChannel: {
+                sendReply: ({ result, error }: { result: any, error: string }) => {
+                    if (error && errorCallback) {
+                        return errorCallback(error);
+                    }
+                    if (callback) {
+                        new Promise(async (res) => {
+                            res((await callback(result)));
+                        }).then().catch(e => console.error(e));
+                    }
+                }
+            },
+            frameId: 1,
+            processId: 1
+        },
+        false,
+        channel,
+        [...args]
     );
 }
