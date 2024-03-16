@@ -2,6 +2,7 @@
 
 (() => {
   const loadPlugin = async (pluginSlug) => {
+    const pluginMeta = LiteLoader.plugins[pluginSlug].manifest;
     const ipcWs = new IPCWebSocket();
     const FakeElectron = {
       ipcRenderer: {
@@ -28,6 +29,8 @@
       else return {};
     }
     window.__FAKE_REQUIRE__ = FakeRequire;
+
+    document.title = pluginMeta.name + ' - Plugin iframe';
 
     // Load preload.js
     const PreloadRes = await fetch(`/plugin/${pluginSlug}/preload.js`);
