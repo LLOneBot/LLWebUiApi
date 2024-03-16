@@ -31,9 +31,9 @@
     window.__FAKE_REQUIRE__ = FakeRequire;
 
     // Hook fetch
-    const RealFetch = window.fetch; 
+    const RealFetch = window.fetch;
     const FakeFetch = (...args) => {
-      const [ originUrl, originConfig = {}, ...originArgs ] = args;
+      const [originUrl, originConfig = {}, ...originArgs] = args;
 
       if (originUrl.indexOf('local:///') === 0) {
         let newUrl = originUrl.replace('local:///', '');
@@ -60,6 +60,20 @@
       return RealFetch(originUrl, originConfig, ...originArgs);
     }
     window.fetch = FakeFetch;
+    // MutationObserver Html
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type !== 'childList' || !mutation.addedNodes) return;
+        mutation.addedNodes.forEach((item) => {
+            console.log(item);
+        });
+      }
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
 
     document.title = pluginMeta.name + ' - Plugin iframe';
 
