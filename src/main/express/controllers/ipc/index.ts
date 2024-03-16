@@ -1,4 +1,4 @@
-import { IPCExecuteCall } from '@/main/helper/ipcHook';
+import { IPCExecuteCall, IpcApiSend } from '@/main/helper/ipcHook';
 
 interface IWebSocketMessage {
   type: string,
@@ -28,6 +28,9 @@ export const IPCHandler = ({ type, channel, params = [], echo }: IWebSocketMessa
       result.error = e;
       sendMsg(result);
     });
+  }else if(type=='send'){
+    IpcApiSend(channel,params);
+    sendMsg("{}");
   }
   // sendMsg(result);
 }
