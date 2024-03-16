@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { PluginInjectRouter } from './inject';
+import { PluginFileRouter } from './file';
 import { Plugin } from '@/main/express/controllers';
 
 const router = Router();
@@ -23,11 +24,11 @@ router.use('/:pluginSlug', (req, res, next) => {
 });
 
 router.get('/:pluginSlug', Plugin.GetInfo);
-router.get('/:pluginSlug/preload.js', Plugin.GetPreload);
-router.get('/:pluginSlug/renderer.js', Plugin.GetRenderer);
 router.get('/:pluginSlug/iframe.html', Plugin.GetIframe);
 
 router.get('/:pluginSlug/config', Plugin.GetConfig);
 router.post('/:pluginSlug/config', Plugin.SetConfig);
+
+router.use('/:pluginSlug/files', PluginFileRouter);
 
 export { router as PluginRouter };
