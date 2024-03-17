@@ -1,23 +1,24 @@
 import { BrowserWindow, ipcMain } from "electron";
 import { CoreLog, LogLevel } from "./log";
+type IpcRendererCallBack = (channel: string, args: any[]) => void;
 let proxyIpcInvokeList: any[] = [];
-let IpcRendererListener: Map<string, Array<any>> = new Map();
-export function addIpcRendererListener(channel: string, callback: any) {
+let IpcRendererListener: Map<string, Array<IpcRendererCallBack>> = new Map();
+export function addIpcRendererListener(channel: string, callback: IpcRendererCallBack) {
     if (IpcRendererListener.has(channel)) {
-        for (let key of IpcRendererListener.get(channel) as Array<any>) {
+        for (let key of IpcRendererListener.get(channel) as Array<IpcRendererCallBack>) {
             if (key == callback) {
                 return false;
             }
         }
-        IpcRendererListener.set(channel, [callback, ...(IpcRendererListener.get(channel) as Array<any>)]);
+        IpcRendererListener.set(channel, [callback, ...(IpcRendererListener.get(channel) as Array<IpcRendererCallBack>)]);
     }
     IpcRendererListener.set(channel, [callback]);
     return true;
 }
-export function removeIpcRendererListener(channel: string, callback: any) {
+export function removeIpcRendererListener(channel: string, callback: IpcRendererCallBack) {
     let newListener = [];
     if (IpcRendererListener.has(channel)) {
-        for (let key of IpcRendererListener.get(channel) as Array<any>) {
+        for (let key of IpcRendererListener.get(channel) as Array<IpcRendererCallBack>) {
             if (key == callback) {
             } else {
                 newListener.push(key);
@@ -33,8 +34,8 @@ export function HookIpcReceiveHandle(window: BrowserWindow) {
     const patchSend = (channel: string, ...args: any) => {
         // HOOK IPC Receive
         if (IpcRendererListener.has(channel)) {
-            for (let key of IpcRendererListener.get(channel) as Array<any>) {
-                key.call(channel, args);
+            for (let key of IpcRendererListener.get(channel) as Array<IpcRendererCallBack>) {
+                key(channel, args);
             }
         }
         if (channel.indexOf("IPC_") != -1) {
