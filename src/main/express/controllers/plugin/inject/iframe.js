@@ -42,7 +42,10 @@
     return result;
   };
 
-  // Hook fetch
+  const loadPlugin = async (pluginSlug) => {
+    const { manifest: pluginMeta, path: originPath } = LiteLoader.plugins[pluginSlug];
+
+    // Hook fetch
   const RealFetch = window.fetch;
   const FakeFetch = (...args) => {
     const [originUrl, originConfig = {}, ...originArgs] = args;
@@ -70,9 +73,6 @@
     return RealFetch(originUrl, originConfig, ...originArgs);
   }
   window.fetch = FakeFetch;
-
-  const loadPlugin = async (pluginSlug) => {
-    const { manifest: pluginMeta, path: originPath } = LiteLoader.plugins[pluginSlug];
 
     // MutationObserver Html
     const observer = new MutationObserver((mutationsList) => {
