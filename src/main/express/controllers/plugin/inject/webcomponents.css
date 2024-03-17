@@ -46,6 +46,22 @@ setting-list[data-direction="row"] setting-item > *:first-child {
   align-items: center;
 }
 
+setting-list setting-divider,
+setting-list[data-direction="column"] setting-divider {
+  display: block;
+  position: relative;
+  width: unset;
+  height: 1px;
+  margin: 0 16px;
+  background-color: var(--border_standard);
+}
+
+setting-list[data-direction="row"] setting-divider {
+  width: 1px;
+  height: unset;
+  margin: 16px 0;
+}
+
 setting-text[data-type="secondary"] {
   color: var(--text_secondary);
   font-size: min(var(--font_size_2),16px);

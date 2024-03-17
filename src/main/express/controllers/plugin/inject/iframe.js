@@ -105,9 +105,21 @@
 
     // Load renderer.js
     const { onSettingWindowCreated } = await import(document.baseURI + pluginMeta.injects.renderer);
-    const settingView = document.querySelector('#app');
+    const settingView = document.createElement('div');
+    settingView.id = 'app';
     settingView.classList.add('liteloader', 'tab-view', pluginSlug);
     await onSettingWindowCreated(settingView);
+    // Add divider
+    settingView.querySelectorAll('setting-list').forEach((dom) => {
+      const children = [ ...dom.children ];
+      for (let i = 1; i < children.length; i++) {
+        const child = children[i];
+        if (child.tagName === 'SETTING-DIVIDER') continue;
+        const divider = document.createElement('setting-divider');
+        dom.insertBefore(divider, child);
+      }
+    });
+    document.body.appendChild(settingView);
 
     document.querySelectorAll('.fake-bar.nav-bar.liteloader .nav-item.liteloader').forEach(dom => {
       if (dom.dataset.pluginSlug === pluginSlug) {
