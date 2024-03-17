@@ -36,7 +36,8 @@ export function InitIpcHandle(ipcMain: Electron.IpcMain, HandleIpcApi: HandleIPC
         // 接收二维码内容
         DataClass.getInstance().set("QRCODE_BASE64", arg);
     });
-    ipcMain.on(CHANNEL_BROWSER_SETLOGINPAGE, (_event, _arg) => {
-        // 设置 Login-Window
+    ipcMain.on(CHANNEL_BROWSER_SETLOGINPAGE, (_event, arg) => {
+        // 设置 Login-Window 已废弃 现用于测Ipc.On
+        console.log(arg);
     });
 }
