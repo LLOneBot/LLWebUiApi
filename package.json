@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "version": "0.0.0",
+  "license": "GPL-3.0-only",
   "scripts": {
     "build": "electron-vite build"
   },
