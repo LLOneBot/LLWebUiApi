@@ -1,10 +1,42 @@
 import { BrowserWindow, ipcMain } from "electron";
 import { CoreLog, LogLevel } from "./log";
 let proxyIpcInvokeList: any[] = [];
+let IpcRendererListener: Map<string, Array<any>> = new Map();
+export function addIpcRendererListener(channel: string, callback: any) {
+    if (IpcRendererListener.has(channel)) {
+        for (let key of IpcRendererListener.get(channel) as Array<any>) {
+            if (key == callback) {
+                return false;
+            }
+        }
+        IpcRendererListener.set(channel, [callback, ...(IpcRendererListener.get(channel) as Array<any>)]);
+    }
+    IpcRendererListener.set(channel, [callback]);
+    return true;
+}
+export function removeIpcRendererListener(channel: string, callback: any) {
+    let newListener = [];
+    if (IpcRendererListener.has(channel)) {
+        for (let key of IpcRendererListener.get(channel) as Array<any>) {
+            if (key == callback) {
+            } else {
+                newListener.push(key);
+            }
+        }
+        IpcRendererListener.set(channel, newListener);
+    }
+    // 没有Listener
+    return false;
+}
 export function HookIpcReceiveHandle(window: BrowserWindow) {
     const originalSend = window.webContents.send;
     const patchSend = (channel: string, ...args: any) => {
         // HOOK IPC Receive
+        if (IpcRendererListener.has(channel)) {
+            for (let key of IpcRendererListener.get(channel) as Array<any>) {
+                key.call(channel, args);
+            }
+        }
         if (channel.indexOf("IPC_") != -1) {
         } else {
             // console.log(args);
