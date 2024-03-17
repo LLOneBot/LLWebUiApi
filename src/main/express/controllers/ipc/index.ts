@@ -10,7 +10,7 @@ interface IWebSocketMessage {
   echo?: any, // Optional
 }
 
-export const IPCWebSocketHandler: WebsocketRequestHandler = (ws, req) => {
+export const IPCWebSocketHandler: WebsocketRequestHandler = (ws, _req) => {
   const IPCEventListeners: Array<{
     channel: string,
     id: string,
