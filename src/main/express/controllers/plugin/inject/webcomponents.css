@@ -1,7 +1,20 @@
+setting-section::before {
+  content: attr(data-title);
+  display: block;
+  margin: 0px 0px 8px 16px;
+  color: var(--text_primary);
+  font-weight: var(--font-bold);
+  font-size: min(var(--font_size_3), 18px);
+  line-height: min(var(--line_height_3), 24px);
+}
 
 setting-panel {
   display: block;
   margin-bottom: 20px;
+}
+
+setting-section:last-child setting-panel {
+  margin-bottom: 0;
 }
 
 setting-list,
