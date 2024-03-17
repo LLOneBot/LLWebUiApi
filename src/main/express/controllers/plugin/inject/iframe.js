@@ -21,8 +21,13 @@
           console.log('[Electron][IPC][Send]', channel, args);
           return ipcWs.send(channel, ...args);
         },
-        on: (channel, ...args) => {
-          console.log('[Electron][IPC][On]', channel, args);
+        on: (channel, listener) => {
+          console.log('[Electron][IPC][On]', channel, listener);
+          return ipcWs.on(channel, listener);
+        },
+        off: (channel, listener) => {
+          console.log('[Electron][IPC][Off]', channel, listener);
+          return ipcWs.off(channel, listener);
         }
       },
       contextBridge: {
@@ -33,7 +38,7 @@
     };
     const FakeRequire = (moduleName) => {
       if (moduleName === 'electron') return FakeElectron;
-      else return {};
+      else return import(moduleName);
     }
     window.__FAKE_REQUIRE__ = FakeRequire;
 

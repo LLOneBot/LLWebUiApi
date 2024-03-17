@@ -17,6 +17,7 @@ class IPCWebSocket {
 
     this.echos = {
       invoke: [],
+      on: [],
     };
 
     this.ws.addEventListener('open', () => this._onConnected());
@@ -48,6 +49,8 @@ class IPCWebSocket {
     if (msg.type === 'pong') { /* Ping-pong */ }
     else if (msg.type === 'invoke') {
       this._doMsgEchoCallback('invoke', msg.channel, msg.echo, msg.data, msg.error);
+    } else if (msg.type === 'event') {
+      this._doMsgEchoCallback('on', msg.channel, msg.echo, msg.data, msg.error);
     }
   }
 
@@ -55,11 +58,15 @@ class IPCWebSocket {
     return this.ws.send(JSON.stringify(data));
   }
 
+  _echo(type) {
+    return `ipc_${type}_${performance.now()}`;
+  }
+
   _sendPing() {
     return this._send({
       type: 'ping',
       channel: 'WebApiInternal',
-      echo: `ipc_ping_${performance.now()}`,
+      echo: this._echo('ping'),
     });
   }
 
@@ -106,7 +113,7 @@ class IPCWebSocket {
   }
 
   invoke(channel, ...params) {
-    const echo = `ipc_invoke_${performance.now()}`;
+    const echo = this._echo('invoke');
     return new Promise((res, rej) => {
       const echoId = this.addMsgEcho('invoke', channel, (data) => {
         res(data);
@@ -130,18 +137,50 @@ class IPCWebSocket {
   }
 
   send(channel, ...params) {
-    const echo = `ipc_send_${performance.now()}`;
     return new Promise((res, rej) => {
       try {
         res(this._send({
           type: 'send',
           channel,
           params: [ ...params ],
-          echo,
+          echo: this._echo('send'),
         }));
       } catch (e) {
         rej(e);
       }
     });
+  }
+
+  on(channel, listener) {
+    const id = uuidv4();
+
+    this.addMsgEcho('on', channel, (...data) => {
+      listener(new CustomEvent('IpcRendererEvent'), ...data);
+    }, (e) => console.error(e), id);
+
+    this._send({
+      type: 'on',
+      channel,
+      echo: id,
+    });
+    return id;
+  }
+
+  off(channel, listener) {
+    for (let i = 0; i < this.echos.on.length; i++) {
+      const echo = this.echos.on[i];
+
+      if (echo.channel !== channel) continue;
+      if (echo.callback !== listener) continue;
+
+      this._send({
+        type: 'off',
+        channel,
+        echo: echo.echo,
+      });
+      this.echos.on.splice(i, 1);
+      return true;
+    }
+    return false;
   }
 }
