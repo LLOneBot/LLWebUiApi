@@ -45,12 +45,15 @@ class IPCWebSocket {
     if (this.heartBeatClock) clearInterval(this.heartBeatClock);
   }
 
-  _onMessage(msg) {
-    if (msg.type === 'pong') { /* Ping-pong */ }
-    else if (msg.type === 'invoke') {
-      this._doMsgEchoCallback('invoke', msg.channel, msg.echo, msg.data, msg.error);
-    } else if (msg.type === 'event') {
-      this._doMsgEchoCallback('on', msg.channel, msg.echo, msg.data, msg.error);
+  _onMessage({ type, channel, echo, data, error }) {
+    switch (type) {
+      case 'invoke':
+      case 'event':
+        this._doMsgEchoCallback(type, channel, echo, data, error);
+        break;
+      default: {
+        /* Nobody here but us chickens */
+      }
     }
   }
 
@@ -149,6 +152,25 @@ class IPCWebSocket {
         rej(e);
       }
     });
+  }
+
+  sendSync(channel, ...args) { // XXX: STOP USING IT YOU PLUGIN DEVELOPERS!
+    const getIPCSyncURI = () => {
+      return document.baseURI.substring(0, document.baseURI.lastIndexOf('/', document.baseURI.length - 2)) + '/ipc_send_sync';
+    };
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', getIPCSyncURI(), false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+      channel,
+      params: [ ...args ],
+    }));
+    if (xhr.readyState !== 4) throw new Error('Your browser does not support synchronized HTTP request!');
+    if (xhr.status !== 200) throw new Error('Request failed: ' + xhr.statusText);
+
+    const response = JSON.parse(xhr.responseText);
+    if (response.msg === 'ok') return response.data;
+    else throw new Error('Request failed: ' + response.msg);
   }
 
   on(channel, listener) {

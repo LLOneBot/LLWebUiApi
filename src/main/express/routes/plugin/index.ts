@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { PluginInjectRouter } from './inject';
 import { PluginFileRouter } from './file';
 import { PluginProxyRouter } from './proxy';
+import { PluginIPCSendSyncRouter } from './sendSync';
 import { Plugin } from '@/main/express/controllers';
 
 const router = Router();
@@ -39,5 +40,7 @@ router.post('/:pluginSlug/config', Plugin.SetConfig);
 
 router.use('/:pluginSlug/files', PluginFileRouter);
 router.use('/:pluginSlug/proxy', PluginProxyRouter);
+
+router.use('/:pluginSlug/ipc_send_sync', PluginIPCSendSyncRouter);
 
 export { router as PluginRouter };

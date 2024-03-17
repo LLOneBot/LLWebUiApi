@@ -24,7 +24,6 @@ export const IPCWebSocketHandler: WebsocketRequestHandler = (ws, _req) => {
       result.echo = echo;
     }
 
-    console.log({ type, channel, params, echo });
     if (type === 'ping') {
       result.type = 'pong';
       sendMsg(result);
@@ -54,7 +53,7 @@ export const IPCWebSocketHandler: WebsocketRequestHandler = (ws, _req) => {
         id: echo,
         callback,
       });
-      addIpcRendererListener(channel,callback);
+      addIpcRendererListener(channel, callback);
       sendMsg({ type, channel, echo });
     } else if (type === 'off') {
       for (let i = 0; i < IPCEventListeners.length; i++) {
@@ -66,7 +65,6 @@ export const IPCWebSocketHandler: WebsocketRequestHandler = (ws, _req) => {
         removeIpcRendererListener(channel, listener.callback);
         return sendMsg({ type, channel, echo });
       }
-
       return sendMsg({ type, channel, error: 'Listener ID not found', echo });
     }
     // sendMsg(result);
@@ -98,3 +96,5 @@ export const IPCWebSocketHandler: WebsocketRequestHandler = (ws, _req) => {
 
   console.log('Connected');
 };
+
+export * from './sendSync';

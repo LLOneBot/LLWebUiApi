@@ -13,6 +13,10 @@
         console.log('[Electron][IPC][Send]', channel, args);
         return ipcWs.send(channel, ...args);
       },
+      sendSync: (channel, ...args) => {
+        console.log('[Electron][IPC][SendSync]', channel, args);
+        return ipcWs.sendSync(channel, ...args);
+      },
       on: (channel, listener) => {
         console.log('[Electron][IPC][On]', channel, listener);
         return ipcWs.on(channel, listener);
