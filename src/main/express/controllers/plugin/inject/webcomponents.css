@@ -28,11 +28,12 @@ setting-list[data-direction="column"] {
 }
 
 setting-list[data-direction="row"] {
+  padding: 16px 0;
   flex-direction: row;
   justify-content: space-around;
 }
 setting-list[data-direction="row"],
-  setting-list[data-direction="row"] * {
+setting-list[data-direction="row"] * {
   text-align: center;
 }
 
@@ -55,8 +56,19 @@ setting-item > *:first-child {
   flex-wrap: nowrap;
 }
 
+setting-list[data-direction="row"] setting-item {
+  padding: 0;
+  margin: 0 10px;
+  flex: 1;
+}
+
 setting-list[data-direction="row"] setting-item > *:first-child {
   align-items: center;
+  flex: 1;
+}
+
+setting-list[data-direction="row"] setting-item > *:first-child > * {
+  flex: 1;
 }
 
 setting-list setting-divider,
@@ -72,10 +84,11 @@ setting-list[data-direction="column"] setting-divider {
 setting-list[data-direction="row"] setting-divider {
   width: 1px;
   height: unset;
-  margin: 16px 0;
+  margin: 0;
 }
 
 setting-text[data-type="secondary"] {
+  margin-top: 4px;
   color: var(--text_secondary);
   font-size: min(var(--font_size_2),16px);
   line-height: min(var(--line_height_2),22px);
