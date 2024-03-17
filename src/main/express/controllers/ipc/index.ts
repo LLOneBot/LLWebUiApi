@@ -1,4 +1,3 @@
-import { ipcMain } from 'electron';
 import { IpcApiInvoke, IpcApiSend, addIpcRendererListener, removeIpcRendererListener } from '@/main/helper/ipcHook';
 import { WebsocketRequestHandler } from 'express-ws';
 
