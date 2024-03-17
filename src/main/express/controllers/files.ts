@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { resolve } from 'path';
-import { FileType } from '@/main/action/types';
+import { FileType } from '@/main/express/types';
 import { FileStateApi } from '@/common/types';
 import { Request, Response } from 'express';
 

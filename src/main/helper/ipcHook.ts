@@ -1,4 +1,5 @@
 import { BrowserWindow, ipcMain } from "electron";
+import { CoreLog, LogLevel } from "./log";
 let proxyIpcInvokeList: any[] = [];
 export function HookIpcReceiveHandle(window: BrowserWindow) {
     const originalSend = window.webContents.send;
@@ -74,8 +75,10 @@ export async function IpcApiInvoke(
     errorCallback?: (error: string) => void
 ) {
     console.log("reg hook");
-    console.log(proxyIpcInvokeList[0]);
-
+    if (proxyIpcInvokeList.length == 0) {
+        CoreLog.getInstance().pushLog(LogLevel.Error, "还未启动进行Invoke调用");
+        return;
+    }
     return proxyIpcInvokeList[0](
         {
             _replyChannel: {

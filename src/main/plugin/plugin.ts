@@ -58,11 +58,6 @@ export class WebPlugin {
         }
         return { result: true, data: Plugin };
     }
-    // 生成Config页面
-    public getConfigPage(_base: string, _slug: string) {
-        
-    }
-    //
     public setPluginEnable(plugin: string): boolean {
         let data = JSON.parse(fs.readFileSync(Path.resolve(LITELOADER_DIR, "./config.json")).toString()) as LiteLoaderConfig;
 

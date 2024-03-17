@@ -19,15 +19,24 @@ jobs:
     - name: install dependenies
       run: export ELECTRON_SKIP_BINARY_DOWNLOAD=1 && npm install
 
-    - name: build
-      run: npm run build
-
+    - name: build LLWebUiApi
+      run: |
+            npm run build
+            mkdir ./dist/static/
+    - name: build LLWebUiFront
+      run: |
+        cd ..
+        git clone https://github.com/LLOneBot/LLWebUiFront LLWebUiFront
+        cd ./LLWebUiFront/
+        npm i
+        npm run build
+        mv ./dist/* ../LLWebUiApi/dist/static/
+        cd ../LLWebUiApi/
     - name: zip
       run: |
         sudo apt install zip -y
         cd ./dist/
         zip -r ../LLWebUiApi.zip ./* 
-    
     - name: publish
       uses: ncipollo/release-action@v1
       with:
