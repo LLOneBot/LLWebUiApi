@@ -57,7 +57,7 @@ export function HookIpcCallHandle(window: BrowserWindow) {
                 if (args[2].indexOf("IPC_UP") != -1) {
 
                 } else {
-                    console.log(args);
+                    // console.log(args);
                     //console.log("IPC_Call", args);
                 }
             } else {
@@ -69,7 +69,7 @@ export function HookIpcCallHandle(window: BrowserWindow) {
     const ipc_invoke_proxy = webContents._events["-ipc-invoke"]?.[0] || webContents._events["-ipc-invoke"];
     const proxyIpcInvoke = new Proxy(ipc_invoke_proxy, {
         apply(target, thisArg, args) {
-            console.log(args);
+            // console.log(args);
             args[0]["_replyChannel"]["sendReply"] = new Proxy(args[0]["_replyChannel"]["sendReply"], {
                 apply(sendtarget, sendthisArg, sendargs) {
 
@@ -107,7 +107,7 @@ export async function IpcApiInvoke(
     callback?: (payload: any) => (void | Promise<void>),
     errorCallback?: (error: string) => void
 ) {
-    console.log("reg hook");
+    // console.log("reg hook");
     if (proxyIpcInvokeList.length == 0) {
         CoreLog.getInstance().pushLog(LogLevel.Error, "还未启动进行Invoke调用");
         return;
