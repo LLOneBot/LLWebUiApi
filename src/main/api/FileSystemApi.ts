@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { FileStateApi } from "../../common/types";
-import { FileType } from "../action/types";
+import { FileType } from "../express/types";
 // 仅允许操作整个 QQ 与 LiteLoader所在目录（太麻烦了 干脆放开） 实现限制与辅助
 export class FileSystemApi {
     static listFile(filePath: string) {
