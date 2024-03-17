@@ -88,7 +88,7 @@ function CheckQrLogin() {
 		}
 	}
 }
-
+window.LLWebUiApi.onLoginPage((value: any) => (console.log(value)));
 if (location.hash === '#/blank') {
 	(window as any).navigation.addEventListener('navigatesuccess', isRendererInit, { once: true });
 } else {
