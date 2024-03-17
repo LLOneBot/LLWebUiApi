@@ -22,7 +22,7 @@ const LLWebUiApi = {
 		ipcRenderer.send(CHANNEL_REMOTE_QRCODE, data);
 	},
 	onLoginPage: (callback: any) => {
-		ipcRenderer.on(CHANNEL_BROWSER_LOGINPAGE, (_event, value) => callback(value))
+		ipcRenderer.on(CHANNEL_BROWSER_LOGINPAGE, (_event, value) => callback(value));
 	},
 	setLoginPage: (data: number) => {
 		ipcRenderer.send(CHANNEL_BROWSER_SETLOGINPAGE, data);
