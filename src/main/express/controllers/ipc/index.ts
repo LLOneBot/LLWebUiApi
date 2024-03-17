@@ -1,5 +1,5 @@
-import { IpcMainEvent, ipcMain } from 'electron';
-import { IpcApiInvoke, IpcApiSend } from '@/main/helper/ipcHook';
+import { ipcMain } from 'electron';
+import { IpcApiInvoke, IpcApiSend, addIpcRendererListener, removeIpcRendererListener } from '@/main/helper/ipcHook';
 import { WebsocketRequestHandler } from 'express-ws';
 
 interface IWebSocketMessage {
@@ -15,16 +15,16 @@ export const IPCWebSocketHandler: WebsocketRequestHandler = (ws, req) => {
   const IPCEventListeners: Array<{
     channel: string,
     id: string,
-    callback: (e: IpcMainEvent, ...args: any[]) => void | Promise<void>,
+    callback: (e: string, args: any[]) => void | Promise<void>,
   }> = [];
   const sendMsg = (data: any) => ws.send(JSON.stringify(data));
   const IPCHandler = ({ type, channel, params = [], echo }: IWebSocketMessage) => {
     const result: IWebSocketMessage = { type, channel };
-  
+
     if (echo !== undefined || echo !== null) {
       result.echo = echo;
     }
-  
+
     console.log({ type, channel, params, echo });
     if (type === 'ping') {
       result.type = 'pong';
@@ -41,11 +41,11 @@ export const IPCWebSocketHandler: WebsocketRequestHandler = (ws, req) => {
       IpcApiSend(channel, params);
       sendMsg(result);
     } else if (type === 'on') {
-      const callback = (e: IpcMainEvent, ...args: any[]) => {
+      const callback = (_channel: string, args: any[]) => {
         sendMsg({
           type: 'event',
           channel,
-          data: [ ...args ],
+          data: [...args],
           echo,
         });
       };
@@ -55,8 +55,7 @@ export const IPCWebSocketHandler: WebsocketRequestHandler = (ws, req) => {
         id: echo,
         callback,
       });
-      ipcMain.on(channel, callback);
-
+      addIpcRendererListener(channel,callback);
       sendMsg({ type, channel, echo });
     } else if (type === 'off') {
       for (let i = 0; i < IPCEventListeners.length; i++) {
@@ -65,7 +64,7 @@ export const IPCWebSocketHandler: WebsocketRequestHandler = (ws, req) => {
         if (listener.channel !== channel) continue;
         if (listener.id !== echo) continue;
 
-        ipcMain.off(channel, listener.callback);
+        removeIpcRendererListener(channel, listener.callback);
         return sendMsg({ type, channel, echo });
       }
 
@@ -93,7 +92,7 @@ export const IPCWebSocketHandler: WebsocketRequestHandler = (ws, req) => {
 
   ws.on('close', () => {
     for (const listener of IPCEventListeners) {
-      ipcMain.off(listener.channel, listener.callback);
+      removeIpcRendererListener(listener.channel, listener.callback);
     }
     console.log('Disconnected');
   });
