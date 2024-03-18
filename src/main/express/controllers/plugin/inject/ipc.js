@@ -14,6 +14,7 @@ class IPCWebSocket {
   constructor() {
     this.url = `${(location.protocol === 'https:' ? 'wss:' : 'ws:')}//${location.host}/ipc`;
     this.ws = new WebSocket(this.url);
+    this.isConnected = 0;
 
     this.echos = {
       invoke: [],
@@ -37,11 +38,25 @@ class IPCWebSocket {
     });
   }
 
+  _waitForConnection() {
+    return new Promise((res, rej) => {
+      if (this.isConnected === 1) return res(true);
+      if (this.isConnected === -1) throw new Error('WebSocket disconnected!');
+      const clockId = setInterval(() => {
+        if (this.isConnected !== 1) return;
+        res(true);
+        clearInterval(clockId);
+      }, 1000);
+    });
+  }
+
   _onConnected() {
+    this.isConnected = 1;
     this.heartBeatClock = setInterval(() => this._sendPing(), 5000);
   }
 
   _onClosed() {
+    this.isConnected = -1;
     if (this.heartBeatClock) clearInterval(this.heartBeatClock);
   }
 
@@ -58,6 +73,7 @@ class IPCWebSocket {
   }
 
   _send(data) {
+    if (this.isConnected !== 1) throw new Error('WebSocket not connected!');
     return this.ws.send(JSON.stringify(data));
   }
 
@@ -117,7 +133,9 @@ class IPCWebSocket {
 
   invoke(channel, ...params) {
     const echo = this._echo('invoke');
-    return new Promise((res, rej) => {
+    return new Promise(async (res, rej) => {
+      await this._waitForConnection();
+
       const echoId = this.addMsgEcho('invoke', channel, (data) => {
         res(data);
         this.removeMsgEcho('invoke', echoId);
@@ -140,7 +158,9 @@ class IPCWebSocket {
   }
 
   send(channel, ...params) {
-    return new Promise((res, rej) => {
+    return new Promise(async (res, rej) => {
+      await this._waitForConnection();
+
       try {
         res(this._send({
           type: 'send',
