@@ -18,7 +18,7 @@ function onBrowserWindowCreated(window: BrowserWindow) {
 	} catch (e: any) {
 		CoreLog.getInstance().pushLog(LogLevel.Error, e.toString())
 	}
-	/**
+	/** 测试 IpcRenderer.on()
 	 * setTimeout(() => {
 		window.webContents.send("message-main","test");
 		window.webContents.send("message-main","test");
