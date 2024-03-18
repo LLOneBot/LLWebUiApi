@@ -22,12 +22,12 @@ export const useMiddleware = (app: Application) => {
       '/api/auth/login',
     ],
   }), (err: Error, req: Request, res: Response, next: NextFunction) => {
-    // if (err.name === 'UnauthorizedError' || !req.auth || !req.auth.admin) {
-    //   return res.status(401)
-    //     .json({
-    //       msg: 'Not logged in or auth expired',
-    //     });
-    // }
+    if (err.name === 'UnauthorizedError' || !req.auth || !req.auth.admin) {
+      return res.status(401)
+        .json({
+          msg: 'Not logged in or auth expired',
+        });
+    }
     next();
   });
   // #endif
