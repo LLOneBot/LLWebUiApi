@@ -5,8 +5,9 @@
   "version": "0.0.0",
   "license": "GPL-3.0-only",
   "scripts": {
-    "build:development": "electron-vite build --mode development",
-    "build:production": "electron-vite build --mode production"
+    "build:dev": "electron-vite build --mode development",
+    "build:prod": "electron-vite build --mode production",
+    "build": "npm run build:prod"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
