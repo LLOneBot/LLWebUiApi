@@ -3,14 +3,14 @@ import { HookIpcCallHandle, HookIpcReceiveHandle } from './main/helper/ipcHook';
 import { ALL_PLUGIN_DIR, DATA_DIR } from './main/helper/utils';
 import { InitIpcHandle } from './main/helper/ipcHandler';
 import { initHeadless3 } from './main/helper/headless3';
-import { BrowserWindow, ipcMain, app } from 'electron';
+import { BrowserWindow, ipcMain, app, OpenDialogReturnValue } from 'electron';
 import { CoreLog, LogLevel } from './main/helper/log';
 import { CoreConfig } from './main/helper/config';
 import { WebPlugin } from './main/plugin/plugin';
 import express from './main/express';
 import { DataClass } from './main/helper/data';
 import fs from 'fs';
-import { initDialogHook } from './main/helper/dialogHook';
+import { initDialogHook, setShowDialogHook } from './main/helper/dialogHook';
 function onBrowserWindowCreated(window: BrowserWindow) {
 	try {
 		HookIpcReceiveHandle(window);
@@ -71,16 +71,14 @@ function loadLLWebUiApi() {
 	InitIpcHandle(ipcMain, HandleIpcApi);
 	// Web Plugin Loading
 	WebPlugin.getInstance().loadPluginInfo(ALL_PLUGIN_DIR);
-	/*
-	addShowDialogHook(async (options) => {
-		console.log(options);
+	// 测试 Dialog Hook 秒返回
+	setShowDialogHook(async (_options) => {
 		let ret: OpenDialogReturnValue = {
 			canceled: false,
 			filePaths: ["F:/Web/ffmpeg.exe"]
 		}
 		return ret;
 	})
-	*/
 	// Express Api初始化
 	express.listen(CoreConfig.getInstance().get().Server.Port, () => {
 		console.log('Express server is now started!');
