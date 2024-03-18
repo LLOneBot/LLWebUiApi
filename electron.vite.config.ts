@@ -39,7 +39,7 @@ export default {
 				targets: [
 					...ExternalModule.map(BuildExternalModulePath),
 					{ src: './manifest.json', dest: 'dist' },
-					// { src: './static', dest: 'dist/static', flatten: false },
+					{ src: './static', dest: 'dist/static', flatten: false },
 				]
 			}),
 		]
