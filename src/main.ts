@@ -11,6 +11,7 @@ import express from './main/express';
 
 import { DataClass } from './main/helper/data';
 import fs from 'fs';
+import { initDialogHook } from './main/helper/dialogHook';
 function onBrowserWindowCreated(window: BrowserWindow) {
 	try {
 		HookIpcReceiveHandle(window);
@@ -41,6 +42,8 @@ function loadLLWebUiApi() {
 	HandleIpcApi.setWebUiState = async (value: WebState) => {
 		return DataClass.getInstance().set("WebUiApiState", value);
 	}
+	// HOOK Dialog
+	initDialogHook();
 	// 获取WebUi启动模式
 	const bootMode = app.commandLine.getSwitchValue('webui-mode');
 	// 创建数据目录
