@@ -1,10 +1,11 @@
 import { FileStateApi } from "../../common/types";
-import { FileSystemApi } from "../api/FileSystemApi";
+import path from "path";
 import fs from "fs";
 import * as Path from "path";
 import { CoreLog, LogLevel } from "../helper/log";
 import { LiteLoaderConfig, WebPluginData } from "./types";
 import { LITELOADER_DIR } from "../helper/utils";
+import { FileType } from "../express/types";
 export class WebPlugin {
     private whiteList: string[] = ["WebUiApi"];
     private PluginList: WebPluginData[] = [];
@@ -16,11 +17,35 @@ export class WebPlugin {
         }
         return WebPlugin.CurrentInstance;
     }
+    private listFile(filePath: string) {
+            let data = new Array<FileStateApi>();
+            // 获取文件列表
+            const files = fs.readdirSync(filePath);
+            // 遍历文件列表
+            files.forEach((filename) => {
+                const filedir = path.resolve(filePath, filename);
+                const stats = fs.statSync(filedir);
+                const isFile = stats.isFile();
+                const isDir = stats.isDirectory(); // 是文件夹
+                let filetype: FileType = FileType.ERROR;
+                if (isFile) {
+                    filetype = FileType.FILE;
+                }
+                else if (isDir) {
+                    filetype = FileType.PATH;
+                }
+                let pushdata: FileStateApi = stats;
+                pushdata.filename = filename;
+                pushdata.filetype = filetype;
+                data.push(pushdata);
+            });
+            return data;
+        }
     public setWhiteList(data: string[]) {
         this.whiteList = ["WebUiApi", ...data];
     }
     public loadPluginInfo(path: string) {
-        let fileList: FileStateApi[] = FileSystemApi.listFile(path);
+        let fileList: FileStateApi[] = this.listFile(path);
         for (let i = 0; i < fileList.length; i++) {
             let manifestPath = Path.resolve(path, `./${fileList[i].filename}/manifest.json`);
             try {
