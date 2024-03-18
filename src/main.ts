@@ -8,7 +8,6 @@ import { CoreLog, LogLevel } from './main/helper/log';
 import { CoreConfig } from './main/helper/config';
 import { WebPlugin } from './main/plugin/plugin';
 import express from './main/express';
-
 import { DataClass } from './main/helper/data';
 import fs from 'fs';
 import { addShowDialogHook, initDialogHook } from './main/helper/dialogHook';
