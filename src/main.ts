@@ -68,13 +68,11 @@ function loadLLWebUiApi() {
 		DataClass.getInstance().set("WebUiApiState", BootMode_WebState);
 		initHeadless3();
 	}
-	// 注册IPC基础事件
+	// 注册 IPC基础事件
 	InitIpcHandle(ipcMain, HandleIpcApi);
 	// Web Plugin Loading
 	WebPlugin.getInstance().loadPluginInfo(ALL_PLUGIN_DIR);
-	// 服务端Api初始化
-	// let HttpServer = ServerFactory.getServer("HTTP", CoreConfig.getInstance().get().Server) as HttpAdapter;
-	// HttpServer.onListening();
+	// Express Api初始化
 	express.listen(CoreConfig.getInstance().get().Server.Port, () => {
 		console.log('Express server is now started!');
 	});
