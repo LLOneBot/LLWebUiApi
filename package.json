@@ -19,7 +19,8 @@
     "electron-vite": "^2.0.0",
     "typescript": "^5.3.3",
     "vite": "^4.4.9",
-    "vite-plugin-cp": "^4.0.8"
+    "vite-plugin-cp": "^4.0.8",
+    "unplugin-preprocessor-directives": "^1.0.3"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -27,7 +28,6 @@
     "express-jwt": "^8.4.1",
     "express-ws": "^5.0.2",
     "jsonwebtoken": "^9.0.2",
-    "unplugin-preprocessor-directives": "^1.0.3",
     "ws": "^8.16.0"
   }
 }
