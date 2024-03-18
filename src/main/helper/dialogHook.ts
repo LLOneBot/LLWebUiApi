@@ -1,4 +1,5 @@
 import { OpenDialogOptions, dialog } from "electron"
+import { CoreLog, LogLevel } from "./log";
 
 type showOpenDialogCallBack = (options: OpenDialogOptions) => Promise<Electron.OpenDialogReturnValue> | Electron.OpenDialogReturnValue;
 let showDialogCallBackFunc: showOpenDialogCallBack | undefined = undefined;
@@ -22,9 +23,8 @@ export const initDialogHook = () => {
     (dialog.showOpenDialog as any) = async function (options: OpenDialogOptions) {
         if (showDialogCallBackFunc) {
             let ret = showDialogCallBackFunc(options);
-            console.log("showOpenDialogHook", ret);
+            CoreLog.getInstance().pushLog(LogLevel.Debug, "showOpenDialogHook", ret);
             if (ret instanceof Promise) {
-                //showDialogList.pop();
                 return ret;
             }
             return new Promise<Electron.OpenDialogReturnValue>((resolve, _reject) => {
