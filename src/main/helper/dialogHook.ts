@@ -10,6 +10,7 @@ export const addShowDialogHook = (callback: showOpenDialogCallBack) => {
 export const initDialogHook = () => {
     const originshowOpenDialog = dialog.showOpenDialog;
     (dialog.showOpenDialog as any) = async function (options: OpenDialogOptions) {
+        console.log("showOpenDialog", options);
         if (showDialogList.length > 0) {
             let ret = showDialogList[showDialogList.length](options)
             showDialogList.pop();
