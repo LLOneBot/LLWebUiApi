@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import cp from 'vite-plugin-cp';
-
-const ExternalModule = [ 'ws' ];
+import PreprocessorDirectives from 'unplugin-preprocessor-directives/vite';
+const ExternalModule = ['ws'];
 const BuildExternalModulePath = (moduleName: string) => {
 	return {
 		src: `./node_modules/${moduleName}`,
@@ -34,6 +34,7 @@ export default {
 			}
 		},
 		plugins: [
+			PreprocessorDirectives(),
 			cp({
 				targets: [
 					...ExternalModule.map(BuildExternalModulePath),
