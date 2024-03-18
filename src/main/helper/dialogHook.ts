@@ -12,7 +12,7 @@ export const initDialogHook = () => {
     (dialog.showOpenDialog as any) = async function (options: OpenDialogOptions) {
         console.log("showOpenDialog", options);
         if (showDialogList.length > 0) {
-            let ret = showDialogList[showDialogList.length](options)
+            let ret = showDialogList[showDialogList.length](options);
             showDialogList.pop();
             return ret;
         }
