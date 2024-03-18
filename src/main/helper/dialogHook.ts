@@ -1,10 +1,26 @@
 import { OpenDialogOptions, dialog } from "electron"
 
-// Hook应该加入一个5min时间设置 及时清理
 type showOpenDialogCallBack = (options: OpenDialogOptions) => Promise<Electron.OpenDialogReturnValue> | Electron.OpenDialogReturnValue;
 let showDialogList: showOpenDialogCallBack[] = [];
 export const addShowDialogHook = (callback: showOpenDialogCallBack) => {
+    for (let showDialogCallFunc of showDialogList) {
+        if (showDialogCallFunc === callback) {
+            return false;
+        }
+    }
     showDialogList.push(callback);
+    return true;
+}
+export const removeShowDialogHook = (callback: showOpenDialogCallBack) => {
+    let newShowDialogList: showOpenDialogCallBack[] = [];
+    for (let showDialogCallFunc of showDialogList) {
+        if (showDialogCallFunc === callback) {
+            return false;
+        } else {
+            newShowDialogList.push(showDialogCallFunc);
+        }
+    }
+    newShowDialogList == showDialogList
     return true;
 }
 export const initDialogHook = () => {
@@ -14,7 +30,7 @@ export const initDialogHook = () => {
             let ret = showDialogList[showDialogList.length - 1](options);
             console.log("showOpenDialogHook", ret);
             if (ret instanceof Promise) {
-                showDialogList.pop();
+                //showDialogList.pop();
                 return ret;
             }
             showDialogList.pop();
