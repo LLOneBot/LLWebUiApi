@@ -34,12 +34,12 @@ export class CoreConfig {
     public regListening() {
         // 注册监听配置操作
     }
-    private getDefaultConfig() {
+    private getDefaultConfig(): WebUiApiConfig {
         return {
-            Server: { Port: 6099 },
+            Server: { Port: 6099, Password: Math.random().toString(36).slice(2) },
             AutoLogin: true,
             BootMode: 0,
             Debug: false
-        }
+        };
     }
 }
