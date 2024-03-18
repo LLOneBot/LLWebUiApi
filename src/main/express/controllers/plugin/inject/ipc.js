@@ -73,8 +73,10 @@ class IPCWebSocket {
   }
 
   _send(data) {
-    if (this.isConnected !== 1) throw new Error('WebSocket not connected!');
-    return this.ws.send(JSON.stringify(data));
+    return new Promise(async (res) => {
+      await this._waitForConnection();
+      res(this.ws.send(JSON.stringify(data)));
+    });
   }
 
   _echo(type) {
@@ -134,8 +136,6 @@ class IPCWebSocket {
   invoke(channel, ...params) {
     const echo = this._echo('invoke');
     return new Promise(async (res, rej) => {
-      await this._waitForConnection();
-
       const echoId = this.addMsgEcho('invoke', channel, (data) => {
         res(data);
         this.removeMsgEcho('invoke', echoId);
@@ -145,7 +145,7 @@ class IPCWebSocket {
       }, echo);
 
       try {
-        this._send({
+        await this._send({
           type: 'invoke',
           channel,
           params: [ ...params ],
@@ -159,10 +159,8 @@ class IPCWebSocket {
 
   send(channel, ...params) {
     return new Promise(async (res, rej) => {
-      await this._waitForConnection();
-
       try {
-        res(this._send({
+        await res(this._send({
           type: 'send',
           channel,
           params: [ ...params ],
