@@ -38,10 +38,13 @@ export function HookIpcReceiveHandle(window: BrowserWindow) {
                 key(channel, args);
             }
         }
-        if (channel.indexOf("IPC_") != -1) {
-        } else {
-            // console.log(args);
-        }
+        /**
+         * if (channel.indexOf("IPC_") != -1) {
+         * } else {
+         * // console.log(args);
+         * }
+         */
+
         originalSend.call(window.webContents, channel, ...args);
     }
     window.webContents.send = patchSend;
@@ -53,6 +56,7 @@ export function HookIpcCallHandle(window: BrowserWindow) {
     const proxyIpcMsg = new Proxy(ipc_message_proxy, {
         apply(target, thisArg, args) {
             let ret = target.apply(thisArg, args);
+            /** 
             if ((args as Array<any>).length > 2) {
                 if (args[2].indexOf("IPC_UP") != -1) {
 
@@ -63,6 +67,7 @@ export function HookIpcCallHandle(window: BrowserWindow) {
             } else {
 
             }
+            */
             return ret;
         },
     });
@@ -72,7 +77,6 @@ export function HookIpcCallHandle(window: BrowserWindow) {
             // console.log(args);
             args[0]["_replyChannel"]["sendReply"] = new Proxy(args[0]["_replyChannel"]["sendReply"], {
                 apply(sendtarget, sendthisArg, sendargs) {
-
                     sendtarget.apply(sendthisArg, sendargs);
                 }
             });
