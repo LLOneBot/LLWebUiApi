@@ -12,9 +12,10 @@ export const useMiddleware = (app: Application) => {
 
   app.use('/static', express.static(resolve(Utils.PLUGIN_DIR, './static')));
 
+  // #if JWT_EXPRESS
   app.use(['/api', '/plugin', '/ipc'], expressjwt({
     secret: '1145141919810', // XXX: Change it before release
-    algorithms: [ 'HS256' ],
+    algorithms: ['HS256'],
   }).unless({
     path: [
       '/api/auth/login',
@@ -28,4 +29,5 @@ export const useMiddleware = (app: Application) => {
     }
     next();
   });
+  // #endif
 }
