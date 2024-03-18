@@ -1,7 +1,7 @@
 import { DataClass } from '@/main/helper/data';
 import { Request, Response } from 'express';
 import { Buffer } from "node:buffer";
-export function getWebState(_req: Request, res: Response) {
+export function getWebUiState(_req: Request, res: Response) {
     res.json(DataClass.getInstance().get("WebUiApiState"));
 }
 export function getQQLoginQRcodBase64(_req: Request, res: Response) {
