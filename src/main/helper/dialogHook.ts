@@ -10,11 +10,17 @@ export const addShowDialogHook = (callback: showOpenDialogCallBack) => {
 export const initDialogHook = () => {
     const originshowOpenDialog = dialog.showOpenDialog;
     (dialog.showOpenDialog as any) = async function (options: OpenDialogOptions) {
-        console.log("showOpenDialog", options);
         if (showDialogList.length > 0) {
-            let ret = showDialogList[showDialogList.length](options);
+            let ret = showDialogList[showDialogList.length - 1](options);
+            console.log("showOpenDialogHook", ret);
+            if (ret instanceof Promise) {
+                showDialogList.pop();
+                return ret;
+            }
             showDialogList.pop();
-            return ret;
+            return new Promise<Electron.OpenDialogReturnValue>((resolve, _reject) => {
+                resolve(ret);
+            })
         }
         return originshowOpenDialog(options);
     }
