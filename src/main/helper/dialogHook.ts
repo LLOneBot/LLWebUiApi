@@ -23,7 +23,7 @@ export const initDialogHook = () => {
     (dialog.showOpenDialog as any) = async function (options: OpenDialogOptions) {
         if (showDialogCallBackFunc) {
             let ret = showDialogCallBackFunc(options);
-            CoreLog.getInstance().pushLog(LogLevel.Debug, "showOpenDialogHook", ret);
+            //CoreLog.getInstance().pushLog(LogLevel.Debug, "showOpenDialogHook", ret);
             if (ret instanceof Promise) {
                 return ret;
             }
