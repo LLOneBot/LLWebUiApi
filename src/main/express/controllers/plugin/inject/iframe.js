@@ -1,5 +1,85 @@
 ; 'use strict';
 
+(() => { // <setting-option>
+const OptionTemplate = document.createElement('template');
+OptionTemplate.innerHTML = `<li part="parent">
+  <span part="text"><slot></slot></span>
+  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" part="check-icon">
+    <path d="M2 7L6.00001 11L14 3" stroke="currentColor" stroke-linejoin="round"></path>
+  </svg>
+</li>`;
+
+window.customElements.define('setting-option', class extends HTMLElement {
+  constructor() {
+    super();
+
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.append(OptionTemplate.content.cloneNode(true));
+  }
+});
+})();
+
+(() => { // <setting-select>
+const SelectTemplate = document.createElement('template');
+SelectTemplate.innerHTML = `<style>
+  .hidden { display: none !important; }
+</style>
+<div part="parent">
+  <div part="button">
+    <input type="text" placeholder="请选择" part="current-text" />
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" part="button-arrow">
+      <path d="M12 6.0001L8.00004 10L4 6" stroke="currentColor" stroke-linejoin="round"></path>
+    </svg>
+  </div>
+  <ul class="hidden" part="option-list"><slot></slot></ul>
+</div>`;
+
+window.customElements.define('setting-select', class extends HTMLElement {
+  constructor() {
+    super();
+
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.append(SelectTemplate.content.cloneNode(true));
+
+    this._button = this.shadowRoot.querySelector('div[part="button"]');
+    this._text = this.shadowRoot.querySelector('input[part="current-text"]');
+    this._context = this.shadowRoot.querySelector('ul[part="option-list"]');
+
+    const buttonClick = () => {
+      const isHidden = this._context.classList.toggle('hidden');
+      window[`${isHidden ? 'remove': 'add'}EventListener`]('pointerdown', windowPointerDown);
+    };
+
+    const windowPointerDown = ({ target }) => {
+      if (!this.contains(target)) buttonClick();
+    };
+
+    this._button.addEventListener('click', buttonClick);
+    this._context.addEventListener('click', ({ target }) => {
+      if (target.tagName !== 'SETTING-OPTION') return;
+      buttonClick();
+
+      if (target.hasAttribute('is-selected')) return;
+
+      this.querySelectorAll('setting-option[is-selected]').forEach(dom => dom.toggleAttribute('is-selected'));
+      target.toggleAttribute('is-selected');
+
+      this._text.value = target.innerText;
+      this.dispatchEvent(new CustomEvent('selected', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          name: target.innerText,
+          value: target.dataset.value,
+        },
+      }));
+    });
+
+    this._text.value = this.querySelector('setting-option[is-selected]').innerText;
+  }
+});
+})();
+
 (() => {
   const ipcWs = new IPCWebSocket();
 

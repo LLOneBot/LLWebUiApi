@@ -1,3 +1,13 @@
+*[is-disabled] {
+  opacity: 0.3;
+  -webkit-pointer-events: none;
+  -moz-pointer-events: none;
+  -ms-pointer-events: none;
+  -o-pointer-events: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 setting-section::before {
   content: attr(data-title);
   display: block;
@@ -195,3 +205,146 @@ setting-button[data-type="primary"]:active {
   background-color: var(--nt_brand_standard_2_overlay_pressed_brand_2_mix);
   border-color: var(--nt_brand_standard_2_overlay_pressed_brand_2_mix);
 }
+
+setting-select,
+setting-select::part(parent),
+setting-select::part(button) {
+  display: block;
+  position: relative;
+  height: 24px;
+  font-size: 12px;
+  line-height: 24px;
+  box-sizing: border-box;
+}
+
+setting-select::part(button) {
+  display: flex;
+  padding: 0px 8px;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid var(--border_dark);
+  z-index: 5;
+  cursor: default;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+setting-select::part(current-text) {
+  display: block;
+  margin-right: 8px;
+  padding: 0px;
+  background: none;
+  background-color: transparent;
+  font-size: 12px;
+  color: var(--text_primary);
+  text-overflow: ellipsis;
+  border-radius: 0px;
+  border: none;
+  outline: none;
+  overflow: hidden;
+  appearance: none;
+  box-sizing: border-box;
+  cursor: default;
+  flex: 1;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-pointer-events: none;
+  -moz-pointer-events: none;
+  -ms-pointer-events: none;
+  -o-pointer-events: none;
+  pointer-events: none;
+}
+
+setting-select::part(button-arrow) {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  color: var(--icon_primary);
+}
+
+setting-select::part(option-list) {
+  display: flex;
+  position: absolute;
+  padding: 4px;
+  margin: 5px 0px;
+  width: 100%;
+  max-height: var(--q-contextmenu-max-height);
+  background-color: var(--blur_middle_standard);
+  background-clip: padding-box;
+  backdrop-filter: blur(8px);
+  font-size: 12px;
+  box-shadow: var(--shadow_bg_middle_secondary);
+  border: 1px solid var(--border_secondary);
+  border-radius: 4px;
+  box-sizing: border-box;
+  app-region: no-drag;
+  overflow-x: hidden;
+  overflow-y: auto;
+  list-style: none;
+  z-index: 999;
+  flex-direction: column;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 4px;
+}
+
+setting-option,
+setting-option::part(parent) {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+}
+
+setting-option::part(parent) {
+  display: flex;
+  padding: 0px 8px;
+  color: var(--text_primary);
+  font-size: 12px;
+  line-height: 24px;
+  border-radius: 4px;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+setting-option:hover::part(parent) {
+  background-color: var(--overlay_hover);
+}
+
+setting-option:active::part(parent) {
+  background-color: var(--overlay_pressed);
+}
+
+setting-option[is-selected]::part(parent) {
+  background-color: var(--overlay_active);
+}
+
+setting-option::part(text) {
+  margin-right: 8px;
+  overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+setting-option::part(check-icon) {
+  display: none;
+  position: relative;
+  right: -4px;
+  width: 1em;
+  height: 1em;
+  color: var(--icon_primary);
+  flex-shrink: 0;
+}
+
+setting-option[is-selected]::part(check-icon) {
+  display: block;
+}
+
