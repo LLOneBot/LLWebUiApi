@@ -2,7 +2,7 @@ import { BootMode, HandleIPCApiType, WebState, WebStateCode } from './common/typ
 import { HookIpcCallHandle, HookIpcReceiveHandle } from './main/helper/ipcHook';
 import { ALL_PLUGIN_DIR, DATA_DIR } from './main/helper/utils';
 import { InitIpcHandle } from './main/helper/ipcHandler';
-import { initHeadless3 } from './main/helper/headless3';
+import { initHeadless3 } from './main/helper/headless';
 import { BrowserWindow, ipcMain, app, OpenDialogReturnValue } from 'electron';
 import { CoreLog, LogLevel } from './main/helper/log';
 import { CoreConfig } from './main/helper/config';

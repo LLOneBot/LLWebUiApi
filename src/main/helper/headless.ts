@@ -3,6 +3,8 @@ import type { BrowserWindowConstructorOptions } from 'electron';
 import { app, BrowserWindow } from 'electron';
 import { setFlagsFromString } from 'node:v8';
 import { runInNewContext } from 'node:vm';
+import { DataClass } from './data';
+import { WebState, WebStateCode } from '@/common/types';
 
 export const initHeadless3 = () => {
 	try {
@@ -35,8 +37,7 @@ export const initHeadless3 = () => {
 				win.setMaximumSize = () => { };
 				win.setPosition = () => { };
 				win.show = () => { };
-
-				// headless 4
+				// #if HEADLESS4
 				if (!args[0].title && !handleClearWindowsTimer) {
 					app.removeAllListeners('window-all-closed')
 					handleClearWindowsTimer = setInterval(() => {
@@ -59,25 +60,25 @@ export const initHeadless3 = () => {
 				type BWFunctions = BrowserWindow[BWKeys];
 
 				const winOriginMethods = {} as Record<BWKeys, BWFunctions>;
-		
-				for (const i in win) {
-				  const ii = i as BWKeys
-		
-				  if (typeof win[ii] === 'function') {
-					winOriginMethods[ii] = win[ii] as () => void // .bind(win)
-		
-					win[ii] = ((...args: unknown[]) => {
-					  // console.log('[headless3] win called ', ii, args)
-					  if (ii === 'isDestroyed') {
-						return false
-					  }
-					  return (
-						winOriginMethods[ii] as (...p: unknown[]) => unknown
-					  ).apply(win, args)
-					}) as never
-				  }
-				}
 
+				for (const i in win) {
+					const ii = i as BWKeys
+
+					if (typeof win[ii] === 'function') {
+						winOriginMethods[ii] = win[ii] as () => void // .bind(win)
+
+						win[ii] = ((...args: unknown[]) => {
+							// console.log('[headless3] win called ', ii, args)
+							if (ii === 'isDestroyed') {
+								return false
+							}
+							return (
+								winOriginMethods[ii] as (...p: unknown[]) => unknown
+							).apply(win, args)
+						}) as never
+					}
+				}
+				// #endif
 				return win;
 			},
 		});
