@@ -1,4 +1,5 @@
 import fs from 'fs';
+import fsp from 'fs/promises';
 import { resolve } from 'path';
 import { FileType } from '@/main/express/types';
 import { FileStateApi } from '@/common/types';
@@ -68,7 +69,7 @@ export const Rename = (req: Request, res: Response) => {
       });
   }
 
-  fs.rename(path, newPath)
+  fsp.rename(path, newPath)
     .then(() => {
       res.json({
         msg: 'ok',
@@ -86,7 +87,7 @@ export const Rename = (req: Request, res: Response) => {
 export const Write = (req: Request, res: Response) => {
   const { path, content } = req.body;
 
-  fs.writeFile(path, content, { encoding: 'utf8' })
+  fsp.writeFile(path, content, { encoding: 'utf8' })
     .then(() => {
       res.json({
         msg: 'ok',
