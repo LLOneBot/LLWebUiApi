@@ -4,8 +4,6 @@ import { resolve } from 'path';
 import * as Utils from '@/main/helper/utils';
 import { Response, NextFunction } from 'express';
 import { Application } from 'express-ws';
-import cors from 'cors';
-
 
 export const useMiddleware = (app: Application) => {
   app.use(express.json());
@@ -30,8 +28,5 @@ export const useMiddleware = (app: Application) => {
     }
     next();
   });
-  // #endif
-  // #if CORS_EXPRESS
-  app.use(cors())
   // #endif
 }
