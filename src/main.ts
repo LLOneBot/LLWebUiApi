@@ -72,6 +72,7 @@ function loadLLWebUiApi() {
 	// Web Plugin Loading
 	WebPlugin.getInstance().loadPluginInfo(ALL_PLUGIN_DIR);
 	// 测试 Dialog Hook 秒返回
+	// #if TEST_ShowDialogHook
 	setShowDialogHook(async (_options) => {
 		let ret: OpenDialogReturnValue = {
 			canceled: false,
@@ -79,6 +80,7 @@ function loadLLWebUiApi() {
 		}
 		return ret;
 	})
+	// #endif
 	// Express Api初始化
 	express.listen(CoreConfig.getInstance().get().Server.Port, () => {
 		console.log('Express server is now started!');
