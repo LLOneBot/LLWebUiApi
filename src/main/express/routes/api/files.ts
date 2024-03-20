@@ -4,10 +4,12 @@ import { Router } from 'express';
 import { Files } from '../../controllers';
 
 const BASE_DIR = LiteLoader.path.root;
-const verifyPath = (path: string) => {
+const resolveVerifiedOrThrow = (path: string) => {
   const newPath = resolve(BASE_DIR, path);
-  if (newPath.indexOf(BASE_DIR) !== 0) return false;
-  else return true;
+  if (newPath.indexOf(BASE_DIR) !== 0) {
+    throw 'unsafe-usage'
+  }
+  return newPath
 }
 
 const router = Router();
@@ -21,22 +23,39 @@ router.use((req, res, next) => {
       });
   }
 
-  const path = resolve(BASE_DIR, req.body.path);
-  if (!verifyPath(path)) {
+  let correctPath: string;
+  try {
+    correctPath = resolveVerifiedOrThrow(req.body.path);
+  } catch (_err) {
     return res.status(400)
       .json({
         msg: 'Invaild path'
       });
   }
 
-  if (!existsSync(path)) {
+  if (!existsSync(correctPath)) {
     return res.status(400)
       .json({
         msg: 'Target path not found'
       });
   }
 
-  req.body.path = path;
+  req.body.path = correctPath;
+
+  if (req.body.newPath) {
+    let correctNewPath: string;
+    try {
+      correctNewPath = resolveVerifiedOrThrow(req.body.newPath);
+    } catch (_err) {
+      return res.status(400)
+          .json({
+            msg: 'Invaild newPath'
+          });
+    }
+
+    req.body.newPath = correctNewPath
+  }
+
   next();
 });
 
