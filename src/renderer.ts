@@ -1,7 +1,17 @@
 import { BootMode, WebStateCode, WebUiApiConfig } from "./common/types";
 
 async function onSettingWindowCreated(view: Element) {
-	view.insertAdjacentHTML('afterbegin', '<setting-section data-title="Password">你的密钥是 ...</setting-section>');
+	view.insertAdjacentHTML('afterbegin',
+	`<setting-section>
+		<setting-panel>
+		<setting-list data-direction="column" class="new">
+			<setting-item data-direction="row">
+				<setting-text class="llwebuiapi-title">LLWebUiApi</setting-text>
+			</setting-item>
+		</setting-list>
+	 	</setting-panel>
+	<setting-section>`
+	);
 }
 /**
  * 
