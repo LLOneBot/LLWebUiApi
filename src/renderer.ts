@@ -2,7 +2,7 @@ import { BootMode, WebStateCode, WebUiApiConfig } from "./common/types";
 
 async function onSettingWindowCreated(view: Element) {
 	view.insertAdjacentHTML('afterbegin',
-	`<setting-section>
+		`<setting-section>
 		<setting-panel>
 		<setting-list data-direction="column" class="new">
 			<setting-item data-direction="row">
@@ -12,6 +12,12 @@ async function onSettingWindowCreated(view: Element) {
 	 	</setting-panel>
 	<setting-section>`
 	);
+	window.LLWebUiApi.getWebUiConfig().then(async (value: WebUiApiConfig) => {
+		let ret = view.querySelector(".llwebuiapi-title");
+		if (ret) {
+			ret.innerHTML = "Username: " + value.Server.Username + " Password: " + value.Server.Password;
+		}
+	});
 }
 /**
  * 

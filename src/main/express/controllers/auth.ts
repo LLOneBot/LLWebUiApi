@@ -1,5 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import { RequestHandler } from 'express';
+import { CoreConfig } from '@/main/helper/config';
 
 const isEmpty = (data: any) => data === undefined || data === null || data === '';
 
@@ -12,8 +13,8 @@ export const Login: RequestHandler = (req, res) => {
         msg: 'Username or password is not specific',
       });
   }
-
-  if (username !== 'misaliu' || password !== '114514') {  // XXX: Change it before release
+  let config = CoreConfig.getInstance().get().Server;
+  if (username !== config.Username || password !== config.Password) {  // XXX: Change it before release
     return res.status(400)
       .json({
         msg: 'Incorrect username or password',
@@ -29,7 +30,7 @@ export const Login: RequestHandler = (req, res) => {
         },
         '1145141919810', // XXX: Change it before release
         {
-          expiresIn: 3600 * 24 * (remember ? 7 : 1), 
+          expiresIn: 3600 * 24 * (remember ? 7 : 1),
         }
       ),
     },
