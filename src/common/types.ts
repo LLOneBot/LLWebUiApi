@@ -7,11 +7,12 @@ export enum WebStateCode {
 }
 export interface WebState {
     WorkState: WebStateCode, //参考
-    BootMode:BootMode,
+    BootMode: BootMode,
     BootTime: number //10位时间戳
 }
 export interface ServerConfig {
     Port: number,
+    Username: string,
     Password?: string
 }
 export interface WebUiApiConfig {

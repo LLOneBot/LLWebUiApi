@@ -30,13 +30,13 @@ export class CoreConfig {
     public set(newConfig: WebUiApiConfig) {
         //this.configData = newConfig; 不要立刻刷新 而是主动监听callbck刷新
         fs.writeFileSync(this.configPath, JSON.stringify(newConfig));
-    }
+    } 
     public regListening() {
         // 注册监听配置操作
     }
     private getDefaultConfig(): WebUiApiConfig {
         return {
-            Server: { Port: 6099, Password: Math.random().toString(36).slice(2) },
+            Server: { Port: 6099, Username: "root", Password: Math.random().toString(36).slice(2) },
             AutoLogin: true,
             BootMode: 0,
             Debug: false

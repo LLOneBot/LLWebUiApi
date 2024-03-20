@@ -13,7 +13,7 @@ LLWebUiApi 旨在提供伪 Headless 与远程管理支持，以尽最大可能�
 
 ## API 一览
 
-* [ ] 远程登陆
+* [x] 远程登陆
 * [ ] 获取 QQNT 基本信息
 * [ ] 获取 LiteLoaderQQNT 基本信息
 * [ ] 调整 QQNT 设置
