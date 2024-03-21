@@ -4,6 +4,7 @@ export function generateUUID() {
     let uuid = "";
     let part = "";
     for (let len of [8, 4, 4, 4, 12]) {
+        part = "";
         while (len >= part.length) {
             part = part + Math.random().toString(36).substring(2);
         }
