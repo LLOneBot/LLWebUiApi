@@ -14,9 +14,9 @@ export const GetInfo = (req: Request, res: Response) => {
   });
 }
 
-export const GetIframe = (req: Request, res: Response) => {
+export const GetIframe = (_req: Request, res: Response) => {
   const { pluginMeta, pluginSlug } = res.locals;
-  const baseUrl = `${req.protocol}://${req.get('host')}/plugin/${pluginSlug}/files/`;
+  const baseUrl = `/plugin/${pluginSlug}/files/`;
   let result = PluginIframeRaw.toString();
   
   if (isEmpty(pluginMeta.path.injects.preload) || isEmpty(pluginMeta.path.injects.renderer)) {
