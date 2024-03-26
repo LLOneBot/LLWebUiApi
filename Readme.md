@@ -2,6 +2,8 @@
   <img src="https://socialify.git.ci/LLOneBot/LLWebUiApi/image?description=1&forks=1&issues=1&language=1&logo=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FLLOneBot%2FLLWebUiApi%2Fdocs%2Flogo.jpg&name=1&owner=1&pulls=1&stargazers=1" alt="Repo banner" />
 </div>
 
+## 提示
+该项目目前已迁移,一开始计划为LLOnebot提供远程配置服务，但LiteLoader与LLOnebot原理上依赖于electron，本身并不为无头做准备,该实现使得项目复杂,且无法实现真正的无头,因此基于下一下NTQQ BOT框架NapCatQQ 重塑项目,实现纯无头,请关注NapCatQQ社群
 ## 简介
 
 LLWebUiApi 旨在提供伪 Headless 与远程管理支持，以尽最大可能减缓无 GPU 环境的图形计算压力，以及方便无用户界面的运行环境（如 Docker）调整和配置 LiteLoaderQQNT 本体及其他插件的设置。
