@@ -5,7 +5,7 @@
 ## 提示
 该项目目前已迁移,一开始计划为LLOnebot提供远程配置服务，但LiteLoader与LLOnebot原理上依赖于electron，本身并不为无头做准备.
 
-该实现使得项目复杂,且无法实现真正的无头,因此基于下一代基于NTQQ BOT框架 NapCatQQ 重塑项目,实现纯无头,请关注NapCatQQ社群.
+该实现使得项目复杂,且无法实现真正的无头,因此基于下一代基于NTQQ BOT框架 NapCatQQ 重塑项目,实现纯无头,请关注NapCatQQ后续.
 
 ## 简介
 
@@ -15,6 +15,10 @@ LLWebUiApi 旨在提供伪 Headless 与远程管理支持，以尽最大可能�
 ## 使用方法
 
 目前 LLWebUiApi 仍处于快速开发阶段，功能依旧十分不稳定且随时可能有更改。如果你想体验，可自行克隆本项目源码后打包体验。
+
+浏览器访问 http://你的ip:6099/api/panel/getQQLoginQRcode 扫码登录
+
+登录之后访问 http://你的ip:6099/plugin/LLOneBot/iframe.html 进行 llonebot 的配置
 
 ## API 一览
 
