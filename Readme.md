@@ -3,6 +3,9 @@
 </div>
 
 ## 提示
+该项目不再维护 请迅速迁移 已终止维护
+
+
 该项目目前已迁移,一开始计划为LLOnebot提供远程配置服务，但LiteLoader与LLOnebot原理上依赖于electron，本身并不为无头做准备.
 
 该实现使得项目复杂,且无法实现真正的无头,因此基于下一代基于NTQQ BOT框架 NapCatQQ 重塑项目,实现纯无头,请关注NapCatQQ后续.
