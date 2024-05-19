@@ -75,8 +75,8 @@ function loadLLWebUiApi() {
 	// #if TEST_ShowDialogHook
 	setShowDialogHook(async (_options) => {
 		let ret: OpenDialogReturnValue = {
-			canceled: false,
-			filePaths: ["F:/Web/ffmpeg.exe"]
+			canceled: true,
+			filePaths: []
 		}
 		return ret;
 	})
